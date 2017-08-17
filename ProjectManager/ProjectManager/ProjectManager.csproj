@@ -157,6 +157,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt.css" />
+    <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_broadway.css" />
+    <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_meadow.css" />
+    <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_skyblue.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -175,6 +179,39 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\dhtmlxgantt.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\ext\dhtmlxgantt_quick_info.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\ext\dhtmlxgantt_tooltip.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_ar.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_be.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_ca.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_cn.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_cs.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_da.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_de.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_el.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_es.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_fi.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_fr.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_he.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_hu.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_id.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_it.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_jp.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_nb.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_nl.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_no.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_pl.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_pt.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_ro.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_ru.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_si.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_sk.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_sv.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_tr.js" />
+    <Content Include="Scripts\pm\dhtmlxgantt\locale\locale_ua.js" />
+    <Content Include="Scripts\pm\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -193,9 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\theme\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\pm\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
