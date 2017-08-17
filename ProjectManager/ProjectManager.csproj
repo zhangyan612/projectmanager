@@ -161,6 +161,7 @@
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_broadway.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_meadow.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_skyblue.css" />
+    <Content Include="Content\theme\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
