@@ -250,6 +250,7 @@
     <Content Include="Scripts\locale\locale_tr.js" />
     <Content Include="Scripts\locale\locale_ua.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\pm\afterLoad.js" />
     <Content Include="Scripts\pm\dhtmlxgantt\dhtmlxgantt.js" />
     <Content Include="Scripts\pm\dhtmlxgantt\ext\dhtmlxgantt_quick_info.js" />
     <Content Include="Scripts\pm\dhtmlxgantt\ext\dhtmlxgantt_tooltip.js" />
@@ -390,6 +391,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\dhtmlxgantt\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
