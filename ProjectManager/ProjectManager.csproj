@@ -189,7 +189,7 @@
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_broadway.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_meadow.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_skyblue.css" />
-    <Content Include="Content\theme\Site.css" />
+    <Content Include="Content\theme\Gantt.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -386,6 +386,7 @@
     <Content Include="Scripts\sources\ext\dhtmlxgantt_fullscreen.js.map" />
     <Content Include="Scripts\sources\ext\dhtmlxgantt_csp.js.map" />
     <Content Include="Scripts\sources\dhtmlxgantt.js.map" />
+    <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

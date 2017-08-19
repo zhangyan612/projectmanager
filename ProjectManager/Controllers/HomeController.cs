@@ -18,6 +18,11 @@ namespace ProjectManager.Controllers
             return View();
         }
 
+        public ActionResult Test()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Get Gantt data as JSON
         /// </summary>
