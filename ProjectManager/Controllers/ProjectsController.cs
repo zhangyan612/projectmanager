@@ -11,6 +11,7 @@ using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
+    [AllowAnonymous]
     public class ProjectsController : Controller
     {
         private PMContext db = new PMContext();

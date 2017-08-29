@@ -9,6 +9,7 @@ using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
+    [AllowAnonymous]
     public class GanttController : Controller
     {
         private readonly PMContext db = new PMContext();

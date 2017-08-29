@@ -80,11 +80,20 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -159,6 +168,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="DAL\Infrastructure\DatabaseFactory.cs" />
+    <Compile Include="DAL\Infrastructure\Disposable.cs" />
+    <Compile Include="DAL\Infrastructure\IDatabaseFactory.cs" />
+    <Compile Include="DAL\Infrastructure\IRepository.cs" />
+    <Compile Include="DAL\Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="DAL\Infrastructure\Page.cs" />
+    <Compile Include="DAL\Infrastructure\RepositoryBase.cs" />
+    <Compile Include="DAL\Infrastructure\UnitOfWork.cs" />
     <Compile Include="DAL\PMContext.cs" />
     <Compile Include="DAL\PMInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,7 +197,12 @@
     <Compile Include="Migrations\201708292109547_idUpdate.Designer.cs">
       <DependentUpon>201708292109547_idUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708292230491_AppUser.cs" />
+    <Compile Include="Migrations\201708292230491_AppUser.Designer.cs">
+      <DependentUpon>201708292230491_AppUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\GanttRequest.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Project.cs" />
@@ -441,6 +463,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708292109547_idUpdate.resx">
       <DependentUpon>201708292109547_idUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708292230491_AppUser.resx">
+      <DependentUpon>201708292230491_AppUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
