@@ -20,7 +20,7 @@ namespace ProjectManager.Models
         /// </summary>
         /// <param name="form">Form collection</param>
         /// <returns>New GanttData</returns>
-        public static List<GanttRequest> Parse(FormCollection form, string ganttMode)
+        public static List<GanttRequest> Parse(FormCollection form, string ganttMode, string ProjectId)
         {
             // save current culture and change it to InvariantCulture for data parsing
             var currentCulture = Thread.CurrentThread.CurrentCulture;
@@ -53,6 +53,7 @@ namespace ProjectManager.Models
                         ParentId = (parse("parent") != "0") ? Int32.Parse(parse("parent")) : (int?)null,
                         SortOrder = (parse("order") != null) ? Int32.Parse(parse("order")) : 0,
                         Type = parse("type"),
+                        ProjectId = Guid.Parse(ProjectId)
                     };
                 }
                 // parse gantt link

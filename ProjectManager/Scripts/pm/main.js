@@ -117,10 +117,10 @@
 
     // init logic move to page
     gantt.init("ganttContainer"); // initialize gantt
-    gantt.load("/Home/Data", "json");
+    gantt.load("/Gantt/Data?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6", "json");
 
     // enable dataProcessor
-    var dp = new dataProcessor("/Home/Save");
+    var dp = new dataProcessor("/Gantt/Save?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6");
     dp.init(gantt);
 
 

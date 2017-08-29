@@ -11,107 +11,112 @@ using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
-    public class ProjectsController : Controller
+    public class TasksController : Controller
     {
         private PMContext db = new PMContext();
 
-        // GET: Projects
+        // GET: Tasks
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            var tasks = db.Tasks.Include(t => t.Project);
+            return View(tasks.ToList());
         }
 
-        // GET: Projects/Details/5
-        public ActionResult Details(Guid? id)
+        // GET: Tasks/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Task task = db.Tasks.Find(id);
+            if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(task);
         }
 
-        // GET: Projects/Create
+        // GET: Tasks/Create
         public ActionResult Create()
         {
+            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name");
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: Tasks/Create
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Text,StartDate,Duration,Progress,SortOrder,Type,ParentId,ProjectId")] Task task)
         {
-            project.CreatedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
-                project.Id = Guid.NewGuid();
-                db.Projects.Add(project);
+                db.Tasks.Add(task);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(project);
+            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", task.ProjectId);
+            return View(task);
         }
 
-        // GET: Projects/Edit/5
-        public ActionResult Edit(Guid? id)
+        // GET: Tasks/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Task task = db.Tasks.Find(id);
+            if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", task.ProjectId);
+            return View(task);
         }
 
-        // POST: Projects/Edit/5
+        // POST: Tasks/Edit/5
+        // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
+        // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,Text,StartDate,Duration,Progress,SortOrder,Type,ParentId,ProjectId")] Task task)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
+                db.Entry(task).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(project);
+            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", task.ProjectId);
+            return View(task);
         }
 
-        // GET: Projects/Delete/5
-        public ActionResult Delete(Guid? id)
+        // GET: Tasks/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Task task = db.Tasks.Find(id);
+            if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(task);
         }
 
-        // POST: Projects/Delete/5
+        // POST: Tasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            Task task = db.Tasks.Find(id);
+            db.Tasks.Remove(task);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
