@@ -52,7 +52,7 @@ namespace ProjectManager.Models
                         Progress = Decimal.Parse(parse("progress")),
                         ParentId = (parse("parent") != "0") ? Int32.Parse(parse("parent")) : (int?)null,
                         SortOrder = (parse("order") != null) ? Int32.Parse(parse("order")) : 0,
-                        Type = parse("type")
+                        Type = parse("type"),
                     };
                 }
                 // parse gantt link

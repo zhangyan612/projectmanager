@@ -2,6 +2,9 @@
 
 namespace ProjectManager.Models
 {
+    /// <summary>
+    /// The link between task
+    /// </summary>
     public class Link
     {
         public int Id { get; set; }

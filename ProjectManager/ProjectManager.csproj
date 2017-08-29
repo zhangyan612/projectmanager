@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -155,8 +156,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAL\GanttContext.cs" />
-    <Compile Include="DAL\GanttInitializer.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="DAL\PMContext.cs" />
+    <Compile Include="DAL\PMInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,9 +166,22 @@
     <Compile Include="Migrations\201708182310107_InitialCreate.Designer.cs">
       <DependentUpon>201708182310107_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708291954598_addProject.cs" />
+    <Compile Include="Migrations\201708291954598_addProject.Designer.cs">
+      <DependentUpon>201708291954598_addProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708292100002_UpdateId.cs" />
+    <Compile Include="Migrations\201708292100002_UpdateId.Designer.cs">
+      <DependentUpon>201708292100002_UpdateId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708292109547_idUpdate.cs" />
+    <Compile Include="Migrations\201708292109547_idUpdate.Designer.cs">
+      <DependentUpon>201708292109547_idUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GanttRequest.cs" />
     <Compile Include="Models\Link.cs" />
+    <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -388,6 +403,12 @@
     <Content Include="Scripts\sources\ext\dhtmlxgantt_csp.js.map" />
     <Content Include="Scripts\sources\dhtmlxgantt.js.map" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
+    <Content Include="Views\Projects\Create.cshtml" />
+    <Content Include="Views\Projects\Delete.cshtml" />
+    <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\Projects\Edit.cshtml" />
+    <Content Include="Views\Projects\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -403,6 +424,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708182310107_InitialCreate.resx">
       <DependentUpon>201708182310107_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708291954598_addProject.resx">
+      <DependentUpon>201708291954598_addProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708292100002_UpdateId.resx">
+      <DependentUpon>201708292100002_UpdateId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708292109547_idUpdate.resx">
+      <DependentUpon>201708292109547_idUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

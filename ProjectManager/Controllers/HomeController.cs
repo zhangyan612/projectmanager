@@ -11,7 +11,7 @@ namespace ProjectManager.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GanttContext db = new GanttContext();
+        private readonly PMContext db = new PMContext();
 
         public ActionResult Index()
         {
@@ -28,13 +28,13 @@ namespace ProjectManager.Controllers
         /// </summary>
         /// <returns>JsonResult</returns>
         [HttpGet]
-        public JsonResult Data()
+        public JsonResult Data(string ProjectId)
         {
             var jsonData = new
             {
                 // create tasks array
                 data = (
-                    from t in db.Tasks.AsEnumerable()
+                    from t in db.Tasks.AsEnumerable().Where(a => a.Project.Id.ToString() == ProjectId)
                     select new
                     {
                         id = t.Id,
@@ -70,7 +70,7 @@ namespace ProjectManager.Controllers
         /// <param name="form">Gantt data</param>
         /// <returns>XML response</returns>
         [HttpPost]
-        public ContentResult Save(FormCollection form)
+        public ContentResult Save(FormCollection form, string ProjectId)
         {
             var dataActions = GanttRequest.Parse(form, Request.QueryString["gantt_mode"]);
             try

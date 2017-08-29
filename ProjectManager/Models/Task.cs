@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectManager.Models
 {
+    /// <summary>
+    /// Each task in a project
+    /// </summary>
     public class Task
     {
         public int Id { get; set; }
@@ -14,5 +17,8 @@ namespace ProjectManager.Models
         public int SortOrder { get; set; }
         public string Type { get; set; }
         public int? ParentId { get; set; }
+
+        public Guid ProjectId { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

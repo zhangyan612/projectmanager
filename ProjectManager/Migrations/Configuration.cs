@@ -8,15 +8,18 @@ namespace ProjectManager.Migrations
     using ProjectManager.DAL;
     using System.Collections.Generic;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ProjectManager.DAL.GanttContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ProjectManager.DAL.PMContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "ProjectManager.DAL.GanttContext";
+            //AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+
+            ContextKey = "ProjectManager.DAL.PMContext";
         }
 
-        protected override void Seed(GanttContext context)
+        protected override void Seed(PMContext context)
         {
             List<Task> tasks = new List<Task>()
             {

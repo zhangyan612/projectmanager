@@ -22,15 +22,17 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                <li>@Html.ActionLink("Tasks", "Index", "Tasks")</li>
                 <li>@Html.ActionLink("Teams", "Test", "Home")</li>
                 <li>@Html.ActionLink("My Projects", "Index", "Home")</li>
                 <li>@Html.ActionLink("Team Projects", "Index", "Home")</li>
             </ul>
         </div>
     </div>
-       
-    @RenderBody()
 
+    <div class="container">
+        @RenderBody()
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

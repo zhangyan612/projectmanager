@@ -5,9 +5,9 @@ using ProjectManager.Models;
 
 namespace ProjectManager.DAL
 {
-    public class GanttInitializer : DropCreateDatabaseIfModelChanges<GanttContext>
+    public class PMInitializer : DropCreateDatabaseIfModelChanges<PMContext>
     {
-        protected override void Seed(GanttContext context)
+        protected override void Seed(PMContext context)
         {
             List<Task> tasks = new List<Task>()
             {

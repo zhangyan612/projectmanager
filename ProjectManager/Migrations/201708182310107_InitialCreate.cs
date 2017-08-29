@@ -7,6 +7,9 @@ namespace ProjectManager.Migrations
     {
         public override void Up()
         {
+            //DropTable("dbo.Tasks");
+            //DropTable("dbo.Links");
+
             CreateTable(
                 "dbo.Links",
                 c => new
