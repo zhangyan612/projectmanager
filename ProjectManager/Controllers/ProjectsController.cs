@@ -11,7 +11,6 @@ using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
-    [AllowAnonymous]
     public class ProjectsController : Controller
     {
         private PMContext db = new PMContext();
@@ -44,8 +43,6 @@ namespace ProjectManager.Controllers
         }
 
         // POST: Projects/Create
-        // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
-        // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate")] Project project)
