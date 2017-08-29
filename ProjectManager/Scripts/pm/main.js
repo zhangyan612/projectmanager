@@ -1,5 +1,5 @@
 ﻿(function () {
-
+    console.log('loading mainJs without api');
     // add month scale
     gantt.config.scale_unit = "week";
     gantt.config.step = 1;
@@ -115,13 +115,13 @@
            
     gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
 
-    // init logic move to page
-    gantt.init("ganttContainer"); // initialize gantt
-    gantt.load("/Gantt/Data?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6", "json");
+    //// init logic move to page
+    //gantt.init("ganttContainer"); // initialize gantt
+    //gantt.load("/Gantt/Data?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6", "json");
 
-    // enable dataProcessor
-    var dp = new dataProcessor("/Gantt/Save?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6");
-    dp.init(gantt);
+    //// enable dataProcessor
+    //var dp = new dataProcessor("/Gantt/Save?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6");
+    //dp.init(gantt);
 
 
     gantt.templates.leftside_text = function (start, end, task) {
@@ -178,6 +178,17 @@
     for (var i = 0; i < els.length; i++) {
         els[i].onclick = func;
     }
+
+
+
+    ////// init logic move to page
+    //gantt.init("ganttContainer"); // initialize gantt
+    //gantt.load("/Gantt/Data?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6", "json");
+
+    //// enable dataProcessor
+    //var dp = new dataProcessor("/Gantt/Save?ProjectId=50fd56d8-62c6-40fe-9125-bd27b64d74f6");
+    //dp.init(gantt);
+
 
 
 

@@ -19,11 +19,12 @@ namespace ProjectManager.Controllers
         [HttpGet]
         public JsonResult Data(string ProjectId)
         {
+            Guid PId = Guid.Parse(ProjectId);
             var jsonData = new
             {
                 // create tasks array
                 data = (
-                    from t in db.Tasks.AsEnumerable().Where(a => a.Project.Id.ToString() == ProjectId)
+                    from t in db.Tasks.AsEnumerable().Where(a => a.Project.Id == PId)
                     select new
                     {
                         id = t.Id,
@@ -36,7 +37,7 @@ namespace ProjectManager.Controllers
                         parent = t.ParentId,
                         type = (t.Type != null) ? t.Type : String.Empty
                     }
-                ).ToArray(),
+                ).ToList(),
                 // create links array
                 links = (
                     from l in db.Links.AsEnumerable()
@@ -47,7 +48,7 @@ namespace ProjectManager.Controllers
                         target = l.TargetTaskId,
                         type = l.Type
                     }
-                ).ToArray()
+                ).ToList()
             };
 
             return new JsonResult { Data = jsonData, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
