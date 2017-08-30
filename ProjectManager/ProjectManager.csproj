@@ -200,6 +200,7 @@
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="DAL\Authentication\DefaultFormsAuthentication.cs" />
     <Compile Include="DAL\Authentication\IFormsAuthentication.cs" />
+    <Compile Include="DAL\Configuration\UserProfileConfiguration.cs" />
     <Compile Include="DAL\Infrastructure\DatabaseFactory.cs" />
     <Compile Include="DAL\Infrastructure\Disposable.cs" />
     <Compile Include="DAL\Infrastructure\IDatabaseFactory.cs" />
@@ -241,6 +242,10 @@
     <Compile Include="Migrations\201708292230491_AppUser.cs" />
     <Compile Include="Migrations\201708292230491_AppUser.Designer.cs">
       <DependentUpon>201708292230491_AppUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708302154410_updateChange.cs" />
+    <Compile Include="Migrations\201708302154410_updateChange.Designer.cs">
+      <DependentUpon>201708302154410_updateChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -536,6 +541,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708292230491_AppUser.resx">
       <DependentUpon>201708292230491_AppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708302154410_updateChange.resx">
+      <DependentUpon>201708302154410_updateChange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
