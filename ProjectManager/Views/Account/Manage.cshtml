@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "Manage Account";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -18,7 +20,7 @@
 
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+            @*@Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })*@
         </section>
     </div>
 </div>
