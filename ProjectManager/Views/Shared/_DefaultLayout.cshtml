@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Manager App</title>
     @Styles.Render("~/Content/css")
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
     @*@Scripts.Render("~/bundles/modernizr")*@
 
 </head>
@@ -35,9 +38,376 @@
         @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+    <script type="text/javascript">
+    function GetFollowers() {
+        $('#divFollowedGroup').getNiceScroll().remove();
+        $('#divSGoals').getNiceScroll().remove();
+        $('#divGoals').getNiceScroll().remove();
+        $('#notification').getNiceScroll().remove();
+        var url = "/Account/Followers";
+        $.get(url, function (result) {
+            $("#followedUsers").html(result);
+
+        });
+    }
+
+    function GetFollowings() {
+        $('#divFollowedGroup').getNiceScroll().remove();
+        $('#divSGoals').getNiceScroll().remove();
+        $('#divGoals').getNiceScroll().remove();
+        $('#notification').getNiceScroll().remove();
+        var url = "/Account/Followings";
+        $.get(url, function (result) {
+            $("#followingUsers").html(result);
+
+        });
+    }
+
+
+    function CreateGoal() {
+        $('#divFollowedGroup').getNiceScroll().remove();
+        $('#divSGoals').getNiceScroll().remove();
+        $('#divGoals').getNiceScroll().remove();
+        $('#notification').getNiceScroll().remove();
+        var url = "/Goal/Create";
+        $.get(url, function (result) {
+            $("#createGoalModal").html(result);
+
+        });
+    }
+
+    //function CreateGroupGoal(id)
+    //{
+    ////$('#divFollowedGroup').getNiceScroll().remove();
+    ////$('#divSGoals').getNiceScroll().remove();
+    ////$('#divGoals').getNiceScroll().remove();
+    ////$('#notification').getNiceScroll().remove();
+    // var url ="/Group/CreateGoal";
+    // $.get(url,{'id':id},function(result){
+    //	$("#createGoal").html(result);
+
+    // });
+    //}
+
+    function CreateGroup() {
+        $('#divFollowedGroup').getNiceScroll().remove();
+        $('#divSGoals').getNiceScroll().remove();
+        $('#divGoals').getNiceScroll().remove();
+        $('#notification').getNiceScroll().remove();
+        var url = "/Group/CreateGroup";
+        $.get(url, function (result) {
+            $("#createGroup").html(result);
+            $('#notification').getNiceScroll();
+        });
+    }
+
+    function enableScroll() {
+        $('#divFollowedGroup').niceScroll();
+        $('#divGroup').niceScroll();
+        $('#divSGoals').niceScroll();
+        $('#divGoals').niceScroll();
+        $('#notification').niceScroll();
+
+    }
+
+
+
+
+
+
+    function Invite(groupId) {
+
+
+        if ($("Email").val() != "") {
+            $("#btnInvite").attr("disabled", "true");
+            var email = $("#Email").val();
+            var url = '/Group/InviteEmail';
+            var postData = { 'Email': email, 'GrouporGoalId': groupId }
+            $.post(url, postData, function (result) {
+                $("#msgGroup").css({ 'display': 'block' });
+                $("#msgGroup").text(result);
+                $("#msgGroup").fadeOut(3000);
+                $("#Email").val('');
+                $("#btnInvite").removeAttr("disabled");
+            });
+        }
+
+    }
+
+    function SupportInvitation(id) {
+        url = '/Goal/SupportInvitation';
+
+        $.get(url, { goalId: id }, function (result) {
+            $('#InviteForm').html(result);
+
+
+        });
+    }
+
+    function SupportInvite(goalId) {
+        if ($("#SupportEmail").val() != "") {
+
+            $("#btnSupportInvite").attr("disabled", "true");
+            var email = $("#SupportEmail").val();
+            var url = "/Goal/InviteEmail";
+            var postData = { 'Email': email, 'GrouporGoalId': goalId }
+            $.post(url, postData, function (result) {
+                $("#msgSupport").css({ 'display': 'block' });
+                $("#msgSupport").text(result);
+                $("#msgSupport").fadeOut(2000);
+                $("#SupportEmail").val('');
+                $("#btnSupportInvite").removeAttr("disabled");
+            });
+        }
+    }
+    function SupportGoal(goalId) {
+        $.get("/Goal/SupportGoal/" + goalId, function (e) {
+            $("#support" + goalId).html('<input type="button"  class="btn btn-primary" value="UnFollow" id="UnSupportBtn' + goalId + '" onclick ="UnSupportGoal(' + goalId + ')" />');
+            //            <a id="UnSupport' + goalId + '" onclick="UnSupportGoal(' + goalId + ')"><i class="icon-minus"></i>Un-Support</a>');
+            $("#divSGoals").load("/Goal/GoalsFollowing");
+        });
+    }
+
+    function UnSupportGoal(goalId) {
+        $.get("/Goal/UnSupportGoal/" + goalId, function (e) {
+            $("#support" + goalId).html(' <input type="button"  class="btn btn-primary" value="Follow" id="SupportBtn' + goalId + '" onclick ="SupportGoal(' + goalId + ')" />');
+            //            <a id="Support' + goalId + '" onclick="SupportGoal(' + goalId + ')"><i class="icon-plus"></i>Support</a>');
+            $("#divSGoals").load("/Goal/GoalsFollowing");
+        });
+    }
+
+    function SupportGoalNow(goalId) {
+        $.get("/Goal/SupportGoalNow/" + goalId, function (e) {
+            $("#support" + goalId).html(' <input type="button"  class="btn btn-primary" value="Unfollow" id="UnSupportBtn' + goalId + '" onclick ="UnSupportGoal(' + goalId + ')" />');
+            //          $("#grp-name").html(
+            $("#divSGoals").load("/Goal/GoalsFollowing");
+        });
+    }
+
+    function DeleteUser(userId, groupId) {
+        $.get("/Group/DeleteMember", { 'userId': userId, 'groupId': groupId }, function (e) {
+            $("#" + userId).html(e);
+            $("#divFollowedGroup").load("/Group/FollowedGroups");
+        });
+    }
+
+
+    function DropDownChange() {
+
+        $("#drpdwnBtn").attr("disabled", "true");
+        var id = $("#GoalStatusId").val();
+        var url = '/Goal/GoalStatus';
+        var goalid = $("#GoalId").val();
+        $.post(url, { 'id': id, 'goalid': goalid }, function (e) {
+            $("#goalStatus").html(e);
+            $("#drpdwnBtn").removeAttr("disabled");
+        });
+    }
+
+    function GroupDropDownChange() {
+
+        $("#grpdrpdwnBtn").attr("disabled", "true");
+        var id = $("#GoalStatusId").val();
+        var url = '/Group/GoalStatus';
+        var goalid = $("#GroupGoalId").val();
+        $.post(url, { 'id': id, 'goalid': goalid }, function (e) {
+            $("#groupgoalStatus").html(e);
+            $("#grpdrpdwnBtn").removeAttr("disabled");
+        });
+    }
+
+
+
+    function saveGroupUpdate(target, metric) {
+        var update = 'Please Enter Update';
+        $("#postGroupupdate").attr("disabled", "true");
+
+        var Gid = $('#GoalId').val();
+        var CurrUpdte = $('#GroupUpdate').val();
+        var CurrStatus = $('#Status').val();
+        var GroupId = $('#GroupId').val();
+
+
+        if ($('#GroupUpdate').val() == '') {
+            alert(update);
+            $("#postGroupupdate").removeAttr("disabled");
+        }
+
+        //     else if (metric != 0 && $('#Status').val() == '' && target != "") {
+
+        //            //alert(status);
+        //            $("#postupdate").removeAttr("disabled");
+        //        }
+
+        else {
+            var PostData = { 'GroupGoalId': Gid, 'Updatemsg': CurrUpdte, 'status': CurrStatus, 'GroupId': GroupId };
+            //        var url = '/Group/SaveUpdate';
+            //        $.post(url, PostData, function (response) {
+            //            $("#divgroupupdate").html(response);
+            //            $("#GroupUpdate").val('');
+            //            $("#GroupStatus").val('');
+            //            $("#postGroupupdate").removeAttr("disabled");
+
+            //        });
+
+            $.ajax({
+                type: "POST",
+                url: "/Group/SaveUpdate",
+                data: PostData,
+            }).done(function (result) {
+                $(this).addClass("done");
+                LoadReport();
+                $("#divgroupupdate").html(result);
+                $("#GroupUpdate").val('');
+                $("#Status").val('');
+                $("#postGroupupdate").removeAttr("disabled");
+            });
+        }
+    }
+    function CommentExpandInGroupUpdate(UpdateId) {
+        var Updateid = UpdateId;
+        var url = '/Group/DisplayComments';
+        $.get(url, { 'id': Updateid }, function (result) {
+
+            $("#divgroupcommentUpdate" + Updateid.toString()).html(result);
+            $("#divgroupcommentUpdate" + Updateid.toString()).toggle("slow");
+        });
+
+    }
+
+    function checkPressedKey(e, id) {
+        evt = e || window.event;
+        if (evt.keyCode == 13) {
+            updateGroupComment(id);
+        }
+
+    }
+
+    function updateGroupComment(id) {
+
+        var Updateid = id;
+
+        var CurrCommnt = $("#GroupCommentText" + id.toString()).val();
+
+
+        var url2 = '/Group/DisplayCommentCount';
+        var url = '/Group/SaveComment';
+        var PostData = { 'GroupUpdateId': Updateid, 'CommentText': CurrCommnt };
+        $.post(url, PostData, function (result) {
+            $("#divgroupcommentUpdate" + id.toString()).html(result);
+            $("#GroupCommentText" + id.toString()).val('');
+
+            $.get(url2, { 'id': Updateid }, function (data) {
+
+                $("#commentGroupToggle" + id.toString()).html(data + ' Comments<i class="icon-comment"></i>');
+            });
+
+        });
+
+    }
+
+
+    function EnableBtn() {
+        $("#inviteResult").empty();
+        $("#btnSupportInvite").removeAttr("disabled");
+    }
+    function DisableBtn() {
+        if ($("#SupportEmail").val() == "") {
+            $("#btnSupportInvite").attr("disabled", "disabled");
+        }
+    }
+    function EnableInviteBtn() {
+        $("#inviteResult").empty();
+        $("#btnInvite").removeAttr("disabled");
+    }
+    function EnableDrpDwn() {
+        $("#drpdwnBtn").removeAttr("disabled");
+    }
+    function EnableGrpDrpDwn() {
+        $("#grpdrpdwnBtn").removeAttr("disabled");
+    }
+    function DisableInviteBtn() {
+        if ($("#Email").val() == "") {
+            $("#btnInvite").attr("disabled", "disabled");
+        }
+    }
+
+    function EditBasicInfo() {
+        var url = '/Account/EditBasicInfo'
+        $.get(url, function (result) {
+            $("#divBasicInfo").html('');
+            $("#divBasicInfo").html(result);
+
+        });
+    }
+
+    function EditPersonalInfo() {
+        var url = '/Account/EditPersonalInfo'
+        $.get(url, function (result) {
+            $("#divPersonalInfo").html('');
+            $("#divPersonalInfo").html(result);
+
+        });
+    }
+
+    function EditProfile() {
+
+        $.ajax({
+            url: '/Account/ImageUpload',
+            cache: false,
+            success: function (data) {
+                $('#profilepic').html(data);
+
+            }
+        })
+        //	var url ='/Account/ImageUpload'
+
+        //	$.get(url,function(result)
+        //	{
+        //	$("#profilepic").html(result);
+
+        //	});
+    }
+
+
+    //  function EnableInviteBtn() {
+    //        $("#forgotPasswordEmail").empty();
+    //        $("#sendBtn").removeAttr("disabled");
+    //    }
+    //
+    //    function DisableInviteBtn() {
+    //        if ($("#forgotPasswordEmail").val() == "") {
+    //            $("#sendBtn").attr("disabled", "disabled");
+    //        }
+    //    }
+
+    function SearchMember(groupid) {
+        var url = "/Group/SearchMemberForGoalAssigning";
+        $.get(url, { 'id': groupid }, function (result) {
+            $("#searchmember").html(result);
+
+
+        });
+    }
+
+    function AssigningUser(GroupUserId, UserId, UserName) {
+        $("#assignedgroupuserId").val(GroupUserId);
+
+        $("#AssignedUser").val(UserName);
+        $("#searchClose").trigger("click");
+
+    }
+
+
+    function RemoveAssigned() {
+        $("#assignedgroupuserId").val('');
+        $("#AssignedUser").val('');
+    }
+    </script>
 
 </body>
 </html>

@@ -285,6 +285,7 @@
     <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_meadow.css" />
     <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_skyblue.css" />
     <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_terrace.css" />
+    <Content Include="Content\ProfilePics\default\avatar.png" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_broadway.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_meadow.css" />
@@ -313,6 +314,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.nicescroll.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

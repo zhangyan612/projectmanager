@@ -7,59 +7,51 @@
 
     <div id="profile" class="span12" style="height:auto;">
     <div class="well span6" style="float:left;height:auto;">   
-            
-                <legend>@Html.DisplayFor(m => m.UserName)</legend>@*  <div class="pull-right">
-						<input type="button"  class="btn btn-primary" value="Edit" id="editBtn" onclick ="location.href='@Url.Action("EditProfile", "Account")'"  />
-					</div>*@
-                <div id="profilepic">
-                    <table>
-                        <tr>
-                            <td >
-                            @if (String.IsNullOrEmpty(Model.ProfilePicUrl))
-                            { 
-                                <img src="../../Content/templatemo_329_blue_urban/images/facebook-avatar.png" class="thumbnail" />
-                            }
-                            else
-                            {
-                                <a href="#myModal" id="imge"><img src="@Url.Content(Model.ProfilePicUrl)" class="thumbnail" /></a>
-                            }
-                            </td>
-                            <td>
-                                @if (User.Identity.GetUserId() == Model.UserId)
-                                {
-
-                                <div class="span1">
-                                    <a data-toggle="modal" href="#" id="editpicture" onclick="EditProfile();"><span rel="tooltip"
-                                        title="Edit Profile Picture"><i class=" icon-edit"></i></span></a>
-                                </div>  }
-                            </td>
-                        </tr>
-                    </table>
-                    @if (Model.RequestSent == false && Model.UserId != User.Identity.GetUserId() && Model.Following == false)
+        <div id="profilepic">
+            <table>
+                <tr>
+                    <td style="width: 150px;">
+                    @if (String.IsNullOrEmpty(Model.ProfilePicUrl))
                     { 
-                        @Html.ActionLink("Follow", "FollowRequest", "Account", new { id = Model.UserId }, new { @class = "btn btn-primary btn-small", @style = "float:right" })
+                        <img src="../../Content/ProfilePics/default/avatar.png" class="thumbnail" />
                     }
-                    else if (Model.RequestSent == false && Model.UserId == User.Identity.GetUserId() && Model.Following == false)
-                    { }
-                    else if (Model.RequestSent == true && Model.Following == false && Model.UserId != User.Identity.GetUserId())
+                    else
                     {
-                        <h6>
-                            Your Following request is waiting for approval.</h6>
+                        <a href="#myModal" id="imge"><img src="@Url.Content(Model.ProfilePicUrl)" class="thumbnail" /></a>
                     }
-                    else if (Model.Following == true && Model.RequestSent == false && Model.UserId != User.Identity.GetUserId())
-                    { 
-                        @Html.ActionLink("Unfollow", "Unfollow", "Account", new { id = Model.UserId }, new { @class = "btn btn-primary", @style = "float:right;" }) 
-                    }
-                   
-                    
-                </div>
-            
+                    </td>
+                    <td>
+                        @if (User.Identity.GetUserId() == Model.UserId)
+                        {
 
-               @* <div class ="span6" style ="float:right" id ="divChangePassword">
+                        <div class="span1">
+                            <a data-toggle="modal" href="#" id="editpicture" onclick="EditProfile();"><span rel="tooltip"
+                                title="Edit Profile Picture"><i class=" icon-edit"></i></span></a>
+                        </div>  }
+                    </td>
+                </tr>
+            </table>
+            @*@if (Model.RequestSent == false && Model.UserId != User.Identity.GetUserId() && Model.Following == false)
+            { 
+                @Html.ActionLink("Follow", "FollowRequest", "Account", new { id = Model.UserId }, new { @class = "btn btn-primary btn-small", @style = "float:right" })
+            }
+            else if (Model.RequestSent == false && Model.UserId == User.Identity.GetUserId() && Model.Following == false)
+            { }
+            else if (Model.RequestSent == true && Model.Following == false && Model.UserId != User.Identity.GetUserId())
+            {
+                <h6>
+                    Your Following request is waiting for approval.</h6>
+            }
+            else if (Model.Following == true && Model.RequestSent == false && Model.UserId != User.Identity.GetUserId())
+            { 
+                @Html.ActionLink("Unfollow", "Unfollow", "Account", new { id = Model.UserId }, new { @class = "btn btn-primary", @style = "float:right;" }) 
+            }*@                    
+        </div>
+            
+            @* <div class ="span6" style ="float:right" id ="divChangePassword">
 			@Ajax.ActionLink("ChangePassword", "ChangePassword", "Account", new AjaxOptions { UpdateTargetId = "divChangePassword"})
 			</div>*@
        
-        
         
             <div id="divBasicInfo" style="float:left;" class="span12">
                 <table class="table">
@@ -163,7 +155,6 @@
             </div>
             @if (User.Identity.GetUserId() == Model.UserId || Model.Address != null || Model.City != null || Model.Country != null || Model.State != null || Model.ZipCode != null || Model.ContactNo != null)
             {
-                
                 <div id="divPersonalInfo" style="float:left;" class="span12">
                     <table class="table">
                         <tr>
@@ -244,30 +235,30 @@
                     </table>
                 </div>
             }
-@*   @Html.Action("UserDetail", "Account", new { id = Model.UserId })*@
+   @*@Html.Action("UserDetail", "Account", new { id = Model.UserId })*@
         
     </div >
     <div class="well span6" style="float:right;">
         <span style="float:left;margin-left:15px;margin-bottom:10px;"><strong>Recent Activities </strong></span>    
        
-        @if (Model.Following == true || Model.UserId == User.Identity.GetUserId())
+        @*@if (Model.Following == true || Model.UserId == User.Identity.GetUserId())
         { 
             <div id="divusernotification" class="span12" style="height: 550px; overflow-y: hidden; outline: none;" tabindex="5002">
             
-                @*@Html.Action("UserNotification", "Home", new { id = Model.UserId })*@
+                @Html.Action("UserNotification", "Home", new { id = Model.UserId })
             </div>
         }
      
          else if (Model.RequestSent == true && Model.Following == false && Model.UserId != User.Identity.GetUserId())
-                    {
-                        @*<h6>
-                            Your Following request is waiting for approval.</h6>*@
-                    }
-                       else 
+        {
+            @*<h6>
+                Your Following request is waiting for approval.</h6>
+        }
+            else 
         {
             
             <h6 style="float: right">Follow @Model.UserName to see the updates</h6>
-        }
+        }*@
 
     </div>
     </div>

@@ -123,7 +123,7 @@
      @Html.ValidationSummary(true)  
     <table style="padding-right:20px;">
         <tr>
-            <td rowspan="3">
+            <td rowspan="3" style="max-width:300px">
                 @if (String.IsNullOrEmpty(Model.LocalPath))
                 {
                     <img alt="Field for image cutting" id ="preview" src="@Url.Content("~/Content/ProfilePics/facebook-avatar.png")" class="thumbnail"/>
