@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using ProjectManager.Models;
 using ProjectManager.DAL;
 using Microsoft.AspNet.Identity;
-
+using ProjectManager.DAL.Services;
 
 namespace ProjectManager
 {
@@ -27,15 +27,23 @@ namespace ProjectManager
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
-            builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().InstancePerHttpRequest();
-                
-             //builder.RegisterAssemblyTypes(typeof(DefaultFormsAuthentication).Assembly)
-             //.Where(t => t.Name.EndsWith("Authentication"))
-             //.AsImplementedInterfaces().InstancePerHttpRequest();
+
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
+            builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(UserProfileService).Assembly)
+               .Where(t => t.Name.EndsWith("Service"))
+               .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(DefaultFormsAuthentication).Assembly)
+            .Where(t => t.Name.EndsWith("Authentication"))
+            .AsImplementedInterfaces().InstancePerRequest();
 
             builder.Register(c => new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new PMContext())))
-                .As<UserManager<ApplicationUser>>().InstancePerHttpRequest();
+                .As<UserManager<ApplicationUser>>().InstancePerRequest();
 
             builder.RegisterFilterProvider();
             IContainer container = builder.Build();

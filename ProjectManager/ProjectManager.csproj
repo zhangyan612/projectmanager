@@ -198,6 +198,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="DAL\Authentication\DefaultFormsAuthentication.cs" />
+    <Compile Include="DAL\Authentication\IFormsAuthentication.cs" />
     <Compile Include="DAL\Infrastructure\DatabaseFactory.cs" />
     <Compile Include="DAL\Infrastructure\Disposable.cs" />
     <Compile Include="DAL\Infrastructure\IDatabaseFactory.cs" />
