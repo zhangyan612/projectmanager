@@ -1,0 +1,152 @@
+﻿@using Microsoft.AspNet.Identity;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager App</title>
+    @Styles.Render("~/Content/css")
+
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    <script type="text/javascript">
+
+        function toggleDiv(divId) {
+            $(eval(divId)).toggle("slow");
+        }
+
+        //function SearchUserToSupport(e, goalid) {
+
+        //    evt = e || window.event;
+        //    var userName = $("#searchUserSupport").val();
+        //    var url = '/Goal/SearchUser';
+        //    if ((evt.keyCode != 13) && ($("#searchUserSupport").val() != "" && $("#searchUserSupport").val().length >= 1)) {
+        //        var getData = { 'username': userName, 'goalId': goalid };
+        //        $.get(url, getData, function (result) {
+        //            $("#searchUserSupport").autocomplete({
+        //                source: result,
+        //                select: function (event, ui) {
+        //                    $.post("/Goal/InviteUser", { id: goalid, UserId: ui.item.id }, function (e, res) {
+        //                        $("#inviteResult").html(e);
+        //                        $("#searchUserSupport").val("");
+        //                        $("#searchUserSupport").autocomplete("disable");
+        //                    });
+        //                }
+        //            });
+        //        });
+        //    }
+        //}
+        //        function search() {
+        //
+        //            var goal = $("#goal").val();
+        //            window.location = '/Search/SearchAll/' + goal;
+        //        }
+
+        //function SearchUser(e, id) {
+        //    evt = e || window.event;
+        //    var userName = $("#searchUser").val();
+        //    var url = '/Group/SearchUserForGroup';
+
+        //    if ((evt != 13) && ($("#searchUser").val() != "" && $("#searchUser").val().length >= 1)) {
+
+        //        var getData = { 'username': userName, 'groupId': id };
+
+        //        $.get(url, getData, function (result) {
+        //            $("#searchUser").autocomplete("enable");
+        //            $("#searchUser").autocomplete({
+        //                source: result,
+        //                select: function (event, ui) {
+        //                    $.post("/Group/InviteUser", { id: id, UserId: ui.item.id }, function (e, res) {
+        //                        $("#inviteResult").html(e);
+        //                        $("#searchUser").val("");
+        //                        $("#searchUser").autocomplete("disable");
+        //                    });
+        //                }
+        //            });
+        //        });
+        //    }
+        //    else if ((window.event.keyCode == 50) || (window.event.keyCode == 46)) {
+        //        $("#searchUser").autocomplete("disable");
+        //    }
+        //}
+    </script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Project Manager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                <li>@Html.ActionLink("Tasks", "Index", "Tasks")</li>
+                <li>@Html.ActionLink("Teams", "Test", "Home")</li>
+                <li>@Html.ActionLink("My Projects", "Index", "Home")</li>
+                <li>@Html.ActionLink("Team Projects", "Index", "Home")</li>
+                <li>
+                    <form action="/Search/SearchAll" class="navbar-search" id="searchform" method="post">
+                        <input class="search-query span2" id="searchText" name="searchText" placeholder="Search" type="text" value="@ViewBag.searchtext" />
+                        <input type="submit" style="display: none;" />
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+
+        @if (Request.IsAuthenticated)
+        {
+            <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-user">
+                    </i>
+                    @{
+                        var name = User.Identity.Name;
+                        <text> @name </text>
+                    }
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        @Html.ActionLink("Profile", "UserProfile", "Account", new { id = User.Identity.GetUserId() }, new { @title = "View Profile" })
+                    </li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Sign Out", "LogOff", "Account")</li>
+                </ul>
+            </div>
+         }
+    </div>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".nav-collapse .nav li a").click(function (e) {
+                $(".nav-collapse .nav .active").removeClass("active")
+                $(this).parent().addClass("active")
+            });
+        });
+
+        $('#searchText').keypress(function (e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13 && $(this).val() != "") {
+                $('#searchform').submit();
+            }
+        });
+    </script>
+
+</body>
+</html>

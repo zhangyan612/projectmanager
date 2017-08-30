@@ -21,6 +21,14 @@ namespace ProjectManager.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        //private readonly IAdminManage _adminmanager = new AdminManage();
+
+        //private readonly IAdminManage _adminmanager;
+        //public HomeController(IAdminManage adminmanager)
+        //{
+        //    _adminmanager = adminmanager;
+        //}
+
         private IUserService userService;
         private IUserProfileService userProfileService;
         private UserManager<ApplicationUser> UserManager;
@@ -30,7 +38,9 @@ namespace ProjectManager.Controllers
             this.userProfileService = userProfileService;
             this.UserManager = userManager;
         }
-        
+        //public AccountController()
+        //{
+        //}
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -82,7 +92,7 @@ namespace ProjectManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var user = new ApplicationUser { UserName = model.UserName, FirstName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
