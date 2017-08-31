@@ -70,11 +70,12 @@ namespace ProjectManager.Controllers
         public ActionResult Create([Bind(Include = "Id,Name,Desc,Public,CreatedDate")] Project project)
         {
             var userId = User.Identity.GetUserId();
+            project.Id = Guid.NewGuid();
 
             if (ModelState.IsValid)
             {
                 projectService.CreateProject(project, userId);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = project.Id });
             }
             return View(project);
         }
@@ -127,10 +128,10 @@ namespace ProjectManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            //projectService.DeleteProject(id);
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
-            db.SaveChanges();
+            projectService.DeleteProject(id);
+            //Project project = db.Projects.Find(id);
+            //db.Projects.Remove(project);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 

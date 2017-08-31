@@ -42,7 +42,6 @@ namespace ProjectManager.DAL.Services
 
         public void CreateProject(Project project, string userId)
         {
-            project.Id = Guid.NewGuid();
             project.CreatedDate = DateTime.Now;
             project.OwnerId = userId;
             projectsRepository.Add(project);
@@ -57,7 +56,7 @@ namespace ProjectManager.DAL.Services
 
         public void DeleteProject(Guid id)
         {
-            var p = projectsRepository.GetById(id.ToString());
+            var p = projectsRepository.Get(u => u.Id == id);
             projectsRepository.Delete(p);
             SaveProject();
         }
