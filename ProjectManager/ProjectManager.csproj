@@ -214,8 +214,10 @@
     <Compile Include="DAL\Mapping\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="DAL\PMContext.cs" />
     <Compile Include="DAL\PMInitializer.cs" />
+    <Compile Include="DAL\Repository\ProjectsRepository.cs" />
     <Compile Include="DAL\Repository\UserProfileRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
+    <Compile Include="DAL\Services\ProjectsService.cs" />
     <Compile Include="DAL\Services\UserProfileService.cs" />
     <Compile Include="DAL\Services\UserService.cs" />
     <Compile Include="DAL\SessionFacade.cs" />

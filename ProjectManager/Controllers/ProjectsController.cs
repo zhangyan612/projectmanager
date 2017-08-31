@@ -8,17 +8,38 @@ using System.Web;
 using System.Web.Mvc;
 using ProjectManager.DAL;
 using ProjectManager.Models;
+using ProjectManager.DAL.Services;
+using Microsoft.AspNet.Identity;
 
 namespace ProjectManager.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private PMContext db = new PMContext();
 
+        private readonly IProjectsService projectService;
+        private readonly IUserService userService;
+
+        //private IUserMailer userMailer = new UserMailer();
+        //public IUserMailer UserMailer
+        //{
+        //    get { return userMailer; }
+        //    set { userMailer = value; }
+        //}
+
+        public ProjectsController(IProjectsService projectService, IUserService userService)
+        {
+            this.projectService = projectService;
+            this.userService = userService;
+        }
         // GET: Projects
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            var userId = User.Identity.GetUserId();
+            var projects = projectService.GetProjectByUser(userId).OrderByDescending(g => g.CreatedDate).ToList();
+
+            return View(projects);
         }
 
         // GET: Projects/Details/5
@@ -28,7 +49,8 @@ namespace ProjectManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+
+            Project project = projectService.GetProject(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -45,17 +67,15 @@ namespace ProjectManager.Controllers
         // POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,Desc,Public,CreatedDate")] Project project)
         {
-            project.CreatedDate = DateTime.Now;
+            var userId = User.Identity.GetUserId();
+
             if (ModelState.IsValid)
             {
-                project.Id = Guid.NewGuid();
-                db.Projects.Add(project);
-                db.SaveChanges();
+                projectService.CreateProject(project, userId);
                 return RedirectToAction("Index");
             }
-
             return View(project);
         }
 
@@ -66,7 +86,7 @@ namespace ProjectManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Project project = projectService.GetProject(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -81,8 +101,7 @@ namespace ProjectManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
-                db.SaveChanges();
+                projectService.UpdateProject(project);
                 return RedirectToAction("Index");
             }
             return View(project);
@@ -95,7 +114,7 @@ namespace ProjectManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Project project = projectService.GetProject(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -108,6 +127,7 @@ namespace ProjectManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
+            //projectService.DeleteProject(id);
             Project project = db.Projects.Find(id);
             db.Projects.Remove(project);
             db.SaveChanges();
