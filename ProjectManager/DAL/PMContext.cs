@@ -52,5 +52,11 @@ namespace ProjectManager.DAL
             modelBuilder.Configurations.Add(new UserProfileConfiguration());
 
         }
+
+        public System.Data.Entity.DbSet<ProjectManager.Models.Team> Teams { get; set; }
+
+        public System.Data.Entity.DbSet<ProjectManager.Models.TeamMember> TeamMembers { get; set; }
+
+        public System.Data.Entity.DbSet<ProjectManager.Models.TeamProject> TeamProjects { get; set; }
     }
 }

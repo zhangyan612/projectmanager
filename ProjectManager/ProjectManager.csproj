@@ -198,6 +198,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="Controllers\TeamMembersController.cs" />
+    <Compile Include="Controllers\TeamProjectsController.cs" />
+    <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="DAL\Authentication\DefaultFormsAuthentication.cs" />
     <Compile Include="DAL\Authentication\IFormsAuthentication.cs" />
     <Compile Include="DAL\Configuration\UserProfileConfiguration.cs" />
@@ -249,8 +252,26 @@
     <Compile Include="Migrations\201708302154410_updateChange.Designer.cs">
       <DependentUpon>201708302154410_updateChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708310151431_addTeams.cs" />
+    <Compile Include="Migrations\201708310151431_addTeams.Designer.cs">
+      <DependentUpon>201708310151431_addTeams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708310211149_addTeamMember.cs" />
+    <Compile Include="Migrations\201708310211149_addTeamMember.Designer.cs">
+      <DependentUpon>201708310211149_addTeamMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708310233510_updateTeamMember.cs" />
+    <Compile Include="Migrations\201708310233510_updateTeamMember.Designer.cs">
+      <DependentUpon>201708310233510_updateTeamMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708310306508_addTeamProjects.cs" />
+    <Compile Include="Migrations\201708310306508_addTeamProjects.Designer.cs">
+      <DependentUpon>201708310306508_addTeamProjects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\TeamMember.cs" />
+    <Compile Include="Models\TeamProject.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\GanttRequest.cs" />
@@ -517,6 +538,21 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Shared\_PageLayout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Teams\Create.cshtml" />
+    <Content Include="Views\Teams\Delete.cshtml" />
+    <Content Include="Views\Teams\Details.cshtml" />
+    <Content Include="Views\Teams\Edit.cshtml" />
+    <Content Include="Views\Teams\Index.cshtml" />
+    <Content Include="Views\TeamMembers\Create.cshtml" />
+    <Content Include="Views\TeamMembers\Delete.cshtml" />
+    <Content Include="Views\TeamMembers\Details.cshtml" />
+    <Content Include="Views\TeamMembers\Edit.cshtml" />
+    <Content Include="Views\TeamMembers\Index.cshtml" />
+    <Content Include="Views\TeamProjects\Create.cshtml" />
+    <Content Include="Views\TeamProjects\Delete.cshtml" />
+    <Content Include="Views\TeamProjects\Details.cshtml" />
+    <Content Include="Views\TeamProjects\Edit.cshtml" />
+    <Content Include="Views\TeamProjects\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -548,6 +584,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708302154410_updateChange.resx">
       <DependentUpon>201708302154410_updateChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708310151431_addTeams.resx">
+      <DependentUpon>201708310151431_addTeams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708310211149_addTeamMember.resx">
+      <DependentUpon>201708310211149_addTeamMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708310233510_updateTeamMember.resx">
+      <DependentUpon>201708310233510_updateTeamMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708310306508_addTeamProjects.resx">
+      <DependentUpon>201708310306508_addTeamProjects.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

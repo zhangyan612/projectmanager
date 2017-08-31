@@ -5,8 +5,13 @@ using System.Web;
 
 namespace ProjectManager.Models
 {
-    //public class Team
-    //{
-    //    public Guid Id { get; set; }
-    //}
+    public class Team
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public virtual ICollection<TeamProject> TeamProjects { get; set; }
+        public virtual ICollection<TeamMember> Members { get; set; }
+    }
 }

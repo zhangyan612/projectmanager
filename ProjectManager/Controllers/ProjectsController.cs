@@ -61,6 +61,7 @@ namespace ProjectManager.Controllers
         // GET: Projects/Create
         public ActionResult Create()
         {
+            ViewBag.TeamId = new SelectList(db.Teams, "Id", "Name");
             return View();
         }
 

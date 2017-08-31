@@ -14,12 +14,10 @@ namespace ProjectManager.Models
         public string Desc { get; set; }
         public bool Public { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
-
+        public DateTime CreatedDate { get; set; }
 
         public virtual ICollection<Task> Tasks { get; set; }
-        //public virtual ICollection<User> Contributors { get; set; }
-
+        public virtual ICollection<TeamProject> TeamProjects { get; set; }
 
         //public Project()
         //{
