@@ -10,7 +10,10 @@ namespace ProjectManager.DAL
 {
     public class PMContext : IdentityDbContext<ApplicationUser>
     {
-        public PMContext() : base("PMContext") { }
+        public PMContext() : base("PMContext")
+        {
+            Database.SetInitializer<PMContext>(new CreateDatabaseIfNotExists<PMContext>());
+        }
 
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Link> Links { get; set; }
