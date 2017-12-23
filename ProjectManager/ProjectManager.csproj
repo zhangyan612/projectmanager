@@ -193,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\GanttController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -272,6 +273,8 @@
     <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_meadow.css" />
     <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_skyblue.css" />
     <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_terrace.css" />
+    <Content Include="Content\jKanban\jkanban.css" />
+    <Content Include="Content\jKanban\jkanban.min.css" />
     <Content Include="Content\ProfilePics\default\avatar.png" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt.css" />
     <Content Include="Content\theme\dhtmlxgantt\dhtmlxgantt_broadway.css" />
@@ -299,6 +302,8 @@
     <Content Include="Scripts\ext\dhtmlxgantt_smart_rendering.js" />
     <Content Include="Scripts\ext\dhtmlxgantt_tooltip.js" />
     <Content Include="Scripts\ext\dhtmlxgantt_undo.js" />
+    <Content Include="Scripts\jKanban\jkanban.js" />
+    <Content Include="Scripts\jKanban\jkanban.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -517,6 +522,8 @@
     <Content Include="Views\TeamProjects\Details.cshtml" />
     <Content Include="Views\TeamProjects\Edit.cshtml" />
     <Content Include="Views\TeamProjects\Index.cshtml" />
+    <Content Include="Views\Board\Index.cshtml" />
+    <Content Include="Views\Board\Kanban.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
