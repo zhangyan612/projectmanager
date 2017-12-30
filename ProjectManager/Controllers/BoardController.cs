@@ -18,8 +18,6 @@ namespace ProjectManager.Controllers
         /// delete single board
         /// </summary>
         /// <returns></returns>
-        //private PMContext db = new PMContext();
-
         private readonly IProjectBoardService boardService;
 
         public BoardController(IProjectBoardService boardService)
@@ -46,10 +44,19 @@ namespace ProjectManager.Controllers
             return View();
         }
 
-        public string AddBoardItem(int id, Guid pid, string bName, string text)
+        public string BoardItemData(int id, Guid pid, string bName, string text, string action)
         {
-            Task item = boardService.CreateBoardItem(id, pid, bName, text);
-            string json = JsonConvert.SerializeObject(item);
+            string json = "";
+            if(action == "Create")
+            {
+                Task item = boardService.CreateBoardItem(id, pid, bName, text);
+                json = JsonConvert.SerializeObject(item);
+            }
+            if (action == "Edit")
+            {
+                Task item = boardService.EditBoardItem(id, text);
+                json = JsonConvert.SerializeObject(item);
+            }
             return json;
         }
 
@@ -66,70 +73,22 @@ namespace ProjectManager.Controllers
             return json;
         }
 
-        // GET: Board/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Board/Create
+        // POST: Board/UpdateBoardItem
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public string UpdateBoardItem(int id, int targetId)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            boardService.UpdateBoardItem(id, targetId);
+            return "Success";
         }
 
-        // GET: Board/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Board/Edit/5
+        // POST: Board/UpdateBoardItem
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public string DeleteItem(int id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            boardService.DeleteBoardItem(id);
+            return "Success";
         }
 
-        // GET: Board/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Board/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -269,6 +269,10 @@
     <Compile Include="Migrations\201712301655377_AddBack.Designer.cs">
       <DependentUpon>201712301655377_AddBack.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712302035537_FixIssue.cs" />
+    <Compile Include="Migrations\201712302035537_FixIssue.Designer.cs">
+      <DependentUpon>201712302035537_FixIssue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
     <Compile Include="Models\Team.cs" />
@@ -597,6 +601,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712301655377_AddBack.resx">
       <DependentUpon>201712301655377_AddBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712302035537_FixIssue.resx">
+      <DependentUpon>201712302035537_FixIssue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

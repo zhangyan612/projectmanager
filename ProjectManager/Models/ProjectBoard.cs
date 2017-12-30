@@ -13,6 +13,7 @@ namespace ProjectManager.Models
         public string cssClass { get; set; }
 
         public virtual ICollection<Task> Tasks { get; set; }
+
         public Guid ProjectId { get; set; }
         //public virtual Project Project { get; set; }
     }

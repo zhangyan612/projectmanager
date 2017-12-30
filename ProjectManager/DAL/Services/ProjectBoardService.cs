@@ -15,7 +15,10 @@ namespace ProjectManager.DAL.Services
         Task CreateBoardItem(int id, Guid pid, string boardName, string text);
         void CreateBoard(ProjectBoard board);
         void UpdateBoard(ProjectBoard board);
+        void UpdateBoardItem(int id, int targetId);
+        Task EditBoardItem(int id, string text);
         void DeleteBoard(int id);
+        void DeleteBoardItem(int id);
         void SaveBoard();
     }
 
@@ -63,10 +66,10 @@ namespace ProjectManager.DAL.Services
                     //ProjectId = projectId
                 };
                 initial.Add(board);
-                boardRepository.Add(board);
-                //var project = projectsRepository.Get(u => u.Id == projectId);
-                //project.Boards = initial;
-                //projectsRepository.Update(project);
+                //boardRepository.Add(board);
+                var project = projectsRepository.Get(u => u.Id == projectId);
+                project.Boards = initial;
+                projectsRepository.Update(project);
             }
             SaveBoard();
             return initial;
@@ -113,6 +116,40 @@ namespace ProjectManager.DAL.Services
             return null;
         }
 
+        public void UpdateBoardItem(int id, int targetId)
+        {
+            var task = db.Tasks.Find(id);
+            var tBoard = boardRepository.Get(u => u.Id == targetId);
+            var boardName = tBoard.Name;
+
+            // change the task boardid
+            task.BoardId = tBoard.Id;
+
+            switch (boardName)
+            {
+                case "In Progress":
+                    task.StartDate = DateTime.Today;
+                    task.Active = true;
+                    break;
+                case "Completed":
+                    var dayDiff = (DateTime.Today - task.StartDate).Days;
+                    task.Duration = dayDiff ==0 ? 1: dayDiff;
+                    task.Active = true;
+                    task.Progress = 1;
+                    break;
+                default:
+                    break;
+            }
+            db.SaveChanges();
+        }
+
+        public Task EditBoardItem(int id, string text)
+        {
+            var task = db.Tasks.Find(id);
+            task.Text = text;
+            db.SaveChanges();
+            return task;
+        }
 
         public void CreateBoard(ProjectBoard board)
         {
@@ -131,6 +168,13 @@ namespace ProjectManager.DAL.Services
             var p = boardRepository.Get(u => u.Id == id);
             boardRepository.Delete(p);
             SaveBoard();
+        }
+
+        public void DeleteBoardItem(int id)
+        {
+            var task = db.Tasks.Find(id);
+            db.Tasks.Remove(task);
+            db.SaveChanges();
         }
 
         public void SaveBoard()

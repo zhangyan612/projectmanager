@@ -13,7 +13,6 @@ namespace ProjectManager.Models
         public string OwnerId { get; set; }
         public string Desc { get; set; }
         public bool Public { get; set; }
-
         public DateTime CreatedDate { get; set; }
 
         public virtual ICollection<Task> Tasks { get; set; }

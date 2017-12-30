@@ -99,8 +99,10 @@
         widthBoard: '400px',
         addItemButton: true,
         click: function (el) {
-            // TODO: add method to change item into form
-            console.log(el);
+            // add method to change item into form
+            var text = el.innerHTML;
+            var boardId = el.parentNode.parentNode.getAttribute("data-id");
+            createForm(text, "Edit", boardId, "", el)
         },
         dragEl: function (el, source) {
             // callback when any board's item are dragged
@@ -109,8 +111,12 @@
         },
         dragendEl: function (el) {
             // callback when any board's item stop drag
-            console.log(el)
-        },             
+            var itemId = el.getAttribute("data-eid");
+            var targetBoardId = el.parentNode.parentNode.getAttribute("data-id");
+            //console.log(itemId)
+            //console.log(targetBoardId)
+            updateBoardItem(itemId, targetBoardId)
+        },
         dragBoard: function (el, source) { },     // callback when any board stop drag
         dragendBoard: function (el) { },              // callback when any board stop drag
         buttonClick: function (el, boardId) {
@@ -118,18 +124,36 @@
             var name = el.previousSibling.innerHTML
             // ajax to add
             //addBoardItem(boardId);
-            var formItem = document.createElement('form');
+            var formItem = createForm("", "Create", boardId, name)
+        },
+        boards: []
+    });
+
+    function createForm(text, action, boardId, name, el) {
+        // scan for formid, if not exist, continue
+        var formItem = document.getElementById("itemForm");
+        var deleteBtn =""
+        if (formItem) {
+            $("#itemForm").focus();
+        } else {
+            el.style.display = 'none';
+            formItem = document.createElement('form');
             formItem.setAttribute("id", "itemForm");
-            formItem.innerHTML = '<div class="form-group"><textarea class="form-control" name="text" rows="2" autofocus></textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>'
+            if (!text) { text = "" }
+            if (action == "Edit") { deleteBtn = '<button type="button" id="deleteBtn" class="btn btn-danger btn-xs pull-right">Delete</button>' }
+            formItem.innerHTML = '<div class="form-group"><textarea class="form-control" name="text" rows="2">' + text + '</textarea></div>'
+            formItem.innerHTML += '<div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button>' + deleteBtn+'</div>'
+            formItem.querySelector('textarea').autofocus = true;
             KanbanBoard.addForm(boardId, formItem);
             // listen for form submit and post content to api
             $("#itemForm").submit(function (e) {
                 e.preventDefault();
-                //console.log($("#itemForm").serialize());
+                var sendData = $("#itemForm").serialize();
+                sendData += "&id=" + boardId + "&pid=@ViewBag.ID" + "&bName=" + name + "&action=" + action;
                 $.ajax({
                     type: "POST",
-                    url: "@Url.Action("AddBoardItem", "Board")?id=" + boardId + "&pid=@ViewBag.ID" + "&bName=" + name,
-                    data: $("#itemForm").serialize(),
+                    url: "@Url.Action("BoardItemData", "Board")",
+                    data: sendData,
                     success: function (data) {
                         var task = JSON.parse(data);
                         //console.log(task)
@@ -146,15 +170,38 @@
                     }
                 });
             });
-            $("#CancelBtn").click(function () {
-                formItem.parentNode.removeChild(formItem);
+        }
+
+        $("#CancelBtn").click(function () {
+            if (action == 'Edit') {
+                //console.log(el);
+                el.style.display = 'block';
+            }
+            formItem.parentNode.removeChild(formItem);
+        });
+
+        // delete board item
+        $("#deleteBtn").click(function () {
+            //var sendData = $("#itemForm").serialize();
+            var id = el.getAttribute("data-eid");
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteItem", "Board")",
+                    data: { id: id },
+                    success: function (data) {
+                        console.log(data);
+                        formItem.parentNode.removeChild(formItem);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
             });
-        },
-        boards: []
-    });
-    
+        });
+
+    }
+
     function parseTasks(taskList) {
-        console.log(taskList.length)
+        //console.log(taskList.length)
         var tasks = []
         for (a = 0; a < taskList.length; a++) {
             tasks.push({ "id": taskList[a].Id, "title": taskList[a].Text })
@@ -175,26 +222,7 @@
             KanbanBoard.addBoards(boardItem)
         }
     }
-
-    // add board item - task
-    function addBoardItem(boardId) {
-        $.ajax({
-            url: "@Url.Action("AddBoardItem", "Board")",
-            data: { id: boardId },
-            success: function (result) {
-                //console.log(result);
-                KanbanBoard.addElement(boardId, {
-                    "title": result,
-                    }
-                );
-            },
-            error: function (err) {
-                console.log(err);
-                alert(err);
-            }
-        });
-    }
-
+    
     //get all board details for this project
     $.ajax({
         url: "@Url.Action("Details", "Board")?pid=@ViewBag.ID",
@@ -210,8 +238,20 @@
     });
 
     //move task to other board
-
-    //delete tasks
+    function updateBoardItem(itemId, boardId) {
+        $.ajax({
+            url: "@Url.Action("UpdateBoardItem", "Board")",
+            type: "Post",
+            data: { id: itemId, targetId: boardId},
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (err) {
+                console.log(err);
+                alert(err);
+            }
+        });
+    }
 
     //Add board
 
