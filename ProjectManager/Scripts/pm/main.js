@@ -138,14 +138,14 @@
         }
     });
 
-    gantt.attachEvent("onBeforeLightbox", function (id) {
-        var task = gantt.getTask(id);
-        if (task.progress == 1) {
-            gantt.message({ text: "This task is already completed!", type: "completed" });
-            //return false;
-        }
-        return true;
-    });
+    //gantt.attachEvent("onBeforeLightbox", function (id) {
+    //    var task = gantt.getTask(id);
+    //    if (task.progress == 1) {
+    //        gantt.message({ text: "This task is already completed!", type: "completed" });
+    //        //return false;
+    //    }
+    //    return true;
+    //});
 
     // Show progress button
     var showProgress = function () {
