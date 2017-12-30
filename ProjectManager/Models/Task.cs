@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,9 +21,11 @@ namespace ProjectManager.Models
         public int? ParentId { get; set; }
         public bool Active { get; set; }
 
+        [JsonIgnore]
+        public virtual ProjectBoard Board { get; set; }
         public int? BoardId { get; set; }
 
         public Guid ProjectId { get; set; }
-        public virtual Project Project { get; set; }
+        //public virtual Project Project { get; set; }
     }
 }

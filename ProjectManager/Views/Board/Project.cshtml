@@ -74,7 +74,7 @@
 }
 
 <h3>Project Board</h3>
-
+<a href="@Url.Action("Details","Projects")/@ViewBag.ID">Go to Time Management</a>
 <div id="myKanban"></div>
 
 <button id="addDefault">Add "Default" board</button><br>
@@ -267,21 +267,29 @@
     //    console.log(item);
     //})
 
+    function parseTasks(taskList) {
+        console.log(taskList.length)
+        var tasks = []
+        for (a = 0; a < taskList.length; a++) {
+            tasks.push({ "id": taskList[a].Id, "title": taskList[a].Text })
+        }
+        return tasks;
+    }
+
     //add board function
     function addBoard(boards) {
         for (i = 0; i < boards.length; i++) {
-            console.log(boards[i])
             //transform task list
-            KanbanBoard.addBoards(
-                [{
-                    "id": boards[i].Id,
-                    "title": boards[i].Name,
-                    "class": boards[i].cssClass,
-                    "item": boards[i].Tasks
-                }]
-            )
+            var boardItem = [{
+                "id": boards[i].Id,
+                "title": boards[i].Name,
+                "class": boards[i].cssClass,
+                "item": parseTasks(boards[i].Tasks)
+            }];
+            KanbanBoard.addBoards(boardItem)
         }
     }
+
 
     // add board item
     function addBoardItem(boardId) {
@@ -307,8 +315,9 @@
     $.ajax({
         url: "@Url.Action("Details", "Board")?pid=@ViewBag.ID",
         success: function (result) {
-            //console.log(result);
-            addBoard(result);
+            var boards = JSON.parse(result);
+            //console.log(boards);
+            addBoard(boards);
         },
         error: function (err) {
             console.log(err);

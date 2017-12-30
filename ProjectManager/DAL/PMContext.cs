@@ -19,6 +19,9 @@ namespace ProjectManager.DAL
         public DbSet<Link> Links { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectBoard> Boards { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamMember> TeamMembers { get; set; }
+        public DbSet<TeamProject> TeamProjects { get; set; }
 
         public virtual void Commit()
         {
@@ -57,10 +60,5 @@ namespace ProjectManager.DAL
 
         }
 
-        public System.Data.Entity.DbSet<ProjectManager.Models.Team> Teams { get; set; }
-
-        public System.Data.Entity.DbSet<ProjectManager.Models.TeamMember> TeamMembers { get; set; }
-
-        public System.Data.Entity.DbSet<ProjectManager.Models.TeamProject> TeamProjects { get; set; }
     }
 }

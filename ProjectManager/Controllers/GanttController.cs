@@ -25,7 +25,7 @@ namespace ProjectManager.Controllers
             {
                 // create tasks array
                 data = (
-                    from t in db.Tasks.AsEnumerable().Where(a => a.Project.Id == PId)
+                    from t in db.Tasks.AsEnumerable().Where(a => a.ProjectId == PId)
                     select new
                     {
                         id = t.Id,
@@ -172,18 +172,26 @@ namespace ProjectManager.Controllers
             var progressBoard = boards.Where(b => b.Name == "In Progress").First();
             var toDoBoard = boards.Where(b => b.Name == "To Do").First();
             var completeBoard = boards.Where(b => b.Name == "Completed").First();
+            var progress = ganttData.UpdatedTask.Progress;
 
-            if (ganttData.UpdatedTask.Progress == 1)
+            if (progress == 1)
             {
                 ganttData.UpdatedTask.BoardId = completeBoard.Id;
             }
-            else if (ganttData.UpdatedTask.StartDate >= DateTime.Today)
+            else if(progress > 0 && progress < 1)
             {
-                ganttData.UpdatedTask.BoardId = toDoBoard.Id;
+                ganttData.UpdatedTask.BoardId = progressBoard.Id;
             }
             else
             {
-                ganttData.UpdatedTask.BoardId = progressBoard.Id;
+                if (ganttData.UpdatedTask.StartDate >= DateTime.Today)
+                {
+                    ganttData.UpdatedTask.BoardId = toDoBoard.Id;
+                }
+                else
+                {
+                    ganttData.UpdatedTask.BoardId = progressBoard.Id;
+                }
             }
             return ganttData;
         }

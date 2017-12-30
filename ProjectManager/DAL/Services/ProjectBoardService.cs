@@ -22,13 +22,13 @@ namespace ProjectManager.DAL.Services
     public class ProjectBoardService : IProjectBoardService
     {
         private readonly IProjectBoardRepository boardRepository;
-        //private readonly IProjectsRepository projectsRepository;
+        private readonly IProjectsRepository projectsRepository;
         private readonly IUnitOfWork unitOfWork;
         //private readonly PMContext db = new PMContext();
 
-        public ProjectBoardService(IProjectBoardRepository boardRepository, IUnitOfWork unitOfWork)
+        public ProjectBoardService(IProjectsRepository projectsRepository, IProjectBoardRepository boardRepository, IUnitOfWork unitOfWork)
         {
-            //this.projectsRepository = projectsRepository;
+            this.projectsRepository = projectsRepository;
             this.boardRepository = boardRepository;
             this.unitOfWork = unitOfWork;
         }
@@ -41,10 +41,9 @@ namespace ProjectManager.DAL.Services
 
         public List<ProjectBoard> GetBoardByProject(Guid projectId)
         {
-            var boards =
-                //projectsRepository.Get(u => u.Id == projectId).Boards.ToList();
-                boardRepository.GetMany(u => u.ProjectId == projectId).OrderBy(b => b.Position)
-                .ToList();
+            var boards = projectsRepository.Get(u => u.Id == projectId).Boards.ToList();
+                //boardRepository.GetMany(u => u.ProjectId == projectId).OrderBy(b => b.Position)
+                //.ToList();
             return boards;
         }
 
@@ -64,10 +63,10 @@ namespace ProjectManager.DAL.Services
                     //ProjectId = projectId
                 };
                 initial.Add(board);
-                boardRepository.Add(board);
-                //var project = projectsRepository.Get(u => u.Id == projectId);
-                //project.Boards = initial;
-                //projectsRepository.Update(project);
+                //boardRepository.Add(board);
+                var project = projectsRepository.Get(u => u.Id == projectId);
+                project.Boards = initial;
+                projectsRepository.Update(project);
             }
             SaveBoard();
             return initial;

@@ -22,7 +22,7 @@ namespace ProjectManager.Controllers
         // GET: Tasks
         public ActionResult Index()
         {
-            var tasks = db.Tasks.Include(t => t.Project);
+            var tasks = db.Tasks;
             return View(tasks.ToList());
         }
 

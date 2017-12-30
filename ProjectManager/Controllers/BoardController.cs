@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace ProjectManager.Controllers
 {
@@ -52,15 +53,16 @@ namespace ProjectManager.Controllers
         }
 
         // GET: Board/Details/5
-        public ActionResult Details(Guid pid)
+        public string Details(Guid pid)
         {
             List<ProjectBoard> existing = boardService.GetBoardByProject(pid);
             if(existing.Count == 0)
             {
                 existing = boardService.initBoard(pid);
             }
+            string json = JsonConvert.SerializeObject(existing);
 
-            return Json(existing, JsonRequestBehavior.AllowGet);
+            return json;
         }
 
         // GET: Board/Create
