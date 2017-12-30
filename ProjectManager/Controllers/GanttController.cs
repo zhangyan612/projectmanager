@@ -167,30 +167,33 @@ namespace ProjectManager.Controllers
 
         private GanttRequest DecideBoard(GanttRequest ganttData)
         {
-            var boards = db.Projects.Find(ganttData.UpdatedTask.ProjectId).Boards;
-            //var boards = db.Boards.Where(a => a.ProjectId == ganttData.UpdatedTask.ProjectId);
-            var progressBoard = boards.Where(b => b.Name == "In Progress").First();
-            var toDoBoard = boards.Where(b => b.Name == "To Do").First();
-            var completeBoard = boards.Where(b => b.Name == "Completed").First();
-            var progress = ganttData.UpdatedTask.Progress;
+            if(ganttData.UpdatedTask.Type == "task")
+            {
+                var boards = db.Projects.Find(ganttData.UpdatedTask.ProjectId).Boards;
+                //var boards = db.Boards.Where(a => a.ProjectId == ganttData.UpdatedTask.ProjectId);
+                var progressBoard = boards.Where(b => b.Name == "In Progress").First();
+                var toDoBoard = boards.Where(b => b.Name == "To Do").First();
+                var completeBoard = boards.Where(b => b.Name == "Completed").First();
+                var progress = ganttData.UpdatedTask.Progress;
 
-            if (progress == 1)
-            {
-                ganttData.UpdatedTask.BoardId = completeBoard.Id;
-            }
-            else if(progress > 0 && progress < 1)
-            {
-                ganttData.UpdatedTask.BoardId = progressBoard.Id;
-            }
-            else
-            {
-                if (ganttData.UpdatedTask.StartDate >= DateTime.Today)
+                if (progress == 1)
                 {
-                    ganttData.UpdatedTask.BoardId = toDoBoard.Id;
+                    ganttData.UpdatedTask.BoardId = completeBoard.Id;
+                }
+                else if (progress > 0 && progress < 1)
+                {
+                    ganttData.UpdatedTask.BoardId = progressBoard.Id;
                 }
                 else
                 {
-                    ganttData.UpdatedTask.BoardId = progressBoard.Id;
+                    if (ganttData.UpdatedTask.StartDate >= DateTime.Today)
+                    {
+                        ganttData.UpdatedTask.BoardId = toDoBoard.Id;
+                    }
+                    else
+                    {
+                        ganttData.UpdatedTask.BoardId = progressBoard.Id;
+                    }
                 }
             }
             return ganttData;
