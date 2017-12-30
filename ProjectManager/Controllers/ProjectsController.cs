@@ -76,7 +76,8 @@ namespace ProjectManager.Controllers
             if (ModelState.IsValid)
             {
                 projectService.CreateProject(project, userId);
-                return RedirectToAction("Details", new { id = project.Id });
+                return RedirectToAction("Project", "Board", new { id = project.Id });
+                // return RedirectToAction("Details", new { id = project.Id });
             }
             return View(project);
         }

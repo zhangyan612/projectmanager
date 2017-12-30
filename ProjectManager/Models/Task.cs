@@ -17,6 +17,10 @@ namespace ProjectManager.Models
         public int SortOrder { get; set; }
         public string Type { get; set; }
         public int? ParentId { get; set; }
+        public bool Active { get; set; }
+
+        public virtual ProjectBoard Board { get; set; }
+        public int? BoardId { get; set; }
 
         public Guid ProjectId { get; set; }
         public virtual Project Project { get; set; }

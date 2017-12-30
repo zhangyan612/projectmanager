@@ -18,6 +18,7 @@ namespace ProjectManager.DAL
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Link> Links { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectBoard> Boards { get; set; }
 
         public virtual void Commit()
         {

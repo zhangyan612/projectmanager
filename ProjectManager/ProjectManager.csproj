@@ -217,9 +217,11 @@
     <Compile Include="DAL\Mapping\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="DAL\PMContext.cs" />
     <Compile Include="DAL\PMInitializer.cs" />
+    <Compile Include="DAL\Repository\ProjectBoardRepository.cs" />
     <Compile Include="DAL\Repository\ProjectsRepository.cs" />
     <Compile Include="DAL\Repository\UserProfileRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
+    <Compile Include="DAL\Services\ProjectBoardService.cs" />
     <Compile Include="DAL\Services\ProjectsService.cs" />
     <Compile Include="DAL\Services\UserProfileService.cs" />
     <Compile Include="DAL\Services\UserService.cs" />
@@ -232,7 +234,16 @@
     <Compile Include="Migrations\201708312253434_reGenerate.Designer.cs">
       <DependentUpon>201708312253434_reGenerate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712291747008_AddProjectBoard.cs" />
+    <Compile Include="Migrations\201712291747008_AddProjectBoard.Designer.cs">
+      <DependentUpon>201712291747008_AddProjectBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712292243513_UpdateBoard.cs" />
+    <Compile Include="Migrations\201712292243513_UpdateBoard.Designer.cs">
+      <DependentUpon>201712292243513_UpdateBoard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ProjectBoard.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
     <Compile Include="Models\TeamProject.cs" />
@@ -524,6 +535,7 @@
     <Content Include="Views\TeamProjects\Index.cshtml" />
     <Content Include="Views\Board\Index.cshtml" />
     <Content Include="Views\Board\Kanban.cshtml" />
+    <Content Include="Views\Board\Project.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -540,6 +552,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708312253434_reGenerate.resx">
       <DependentUpon>201708312253434_reGenerate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712291747008_AddProjectBoard.resx">
+      <DependentUpon>201712291747008_AddProjectBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712292243513_UpdateBoard.resx">
+      <DependentUpon>201712292243513_UpdateBoard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

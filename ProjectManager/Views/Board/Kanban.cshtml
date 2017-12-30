@@ -401,7 +401,7 @@
     <script src="~/Scripts/jKanban/jkanban.min.js"></script>
 
     <script>
-    var KanbanTest = new jKanban({
+    var KanbanBoards = new jKanban({
         element : '#myKanban',
         gutter  : '10px',
         widthBoard : '400px',
@@ -477,7 +477,7 @@
 
     var toDoButton = document.getElementById('addToDo');
     toDoButton.addEventListener('click',function(){
-        KanbanTest.addElement(
+        KanbanBoards.addElement(
             "_todo",
             {
                 "title":"Test Add",
@@ -487,7 +487,7 @@
 
     var addBoardDefault = document.getElementById('addDefault');
     addBoardDefault.addEventListener('click', function () {
-        KanbanTest.addBoards(
+        KanbanBoards.addBoards(
             [{
                 "id" : "_default",
                 "title"  : "Kanban Default",
@@ -508,15 +508,15 @@
 
     var removeBoard = document.getElementById('removeBoard');
     removeBoard.addEventListener('click',function(){
-        KanbanTest.removeBoard('_done');
+        KanbanBoards.removeBoard('_done');
     });
 
     var removeElement = document.getElementById('removeElement');
     removeElement.addEventListener('click',function(){
-        KanbanTest.removeElement('_test_delete');
+        KanbanBoards.removeElement('_test_delete');
     });
 
-    var allEle = KanbanTest.getBoardElements('_todo');
+    var allEle = KanbanBoards.getBoardElements('_todo');
     allEle.forEach(function(item, index){
         console.log(item);
     })

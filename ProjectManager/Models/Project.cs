@@ -18,6 +18,7 @@ namespace ProjectManager.Models
 
         public virtual ICollection<Task> Tasks { get; set; }
         public virtual ICollection<TeamProject> TeamProjects { get; set; }
+        public virtual ICollection<ProjectBoard> Boards { get; set; }
 
         //public Project()
         //{

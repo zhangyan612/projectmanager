@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ProjectManager.DAL;
+using ProjectManager.DAL.Services;
+using ProjectManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +11,23 @@ namespace ProjectManager.Controllers
 {
     public class BoardController : Controller
     {
+        /// <summary>
+        /// View board by project id
+        /// add board to project
+        /// delete single board
+        /// </summary>
+        /// <returns></returns>
+        private PMContext db = new PMContext();
+
+        private readonly IProjectBoardService boardService;
+
+        public BoardController(IProjectBoardService boardService)
+        {
+            this.boardService = boardService;
+        }
+
+        // Add board
+
         // GET: Board
         public ActionResult Index()
         {
@@ -19,10 +39,22 @@ namespace ProjectManager.Controllers
             return View();
         }
 
-        // GET: Board/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Project(string id)
         {
+            ViewBag.ID = id;
             return View();
+        }
+
+        // GET: Board/Details/5
+        public ActionResult Details(Guid pid)
+        {
+            List<ProjectBoard> existing = boardService.GetBoardByProject(pid);
+            if(existing.Count == 0)
+            {
+                existing = boardService.initBoard(pid);
+            }
+
+            return Json(existing, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Board/Create

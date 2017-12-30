@@ -10,6 +10,11 @@ namespace ProjectManager.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<ProjectManager.DAL.PMContext>
     {
+        /// <summary>
+        /// How to use migration
+        /// Add-Migration SomeName
+        /// Update-Database
+        /// </summary>
         public Configuration()
         {
             //AutomaticMigrationsEnabled = false;
