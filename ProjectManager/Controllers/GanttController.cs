@@ -25,7 +25,7 @@ namespace ProjectManager.Controllers
             {
                 // create tasks array
                 data = (
-                    from t in db.Tasks.AsEnumerable().Where(a => a.ProjectId == PId)
+                    from t in db.Tasks.AsEnumerable().Where(a => a.ProjectId == PId && a.Active == true)
                     select new
                     {
                         id = t.Id,

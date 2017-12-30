@@ -46,10 +46,11 @@ namespace ProjectManager.Controllers
             return View();
         }
 
-        public Task AddBoardItem(int id, Guid pid, string bName, string text)
+        public string AddBoardItem(int id, Guid pid, string bName, string text)
         {
             Task item = boardService.CreateBoardItem(id, pid, bName, text);
-            return item;
+            string json = JsonConvert.SerializeObject(item);
+            return json;
         }
 
         // GET: Board/Details/5

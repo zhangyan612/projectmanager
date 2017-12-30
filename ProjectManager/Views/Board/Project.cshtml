@@ -77,13 +77,7 @@
 <a href="@Url.Action("Details","Projects")/@ViewBag.ID">Go to Time Management</a>
 <div id="myKanban"></div>
 
-<button id="addDefault">Add "Default" board</button><br>
-<button id="addToDo">Add element in "To Do" Board</button><br>
-<button id="removeBoard">Remove "Done" Board</button><br>
-<button id="removeElement">Remove "My Task Test"</button>
-
-
-<form>
+@*<form>
     <div class="form-group">
         <textarea class="form-control" rows="2"></textarea>
     </div>
@@ -91,7 +85,7 @@
         <button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button>
         <button type="button" class="btn btn-default btn-xs pull-right">Cancel</button>
     </div>
-</form>
+</form>*@
 
 
 <script src="~/Scripts/jKanban/jkanban.min.js"></script>
@@ -131,16 +125,18 @@
             // listen for form submit and post content to api
             $("#itemForm").submit(function (e) {
                 e.preventDefault();
-                console.log($("#itemForm").serialize());
+                //console.log($("#itemForm").serialize());
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("AddBoardItem", "Board")?id=" + boardId + "&pid=@ViewBag.ID" + "&bName=" + name,
                     data: $("#itemForm").serialize(),
                     success: function (data) {
-                        if (data) {
+                        var task = JSON.parse(data);
+                        //console.log(task)
+                        if (task) {
                             KanbanBoard.addElement(boardId, {
-                                "title": data['title'],
-                                "id": data['id']
+                                "title": task.Text,
+                                "id": task.Id
                             })
                             formItem.parentNode.removeChild(formItem);
                         }
@@ -154,119 +150,9 @@
                 formItem.parentNode.removeChild(formItem);
             });
         },
-        boards: [
-            //{
-            //    "id": "_backlog",
-            //    "title": "Backlog",
-            //    "class": "default",
-            //    "item": [
-            //        {
-            //            "title": "This is backlog items",
-            //        },
-            //        {
-            //            "title": "Another item",
-            //        }
-            //    ]
-            //},
-            //{
-            //    "id": "_todo",
-            //    "title": "To Do",
-            //    "class": "info",
-            //    "item": [
-            //        {
-            //            "id": "_test_delete",
-            //            "title": "Somehow this text is large area, it has a lot of requirement that cannot be displayed at all",
-            //            "click": function (el) {
-            //                alert("click");
-            //                console.log(el);
-            //            },
-            //            "drag": function (el, source) {
-            //                alert("drag");
-            //            },
-            //            "dragend": function (el) {
-            //                alert("dragend");
-            //            }
-            //        },
-            //        {
-            //            "title": "This is another todo items",
-            //        }
-            //    ]
-            //},
-            //{
-            //    "id": "_progress",
-            //    "title": "In Progress",
-            //    "class": "warning",
-            //    "item": [
-            //        {
-            //            "title": "Do Something!",
-            //        },
-            //        {
-            //            "title": "Run?",
-            //        }
-            //    ]
-            //},
-            //{
-            //    "id": "_done",
-            //    "title": "Done",
-            //    "class": "success",
-            //    "item": [
-            //        {
-            //            "title": "All right",
-            //        },
-            //        {
-            //            "title": "Ok!",
-            //        }
-            //    ]
-            //}
-        ]
+        boards: []
     });
-
-    //var toDoButton = document.getElementById('addToDo');
-    //toDoButton.addEventListener('click', function () {
-    //    KanbanBoard.addElement(
-    //        "_todo",
-    //        {
-    //            "title": "Test Add Element",
-    //        }
-    //    );
-    //});
-
-    var addBoardDefault = document.getElementById('addDefault');
-    addBoardDefault.addEventListener('click', function () {
-        KanbanBoard.addBoards(
-            [{
-                "id": "_default",
-                "title": "Kanban Default",
-                "item": [
-                    {
-                        "title": "Default Item",
-                    },
-                    {
-                        "title": "Default Item 2",
-                    },
-                    {
-                        "title": "Default Item 3",
-                    }
-                ]
-            }]
-        )
-    });
-
-    var removeBoard = document.getElementById('removeBoard');
-    removeBoard.addEventListener('click', function () {
-        KanbanBoard.removeBoard('_done');
-    });
-
-    var removeElement = document.getElementById('removeElement');
-    removeElement.addEventListener('click', function () {
-        KanbanBoard.removeElement('_test_delete');
-    });
-
-    //var allEle = KanbanBoard.getBoardElements('_todo');
-    //allEle.forEach(function (item, index) {
-    //    console.log(item);
-    //})
-
+    
     function parseTasks(taskList) {
         console.log(taskList.length)
         var tasks = []
@@ -290,8 +176,7 @@
         }
     }
 
-
-    // add board item
+    // add board item - task
     function addBoardItem(boardId) {
         $.ajax({
             url: "@Url.Action("AddBoardItem", "Board")",
@@ -310,7 +195,6 @@
         });
     }
 
-
     //get all board details for this project
     $.ajax({
         url: "@Url.Action("Details", "Board")?pid=@ViewBag.ID",
@@ -325,13 +209,11 @@
         }
     });
 
-    //add task
-
     //move task to other board
 
     //delete tasks
 
-
+    //Add board
 
     //delete board
 

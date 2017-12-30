@@ -24,7 +24,8 @@
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
         </th>
-        <th>View Project</th>
+        <th>Project Board</th>
+        <th>Time Management</th>
 
         <th></th>
     </tr>
@@ -44,7 +45,10 @@
             @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Board", "Project", "Board", new { id = item.Id }, new { @class = "btn btn-default" })
+        </td>
+        <td>
+            @Html.ActionLink("Time Management", "Details", new { id = item.Id }, new { @class = "btn btn-default" })
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

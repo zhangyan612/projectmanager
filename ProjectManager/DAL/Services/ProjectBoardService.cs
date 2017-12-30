@@ -24,7 +24,7 @@ namespace ProjectManager.DAL.Services
         private readonly IProjectBoardRepository boardRepository;
         private readonly IProjectsRepository projectsRepository;
         private readonly IUnitOfWork unitOfWork;
-        //private readonly PMContext db = new PMContext();
+        private readonly PMContext db = new PMContext();
 
         public ProjectBoardService(IProjectsRepository projectsRepository, IProjectBoardRepository boardRepository, IUnitOfWork unitOfWork)
         {
@@ -41,9 +41,9 @@ namespace ProjectManager.DAL.Services
 
         public List<ProjectBoard> GetBoardByProject(Guid projectId)
         {
-            var boards = projectsRepository.Get(u => u.Id == projectId).Boards.ToList();
-                //boardRepository.GetMany(u => u.ProjectId == projectId).OrderBy(b => b.Position)
-                //.ToList();
+            var boards = //projectsRepository.Get(u => u.Id == projectId).Boards.ToList();
+                boardRepository.GetMany(u => u.ProjectId == projectId).OrderBy(b => b.Position)
+                .ToList();
             return boards;
         }
 
@@ -63,10 +63,10 @@ namespace ProjectManager.DAL.Services
                     //ProjectId = projectId
                 };
                 initial.Add(board);
-                //boardRepository.Add(board);
-                var project = projectsRepository.Get(u => u.Id == projectId);
-                project.Boards = initial;
-                projectsRepository.Update(project);
+                boardRepository.Add(board);
+                //var project = projectsRepository.Get(u => u.Id == projectId);
+                //project.Boards = initial;
+                //projectsRepository.Update(project);
             }
             SaveBoard();
             return initial;
@@ -78,21 +78,37 @@ namespace ProjectManager.DAL.Services
             {
                 Task newTask = new Task()
                 {
-                    BoardId = id
+                    BoardId = id,
+                    Text = text,
+                    Progress= 0,
+                    SortOrder = 0,
+                    Type = "task",
+                    ProjectId = pid,
+                    Active = false,
+                    StartDate = DateTime.Today,
+                    Duration = 3
                 };
 
                 switch (boardName)
                 {
                     case "In Progress":
-                        //db.Tasks.Add(newTask);
+                        newTask.StartDate = DateTime.Today;
+                        newTask.Active = true;
+                        db.Tasks.Add(newTask);
                         break;
                     case "Completed":
-                        //db.Tasks.Add(newTask);
+                        newTask.StartDate = DateTime.Today.AddDays(-3);
+                        newTask.Duration = 3;
+                        newTask.Active = true;
+                        newTask.Progress = 1;
+                        db.Tasks.Add(newTask);
                         break;
                     default:
-                        //db.Tasks.Add(newTask);
+                        db.Tasks.Add(newTask);
                         break;
                 }
+                db.SaveChanges();
+                return newTask;
             }
             return null;
         }

@@ -53,7 +53,8 @@ namespace ProjectManager.Models
                         ParentId = (parse("parent") != "0") ? Int32.Parse(parse("parent")) : (int?)null,
                         SortOrder = (parse("order") != null) ? Int32.Parse(parse("order")) : 0,
                         Type = parse("type"),
-                        ProjectId = Guid.Parse(ProjectId)
+                        ProjectId = Guid.Parse(ProjectId),
+                        Active = true
                     };
                 }
                 // parse gantt link
