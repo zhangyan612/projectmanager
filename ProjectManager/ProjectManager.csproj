@@ -275,18 +275,6 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\dhtmlxgantt\dhtmlxgantt_broadway.css" />
-    <Content Include="Content\dhtmlxgantt\dhtmlxgantt_contrast_black.css" />
-    <Content Include="Content\dhtmlxgantt\dhtmlxgantt_contrast_white.css" />
-    <Content Include="Content\dhtmlxgantt\dhtmlxgantt_meadow.css" />
-    <Content Include="Content\dhtmlxgantt\dhtmlxgantt_skyblue.css" />
-    <Content Include="Content\dhtmlxgantt\dhtmlxgantt_terrace.css" />
-    <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_broadway.css" />
-    <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_contrast_black.css" />
-    <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_contrast_white.css" />
-    <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_meadow.css" />
-    <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_skyblue.css" />
-    <Content Include="Content\dhtmlxgantt\sources\dhtmlxgantt_terrace.css" />
     <Content Include="Content\jKanban\jkanban.css" />
     <Content Include="Content\jKanban\jkanban.min.css" />
     <Content Include="Content\ProfilePics\default\avatar.png" />
@@ -420,7 +408,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\dhtmlxgantt\Images\" />
     <Folder Include="Views\Gantt\" />
   </ItemGroup>
   <ItemGroup>
