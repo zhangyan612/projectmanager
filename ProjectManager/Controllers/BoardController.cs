@@ -17,7 +17,7 @@ namespace ProjectManager.Controllers
         /// delete single board
         /// </summary>
         /// <returns></returns>
-        private PMContext db = new PMContext();
+        //private PMContext db = new PMContext();
 
         private readonly IProjectBoardService boardService;
 
@@ -43,6 +43,12 @@ namespace ProjectManager.Controllers
         {
             ViewBag.ID = id;
             return View();
+        }
+
+        public Task AddBoardItem(int id, Guid pid, string bName, string text)
+        {
+            Task item = boardService.CreateBoardItem(id, pid, bName, text);
+            return item;
         }
 
         // GET: Board/Details/5

@@ -98,6 +98,7 @@ namespace ProjectManager.Controllers
             {
                 case GanttAction.Inserted:
                     // add new gantt task entity
+                    ganttData = DecideBoard(ganttData);
                     db.Tasks.Add(ganttData.UpdatedTask);
                     break;
                 case GanttAction.Deleted:
@@ -106,6 +107,7 @@ namespace ProjectManager.Controllers
                     break;
                 case GanttAction.Updated:
                     // update gantt task
+                    ganttData = DecideBoard(ganttData);
                     db.Entry(db.Tasks.Find(ganttData.UpdatedTask.Id)).CurrentValues.SetValues(ganttData.UpdatedTask);
                     break;
                 default:
@@ -153,13 +155,37 @@ namespace ProjectManager.Controllers
                 var action = new XElement("action");
                 action.SetAttributeValue("type", ganttData.Action.ToString().ToLower());
                 action.SetAttributeValue("sid", ganttData.SourceId);
-                action.SetAttributeValue("tid", (ganttData.Mode == GanttMode.Tasks) ? ganttData.UpdatedTask.Id : ganttData.UpdatedLink.Id);
+                if(ganttData.Action != GanttAction.Deleted)
+                    action.SetAttributeValue("tid", (ganttData.Mode == GanttMode.Tasks) ? ganttData.UpdatedTask.Id : ganttData.UpdatedLink.Id);
                 actions.Add(action);
             }
 
             var data = new XDocument(new XElement("data", actions));
             data.Declaration = new XDeclaration("1.0", "utf-8", "true");
             return Content(data.ToString(), "text/xml");
+        }
+
+        private GanttRequest DecideBoard(GanttRequest ganttData)
+        {
+            var boards = db.Projects.Find(ganttData.UpdatedTask.ProjectId).Boards;
+            //var boards = db.Boards.Where(a => a.ProjectId == ganttData.UpdatedTask.ProjectId);
+            var progressBoard = boards.Where(b => b.Name == "In Progress").First();
+            var toDoBoard = boards.Where(b => b.Name == "To Do").First();
+            var completeBoard = boards.Where(b => b.Name == "Completed").First();
+
+            if (ganttData.UpdatedTask.Progress == 1)
+            {
+                ganttData.UpdatedTask.BoardId = completeBoard.Id;
+            }
+            else if (ganttData.UpdatedTask.StartDate >= DateTime.Today)
+            {
+                ganttData.UpdatedTask.BoardId = toDoBoard.Id;
+            }
+            else
+            {
+                ganttData.UpdatedTask.BoardId = progressBoard.Id;
+            }
+            return ganttData;
         }
     }
 }

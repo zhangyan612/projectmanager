@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectManager.Models
 {
@@ -19,7 +20,6 @@ namespace ProjectManager.Models
         public int? ParentId { get; set; }
         public bool Active { get; set; }
 
-        public virtual ProjectBoard Board { get; set; }
         public int? BoardId { get; set; }
 
         public Guid ProjectId { get; set; }

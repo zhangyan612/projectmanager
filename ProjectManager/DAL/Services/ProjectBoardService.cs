@@ -12,6 +12,7 @@ namespace ProjectManager.DAL.Services
         ProjectBoard GetBoard(int? id);
         List<ProjectBoard> GetBoardByProject(Guid projectId);
         List<ProjectBoard> initBoard(Guid projectId);
+        Task CreateBoardItem(int id, Guid pid, string boardName, string text);
         void CreateBoard(ProjectBoard board);
         void UpdateBoard(ProjectBoard board);
         void DeleteBoard(int id);
@@ -21,10 +22,13 @@ namespace ProjectManager.DAL.Services
     public class ProjectBoardService : IProjectBoardService
     {
         private readonly IProjectBoardRepository boardRepository;
+        //private readonly IProjectsRepository projectsRepository;
         private readonly IUnitOfWork unitOfWork;
+        //private readonly PMContext db = new PMContext();
 
         public ProjectBoardService(IProjectBoardRepository boardRepository, IUnitOfWork unitOfWork)
         {
+            //this.projectsRepository = projectsRepository;
             this.boardRepository = boardRepository;
             this.unitOfWork = unitOfWork;
         }
@@ -37,8 +41,11 @@ namespace ProjectManager.DAL.Services
 
         public List<ProjectBoard> GetBoardByProject(Guid projectId)
         {
-            var project = boardRepository.GetMany(u => u.ProjectId == projectId).OrderBy(b => b.Position).ToList();
-            return project;
+            var boards =
+                //projectsRepository.Get(u => u.Id == projectId).Boards.ToList();
+                boardRepository.GetMany(u => u.ProjectId == projectId).OrderBy(b => b.Position)
+                .ToList();
+            return boards;
         }
 
         public List<ProjectBoard> initBoard(Guid projectId)
@@ -54,14 +61,43 @@ namespace ProjectManager.DAL.Services
                     Name = defaultBoard[i],
                     Position = i,
                     cssClass = css[i],
-                    ProjectId = projectId
+                    //ProjectId = projectId
                 };
                 initial.Add(board);
                 boardRepository.Add(board);
+                //var project = projectsRepository.Get(u => u.Id == projectId);
+                //project.Boards = initial;
+                //projectsRepository.Update(project);
             }
             SaveBoard();
             return initial;
         }
+
+        public Task CreateBoardItem(int id, Guid pid, string boardName, string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                Task newTask = new Task()
+                {
+                    BoardId = id
+                };
+
+                switch (boardName)
+                {
+                    case "In Progress":
+                        //db.Tasks.Add(newTask);
+                        break;
+                    case "Completed":
+                        //db.Tasks.Add(newTask);
+                        break;
+                    default:
+                        //db.Tasks.Add(newTask);
+                        break;
+                }
+            }
+            return null;
+        }
+
 
         public void CreateBoard(ProjectBoard board)
         {

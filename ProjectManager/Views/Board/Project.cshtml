@@ -82,29 +82,77 @@
 <button id="removeBoard">Remove "Done" Board</button><br>
 <button id="removeElement">Remove "My Task Test"</button>
 
+
+<form>
+    <div class="form-group">
+        <textarea class="form-control" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button>
+        <button type="button" class="btn btn-default btn-xs pull-right">Cancel</button>
+    </div>
+</form>
+
+
 <script src="~/Scripts/jKanban/jkanban.min.js"></script>
 @section scripts {
-    
+
 <script>
+
     var KanbanBoard = new jKanban({
         element: '#myKanban',
         gutter: '10px',
         widthBoard: '400px',
         addItemButton: true,
         click: function (el) {
+            // TODO: add method to change item into form
             console.log(el);
         },
-        dragEl: function (el, source) { },     // callback when any board's item are dragged
-        dragendEl: function (el) { },             // callback when any board's item stop drag
+        dragEl: function (el, source) {
+            // callback when any board's item are dragged
+            console.log(el)
+            console.log(source)
+        },
+        dragendEl: function (el) {
+            // callback when any board's item stop drag
+            console.log(el)
+        },             
         dragBoard: function (el, source) { },     // callback when any board stop drag
         dragendBoard: function (el) { },              // callback when any board stop drag
         buttonClick: function (el, boardId) {
-            console.log(el);
             console.log(boardId);
-            KanbanBoard.addElement(boardId, {
-                "title": "Test Add Item",
-            }
-            );
+            var name = el.previousSibling.innerHTML
+            // ajax to add
+            //addBoardItem(boardId);
+            var formItem = document.createElement('form');
+            formItem.setAttribute("id", "itemForm");
+            formItem.innerHTML = '<div class="form-group"><textarea class="form-control" name="text" rows="2" autofocus></textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>'
+            KanbanBoard.addForm(boardId, formItem);
+            // listen for form submit and post content to api
+            $("#itemForm").submit(function (e) {
+                e.preventDefault();
+                console.log($("#itemForm").serialize());
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AddBoardItem", "Board")?id=" + boardId + "&pid=@ViewBag.ID" + "&bName=" + name,
+                    data: $("#itemForm").serialize(),
+                    success: function (data) {
+                        if (data) {
+                            KanbanBoard.addElement(boardId, {
+                                "title": data['title'],
+                                "id": data['id']
+                            })
+                            formItem.parentNode.removeChild(formItem);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+            $("#CancelBtn").click(function () {
+                formItem.parentNode.removeChild(formItem);
+            });
         },
         boards: [
             //{
@@ -235,6 +283,26 @@
         }
     }
 
+    // add board item
+    function addBoardItem(boardId) {
+        $.ajax({
+            url: "@Url.Action("AddBoardItem", "Board")",
+            data: { id: boardId },
+            success: function (result) {
+                //console.log(result);
+                KanbanBoard.addElement(boardId, {
+                    "title": result,
+                    }
+                );
+            },
+            error: function (err) {
+                console.log(err);
+                alert(err);
+            }
+        });
+    }
+
+
     //get all board details for this project
     $.ajax({
         url: "@Url.Action("Details", "Board")?pid=@ViewBag.ID",
@@ -255,7 +323,7 @@
     //delete tasks
 
 
-    
+
     //delete board
 
 

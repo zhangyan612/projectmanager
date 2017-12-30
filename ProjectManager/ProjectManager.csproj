@@ -242,6 +242,18 @@
     <Compile Include="Migrations\201712292243513_UpdateBoard.Designer.cs">
       <DependentUpon>201712292243513_UpdateBoard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712300626097_RemoveCircleRef.cs" />
+    <Compile Include="Migrations\201712300626097_RemoveCircleRef.Designer.cs">
+      <DependentUpon>201712300626097_RemoveCircleRef.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712300657098_ModifySchema.cs" />
+    <Compile Include="Migrations\201712300657098_ModifySchema.Designer.cs">
+      <DependentUpon>201712300657098_ModifySchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712300703253_revert.cs" />
+    <Compile Include="Migrations\201712300703253_revert.Designer.cs">
+      <DependentUpon>201712300703253_revert.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
     <Compile Include="Models\Team.cs" />
@@ -558,6 +570,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712292243513_UpdateBoard.resx">
       <DependentUpon>201712292243513_UpdateBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712300626097_RemoveCircleRef.resx">
+      <DependentUpon>201712300626097_RemoveCircleRef.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712300657098_ModifySchema.resx">
+      <DependentUpon>201712300657098_ModifySchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712300703253_revert.resx">
+      <DependentUpon>201712300703253_revert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
