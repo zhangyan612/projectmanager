@@ -3,10 +3,46 @@ namespace ProjectManager.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class reGenerate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.ProjectBoards",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Position = c.Int(nullable: false),
+                        cssClass = c.String(),
+                        ProjectId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
+                .Index(t => t.ProjectId);
+            
+            CreateTable(
+                "dbo.Tasks",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Text = c.String(maxLength: 255),
+                        StartDate = c.DateTime(nullable: false),
+                        Duration = c.Int(nullable: false),
+                        Progress = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        SortOrder = c.Int(nullable: false),
+                        Type = c.String(),
+                        ParentId = c.Int(),
+                        Active = c.Boolean(nullable: false),
+                        BoardId = c.Int(),
+                        ProjectId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ProjectBoards", t => t.BoardId)
+                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
+                .Index(t => t.BoardId)
+                .Index(t => t.ProjectId);
+            
             CreateTable(
                 "dbo.Links",
                 c => new
@@ -30,24 +66,6 @@ namespace ProjectManager.Migrations
                         CreatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Tasks",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Text = c.String(maxLength: 255),
-                        StartDate = c.DateTime(nullable: false),
-                        Duration = c.Int(nullable: false),
-                        Progress = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        SortOrder = c.Int(nullable: false),
-                        Type = c.String(),
-                        ParentId = c.Int(),
-                        ProjectId = c.Guid(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
-                .Index(t => t.ProjectId);
             
             CreateTable(
                 "dbo.TeamProjects",
@@ -195,6 +213,8 @@ namespace ProjectManager.Migrations
             DropForeignKey("dbo.TeamMembers", "TeamId", "dbo.Teams");
             DropForeignKey("dbo.TeamProjects", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.Tasks", "ProjectId", "dbo.Projects");
+            DropForeignKey("dbo.ProjectBoards", "ProjectId", "dbo.Projects");
+            DropForeignKey("dbo.Tasks", "BoardId", "dbo.ProjectBoards");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -205,6 +225,8 @@ namespace ProjectManager.Migrations
             DropIndex("dbo.TeamProjects", new[] { "ProjectId" });
             DropIndex("dbo.TeamProjects", new[] { "TeamId" });
             DropIndex("dbo.Tasks", new[] { "ProjectId" });
+            DropIndex("dbo.Tasks", new[] { "BoardId" });
+            DropIndex("dbo.ProjectBoards", new[] { "ProjectId" });
             DropTable("dbo.UserProfiles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
@@ -214,9 +236,10 @@ namespace ProjectManager.Migrations
             DropTable("dbo.TeamMembers");
             DropTable("dbo.Teams");
             DropTable("dbo.TeamProjects");
-            DropTable("dbo.Tasks");
             DropTable("dbo.Projects");
             DropTable("dbo.Links");
+            DropTable("dbo.Tasks");
+            DropTable("dbo.ProjectBoards");
         }
     }
 }

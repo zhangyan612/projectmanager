@@ -136,7 +136,9 @@
         if (formItem) {
             $("#itemForm").focus();
         } else {
-            el.style.display = 'none';
+            if (action == 'Edit') {
+                el.style.display = 'none';
+            }
             formItem = document.createElement('form');
             formItem.setAttribute("id", "itemForm");
             if (!text) { text = "" }
@@ -203,8 +205,10 @@
     function parseTasks(taskList) {
         //console.log(taskList.length)
         var tasks = []
-        for (a = 0; a < taskList.length; a++) {
-            tasks.push({ "id": taskList[a].Id, "title": taskList[a].Text })
+        if (taskList) {
+            for (a = 0; a < taskList.length; a++) {
+                tasks.push({ "id": taskList[a].Id, "title": taskList[a].Text })
+            }
         }
         return tasks;
     }

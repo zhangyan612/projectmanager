@@ -241,37 +241,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708312253434_reGenerate.cs" />
-    <Compile Include="Migrations\201708312253434_reGenerate.Designer.cs">
-      <DependentUpon>201708312253434_reGenerate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712291747008_AddProjectBoard.cs" />
-    <Compile Include="Migrations\201712291747008_AddProjectBoard.Designer.cs">
-      <DependentUpon>201712291747008_AddProjectBoard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712292243513_UpdateBoard.cs" />
-    <Compile Include="Migrations\201712292243513_UpdateBoard.Designer.cs">
-      <DependentUpon>201712292243513_UpdateBoard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712300626097_RemoveCircleRef.cs" />
-    <Compile Include="Migrations\201712300626097_RemoveCircleRef.Designer.cs">
-      <DependentUpon>201712300626097_RemoveCircleRef.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712300657098_ModifySchema.cs" />
-    <Compile Include="Migrations\201712300657098_ModifySchema.Designer.cs">
-      <DependentUpon>201712300657098_ModifySchema.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712300703253_revert.cs" />
-    <Compile Include="Migrations\201712300703253_revert.Designer.cs">
-      <DependentUpon>201712300703253_revert.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712301655377_AddBack.cs" />
-    <Compile Include="Migrations\201712301655377_AddBack.Designer.cs">
-      <DependentUpon>201712301655377_AddBack.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712302035537_FixIssue.cs" />
-    <Compile Include="Migrations\201712302035537_FixIssue.Designer.cs">
-      <DependentUpon>201712302035537_FixIssue.cs</DependentUpon>
+    <Compile Include="Migrations\201712302233534_Initial.cs" />
+    <Compile Include="Migrations\201712302233534_Initial.Designer.cs">
+      <DependentUpon>201712302233534_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
@@ -581,29 +553,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708312253434_reGenerate.resx">
-      <DependentUpon>201708312253434_reGenerate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712291747008_AddProjectBoard.resx">
-      <DependentUpon>201712291747008_AddProjectBoard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712292243513_UpdateBoard.resx">
-      <DependentUpon>201712292243513_UpdateBoard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712300626097_RemoveCircleRef.resx">
-      <DependentUpon>201712300626097_RemoveCircleRef.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712300657098_ModifySchema.resx">
-      <DependentUpon>201712300657098_ModifySchema.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712300703253_revert.resx">
-      <DependentUpon>201712300703253_revert.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712301655377_AddBack.resx">
-      <DependentUpon>201712301655377_AddBack.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712302035537_FixIssue.resx">
-      <DependentUpon>201712302035537_FixIssue.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712302233534_Initial.resx">
+      <DependentUpon>201712302233534_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
