@@ -15,9 +15,15 @@ namespace ProjectManager.Models
         public bool Public { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        public Guid? TeamId { get; set; }
+        //public virtual Team Team { get; set; }
+
+        public virtual ICollection<Collaborator> Collaborators { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
-        public virtual ICollection<TeamProject> TeamProjects { get; set; }
         public virtual ICollection<ProjectBoard> Boards { get; set; }
+
+
+        //public virtual ICollection<TeamProject> TeamProjects { get; set; }
 
         //public Project()
         //{

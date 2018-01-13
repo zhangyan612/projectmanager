@@ -11,7 +11,7 @@ namespace ProjectManager.Models
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public virtual ICollection<TeamProject> TeamProjects { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<TeamMember> Members { get; set; }
     }
 }

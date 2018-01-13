@@ -21,7 +21,7 @@ namespace ProjectManager.DAL
         public DbSet<ProjectBoard> Boards { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
-        public DbSet<TeamProject> TeamProjects { get; set; }
+        //public DbSet<TeamProject> TeamProjects { get; set; }
 
         public virtual void Commit()
         {

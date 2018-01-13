@@ -8,49 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using ProjectManager.DAL;
 using ProjectManager.Models;
-using ProjectManager.DAL.Services;
-using Microsoft.AspNet.Identity;
 
 namespace ProjectManager.Controllers
 {
-    [Authorize]
-    public class ProjectsController : Controller
+    public class ProjectController : Controller
     {
         private PMContext db = new PMContext();
 
-        private readonly IProjectsService projectService;
-        private readonly IUserService userService;
-
-        //private IUserMailer userMailer = new UserMailer();
-        //public IUserMailer UserMailer
-        //{
-        //    get { return userMailer; }
-        //    set { userMailer = value; }
-        //}
-
-        public ProjectsController(IProjectsService projectService, IUserService userService)
-        {
-            this.projectService = projectService;
-            this.userService = userService;
-        }
-        // GET: Projects
+        // GET: Project
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId();
-            var projects = projectService.GetProjectByUser(userId).OrderByDescending(g => g.CreatedDate).ToList();
-
-            return View(projects);
+            return View(db.Projects.ToList());
         }
 
-        // GET: Projects/Details/5
+        // GET: Project/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            Project project = projectService.GetProject(id);
+            Project project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -58,39 +36,38 @@ namespace ProjectManager.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
+        // GET: Project/Create
         public ActionResult Create()
         {
-            ViewBag.TeamId = new SelectList(db.Teams, "Id", "Name");
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: Project/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Desc,Public,CreatedDate,Team_Id")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate,isTeamProject,TeamId")] Project project)
         {
-            var userId = User.Identity.GetUserId();
-            project.Id = Guid.NewGuid();
-            // bind teamId
-
             if (ModelState.IsValid)
             {
-                projectService.CreateProject(project, userId);
-                return RedirectToAction("Project", "Board", new { id = project.Id });
-                // return RedirectToAction("Details", new { id = project.Id });
+                project.Id = Guid.NewGuid();
+                db.Projects.Add(project);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
+
             return View(project);
         }
 
-        // GET: Projects/Edit/5
+        // GET: Project/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = projectService.GetProject(id);
+            Project project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -98,27 +75,30 @@ namespace ProjectManager.Controllers
             return View(project);
         }
 
-        // POST: Projects/Edit/5
+        // POST: Project/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate,isTeamProject,TeamId")] Project project)
         {
             if (ModelState.IsValid)
             {
-                projectService.UpdateProject(project);
+                db.Entry(project).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(project);
         }
 
-        // GET: Projects/Delete/5
+        // GET: Project/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = projectService.GetProject(id);
+            Project project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -126,15 +106,14 @@ namespace ProjectManager.Controllers
             return View(project);
         }
 
-        // POST: Projects/Delete/5
+        // POST: Project/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            projectService.DeleteProject(id);
-            //Project project = db.Projects.Find(id);
-            //db.Projects.Remove(project);
-            //db.SaveChanges();
+            Project project = db.Projects.Find(id);
+            db.Projects.Remove(project);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

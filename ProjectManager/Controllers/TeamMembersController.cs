@@ -51,7 +51,7 @@ namespace ProjectManager.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,TeamId,UserId,Email")] TeamMember teamMember)
+        public ActionResult Create([Bind(Include = "Id,TeamId,UserId")] TeamMember teamMember)
         {
             if (ModelState.IsValid)
             {

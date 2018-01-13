@@ -207,6 +207,7 @@
     <Compile Include="Controllers\GanttController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectBoardsController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\TeamMembersController.cs" />
@@ -245,7 +246,20 @@
     <Compile Include="Migrations\201712302233534_Initial.Designer.cs">
       <DependentUpon>201712302233534_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801131656070_updateteam.cs" />
+    <Compile Include="Migrations\201801131656070_updateteam.Designer.cs">
+      <DependentUpon>201801131656070_updateteam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801131716037_modifyteam.cs" />
+    <Compile Include="Migrations\201801131716037_modifyteam.Designer.cs">
+      <DependentUpon>201801131716037_modifyteam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801131723114_updateteam1.cs" />
+    <Compile Include="Migrations\201801131723114_updateteam1.Designer.cs">
+      <DependentUpon>201801131723114_updateteam1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Collaborator.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
@@ -405,6 +419,11 @@
     <Content Include="Views\Board\Index.cshtml" />
     <Content Include="Views\Board\Kanban.cshtml" />
     <Content Include="Views\Board\Project.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -420,6 +439,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712302233534_Initial.resx">
       <DependentUpon>201712302233534_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801131656070_updateteam.resx">
+      <DependentUpon>201801131656070_updateteam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801131716037_modifyteam.resx">
+      <DependentUpon>201801131716037_modifyteam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801131723114_updateteam1.resx">
+      <DependentUpon>201801131723114_updateteam1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
