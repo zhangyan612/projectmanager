@@ -60,5 +60,6 @@ namespace ProjectManager.DAL
 
         }
 
+        public System.Data.Entity.DbSet<ProjectManager.Models.Collaborator> Collaborators { get; set; }
     }
 }

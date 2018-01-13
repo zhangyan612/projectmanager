@@ -68,11 +68,10 @@ namespace ProjectManager.Controllers
         // POST: Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Desc,Public,CreatedDate,Team_Id")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,Desc,Public,CreatedDate,TeamId")] Project project)
         {
             var userId = User.Identity.GetUserId();
             project.Id = Guid.NewGuid();
-            // bind teamId
 
             if (ModelState.IsValid)
             {

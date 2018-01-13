@@ -204,10 +204,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
+    <Compile Include="Controllers\CollaboratorsController.cs" />
     <Compile Include="Controllers\GanttController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectBoardsController.cs" />
-    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\TeamMembersController.cs" />
@@ -419,11 +419,11 @@
     <Content Include="Views\Board\Index.cshtml" />
     <Content Include="Views\Board\Kanban.cshtml" />
     <Content Include="Views\Board\Project.cshtml" />
-    <Content Include="Views\Project\Create.cshtml" />
-    <Content Include="Views\Project\Delete.cshtml" />
-    <Content Include="Views\Project\Details.cshtml" />
-    <Content Include="Views\Project\Edit.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Collaborators\Create.cshtml" />
+    <Content Include="Views\Collaborators\Delete.cshtml" />
+    <Content Include="Views\Collaborators\Details.cshtml" />
+    <Content Include="Views\Collaborators\Edit.cshtml" />
+    <Content Include="Views\Collaborators\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

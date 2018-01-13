@@ -11,108 +11,107 @@ using ProjectManager.Models;
 
 namespace ProjectManager.Controllers
 {
-    public class ProjectController : Controller
+    public class CollaboratorsController : Controller
     {
         private PMContext db = new PMContext();
 
-        // GET: Project
+        // GET: Collaborators
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            return View(db.Collaborators.ToList());
         }
 
-        // GET: Project/Details/5
-        public ActionResult Details(Guid? id)
+        // GET: Collaborators/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Collaborator collaborator = db.Collaborators.Find(id);
+            if (collaborator == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(collaborator);
         }
 
-        // GET: Project/Create
+        // GET: Collaborators/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Project/Create
+        // POST: Collaborators/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate,isTeamProject,TeamId")] Project project)
+        public ActionResult Create([Bind(Include = "Id,UserId,ProjectId")] Collaborator collaborator)
         {
             if (ModelState.IsValid)
             {
-                project.Id = Guid.NewGuid();
-                db.Projects.Add(project);
+                db.Collaborators.Add(collaborator);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(project);
+            return View(collaborator);
         }
 
-        // GET: Project/Edit/5
-        public ActionResult Edit(Guid? id)
+        // GET: Collaborators/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Collaborator collaborator = db.Collaborators.Find(id);
+            if (collaborator == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(collaborator);
         }
 
-        // POST: Project/Edit/5
+        // POST: Collaborators/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,OwnerId,Desc,Public,CreatedDate,isTeamProject,TeamId")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,UserId,ProjectId")] Collaborator collaborator)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
+                db.Entry(collaborator).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(project);
+            return View(collaborator);
         }
 
-        // GET: Project/Delete/5
-        public ActionResult Delete(Guid? id)
+        // GET: Collaborators/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Collaborator collaborator = db.Collaborators.Find(id);
+            if (collaborator == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(collaborator);
         }
 
-        // POST: Project/Delete/5
+        // POST: Collaborators/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            Collaborator collaborator = db.Collaborators.Find(id);
+            db.Collaborators.Remove(collaborator);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
