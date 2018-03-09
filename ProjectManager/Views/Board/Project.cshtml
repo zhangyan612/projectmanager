@@ -142,9 +142,12 @@
             formItem = document.createElement('form');
             formItem.setAttribute("id", "itemForm");
             if (!text) { text = "" }
-            if (action == "Edit") { deleteBtn = '<button type="button" id="deleteBtn" class="btn btn-danger btn-xs pull-right">Delete</button>' }
+            if (action == "Edit") {
+                deleteBtn = '<button type="button" id="deleteBtn" class="btn btn-danger btn-xs pull-right">Delete</button>'
+            }
             formItem.innerHTML = '<div class="form-group"><textarea class="form-control" name="text" rows="2">' + text + '</textarea></div>'
-            formItem.innerHTML += '<div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button>' + deleteBtn+'</div>'
+            formItem.innerHTML += '<div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Save</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button>' + deleteBtn+'</div>'
+
             formItem.querySelector('textarea').autofocus = true;
             KanbanBoard.addForm(boardId, formItem);
             // listen for form submit and post content to api

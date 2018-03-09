@@ -10,6 +10,8 @@ namespace ProjectManager.Models
     /// </summary>
     public class Task
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { get; set; }
         [MaxLength(255)]
         public string Text { get; set; }

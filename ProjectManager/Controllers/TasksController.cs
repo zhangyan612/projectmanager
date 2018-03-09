@@ -26,6 +26,13 @@ namespace ProjectManager.Controllers
             return View(tasks.ToList());
         }
 
+        public ActionResult Project(Guid id)
+        {
+            var tasks = db.Tasks.Where(x => x.ProjectId == id);
+            return View(tasks.ToList());
+        }
+
+
         // GET: Tasks/Details/5
         public ActionResult Details(int? id)
         {

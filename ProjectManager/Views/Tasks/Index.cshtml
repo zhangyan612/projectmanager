@@ -13,9 +13,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Project.Name)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Text)
         </th>
         <th>
@@ -41,9 +38,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Project.Name)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Text)
         </td>

@@ -24,6 +24,7 @@
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
         </th>
+        <th>Project Tasks</th>
         <th>Project Board</th>
         <th>Time Management</th>
 
@@ -43,6 +44,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            <a href="@Url.Action("Project", "Tasks")/@item.Id" class="btn btn-default">Task List</a>
         </td>
         <td>
             @Html.ActionLink("Board", "Project", "Board", new { id = item.Id }, new { @class = "btn btn-default" })

@@ -424,6 +424,7 @@
     <Content Include="Views\Collaborators\Details.cshtml" />
     <Content Include="Views\Collaborators\Edit.cshtml" />
     <Content Include="Views\Collaborators\Index.cshtml" />
+    <Content Include="Views\Tasks\Project.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
