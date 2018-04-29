@@ -15,61 +15,7 @@
         function toggleDiv(divId) {
             $(eval(divId)).toggle("slow");
         }
-
-        //function SearchUserToSupport(e, goalid) {
-
-        //    evt = e || window.event;
-        //    var userName = $("#searchUserSupport").val();
-        //    var url = '/Goal/SearchUser';
-        //    if ((evt.keyCode != 13) && ($("#searchUserSupport").val() != "" && $("#searchUserSupport").val().length >= 1)) {
-        //        var getData = { 'username': userName, 'goalId': goalid };
-        //        $.get(url, getData, function (result) {
-        //            $("#searchUserSupport").autocomplete({
-        //                source: result,
-        //                select: function (event, ui) {
-        //                    $.post("/Goal/InviteUser", { id: goalid, UserId: ui.item.id }, function (e, res) {
-        //                        $("#inviteResult").html(e);
-        //                        $("#searchUserSupport").val("");
-        //                        $("#searchUserSupport").autocomplete("disable");
-        //                    });
-        //                }
-        //            });
-        //        });
-        //    }
-        //}
-        //        function search() {
-        //
-        //            var goal = $("#goal").val();
-        //            window.location = '/Search/SearchAll/' + goal;
-        //        }
-
-        //function SearchUser(e, id) {
-        //    evt = e || window.event;
-        //    var userName = $("#searchUser").val();
-        //    var url = '/Group/SearchUserForGroup';
-
-        //    if ((evt != 13) && ($("#searchUser").val() != "" && $("#searchUser").val().length >= 1)) {
-
-        //        var getData = { 'username': userName, 'groupId': id };
-
-        //        $.get(url, getData, function (result) {
-        //            $("#searchUser").autocomplete("enable");
-        //            $("#searchUser").autocomplete({
-        //                source: result,
-        //                select: function (event, ui) {
-        //                    $.post("/Group/InviteUser", { id: id, UserId: ui.item.id }, function (e, res) {
-        //                        $("#inviteResult").html(e);
-        //                        $("#searchUser").val("");
-        //                        $("#searchUser").autocomplete("disable");
-        //                    });
-        //                }
-        //            });
-        //        });
-        //    }
-        //    else if ((window.event.keyCode == 50) || (window.event.keyCode == 46)) {
-        //        $("#searchUser").autocomplete("disable");
-        //    }
-        //}
+        
     </script>
 
 </head>
