@@ -262,6 +262,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Collaborator.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
+    <Compile Include="Models\TaskDescription.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
     <Compile Include="Models\TeamProject.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Models\ViewModels\ProjectTaskList.cs" />
     <Compile Include="Models\ViewModels\UploadImageViewModel.cs" />
     <Compile Include="Models\ViewModels\UserProfileFormModel.cs" />
     <Compile Include="Models\ViewModels\UserProfileViewModel.cs" />
@@ -281,7 +283,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Services\ProjectTaskService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utility\ObjectMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">

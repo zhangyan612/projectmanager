@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ProjectManager.DAL;
 using ProjectManager.Models;
 using Newtonsoft.Json;
+using ProjectManager.Services;
 
 namespace ProjectManager.Controllers
 {
@@ -35,7 +36,7 @@ namespace ProjectManager.Controllers
 
         public string ProjectJson(Guid id)
         {
-            var tasks = db.Tasks.Where(x => x.ProjectId == id);
+            var tasks = ProjectTaskService.GetProjectTasks(id);
             string json = JsonConvert.SerializeObject(tasks);
             return json;
         }

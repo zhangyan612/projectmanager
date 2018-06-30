@@ -12,11 +12,13 @@ app.config(['$locationProvider', function ($locationProvider) {
 
 
 app.controller('ListController', function ($scope, DataService, $location) {
-    // Default data (can be loaded from a database)
     var currentUrl = $location.path().split("/")[3]
 
-    $scope.records = DataService.getProjectTasks(currentUrl);
-    console.log($scope.records)
+    DataService.getProjectTasks(currentUrl).then(function (result) {
+
+        $scope.taskLists = result.data;
+    });
+
 
     //DataService.getProjectTasks().then(function (dataResponse) {
     //    $scope.records = dataResponse;
@@ -32,6 +34,9 @@ app.controller('ListController', function ($scope, DataService, $location) {
 
 
 app.controller('ItemController', function ($scope, DataService) {
+
+    $scope.StatusOptions = ['To Do', 'In Progress', 'Completed', 'Backlog'];
+
     $scope.saveItem = function (item) {
         //db_list.push(item);
         //$rootScope.item = null;

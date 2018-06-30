@@ -28,6 +28,8 @@ namespace ProjectManager.Models
         public int? BoardId { get; set; }
 
         public Guid ProjectId { get; set; }
+        public int? DescriptionId { get; set; }
+
         //public virtual Project Project { get; set; }
     }
 }

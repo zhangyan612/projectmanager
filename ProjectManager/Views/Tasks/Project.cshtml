@@ -30,21 +30,22 @@
 <div id="flexLayout" style="min-height:900px; height:100%;" ng-app='ProjectList'>
 
     <div class="ui-layout-center" style="display: none;">
-        <div class="col-xs-6">
-            <h1>Edit Data</h1>
-            <div id="itemDetails" ng-controller="ItemController">
+        <div class="col-xs-6" id="itemDetails" ng-controller="ItemController">
+            <div ng-show="item">
+                <h4>{{item.Id}} : {{item.Text}}</h4>
                 <p>
-                    state : <input type="text" ng-model="item.state" />
+                    Status :
+                    <select class="form-control" ng-model="item.Status" ng-options="x for x in StatusOptions"></select>
                 </p>
                 <p>
-                    price : {{item.price}}
+                    Start Date : {{item.StartDate}}
                 </p>
                 <p>
-                    tax : {{item.tax}}
+                    Progress :{{item.Progress}}
                 </p>
-                <p>
-                    include :{{item.include}}
-                </p>
+            </div>
+            <div ng-hide="item">
+                <h4>Please select task from left panel</h4>
             </div>
         </div>
     </div>
@@ -52,92 +53,28 @@
 
     <div class="ui-layout-west" style="display: none;">
 
-        <h3>Tasks</h3>
+        <h3>Project Tasks</h3>
 
-        <table class="table" data-toggle="table">
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Task
-                </th>
-                <th>
-                    Status
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Duration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Progress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Text)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Board.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Duration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Progress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
-            }
-
-        </table>
-
-
-        <div ng-controller="ListController" class="col-xs-6">
-            <h1>List Data</h1>
+        <div ng-controller="ListController">
             <table class="table table-striped">
                 <tr>
-                    <th ng-click="type = 'include'; reverse = !reverse">Status</th>
-                    <th ng-click="type = 'state'; reverse = !reverse">State</th>
-                    <th ng-click="type = 'price'; reverse = !reverse">Price</th>
-                    <th ng-click="type = 'tax'; reverse = !reverse">Tax</th>
+                    <th>Id</th>
+                    <th>Text</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>Duration</th>
+                    <th>Progress</th>
                 </tr>
 
-                <tr ng-repeat="record in records | orderBy:type:reverse" ng-click="editItem(record)">
-                    <td><input type="checkbox" ng-model="record.include"></td>
-                    <td>{{record.state | uppercase}}</td>
-                    <td>{{record.price | currency}}</td>
-                    <td>{{record.tax | currency}}</td>
+                <tr ng-repeat="task in taskLists" ng-click="editItem(task)">
+                    <td>{{task.Id}}</td>
+                    <td>{{task.Text}}</td>
+                    <td>{{task.Status}}</td>
+                    <td>{{task.StartDate | date:'medium' }}</td>
+                    <td>{{task.Duration}}</td>
+                    <td>{{task.Progress}}</td>
                 </tr>
             </table>
-
-
-            <p>
-                Target: {{target}}<br />
-            </p>
         </div>
 
 
