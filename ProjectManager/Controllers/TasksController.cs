@@ -41,6 +41,13 @@ namespace ProjectManager.Controllers
             return json;
         }
 
+        public string TaskDescription(int id)
+        {
+            var task = ProjectTaskService.GetTaskDescription(id);
+            string json = JsonConvert.SerializeObject(task);
+            return json;
+        }
+
         // GET: Tasks/Details/5
         public ActionResult Details(int? id)
         {

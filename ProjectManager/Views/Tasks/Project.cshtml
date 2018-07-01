@@ -4,10 +4,11 @@
     ViewBag.Title = "Project";
     Layout = "~/Views/Shared/_Layout.cshtml";
     <link rel="stylesheet" type="text/css" href="~/Scripts/layout/layout-default.css">
+    <style>
 
+    </style>
     <script src="~/Scripts/layout/jquery.layout.js"></script>
     <script src="~/Scripts/layout/callbacks/jquery.layout.resizePaneAccordions.js"></script>
-
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -27,24 +28,29 @@
    
 }
 
-<div id="flexLayout" style="min-height:900px; height:100%;" ng-app='ProjectList'>
-
+<div id="flexLayout" style="min-height:900px; height:100%;" ng-app='ProjectList'  ng-controller="ProjectListController">
     <div class="ui-layout-center" style="display: none;">
-        <div class="col-xs-6" id="itemDetails" ng-controller="ItemController">
-            <div ng-show="item">
-                <h4>{{item.Id}} : {{item.Text}}</h4>
+        <div class="col-md-12" id="itemDetails">
+            <div ng-show="task">
+                <h4>{{task.Id}} : {{task.Text}}</h4>
                 <p>
                     Status :
-                    <select class="form-control" ng-model="item.Status" ng-options="x for x in StatusOptions"></select>
+                    <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions"></select>
                 </p>
                 <p>
-                    Start Date : {{item.StartDate}}
+                    Start Date : {{task.StartDate}}
                 </p>
                 <p>
-                    Progress :{{item.Progress}}
+                    Progress :{{task.Progress}}
+                </p>
+                <p ng-show="TaskDescription">
+                    Note {{TaskDescription}}
+                </p>
+                <p ng-hide="TaskDescription">
+                    Note <textarea class="form-control" rows="3"></textarea>
                 </p>
             </div>
-            <div ng-hide="item">
+            <div ng-hide="task">
                 <h4>Please select task from left panel</h4>
             </div>
         </div>
@@ -55,7 +61,7 @@
 
         <h3>Project Tasks</h3>
 
-        <div ng-controller="ListController">
+        <div>
             <table class="table table-striped">
                 <tr>
                     <th>Id</th>
@@ -66,17 +72,15 @@
                     <th>Progress</th>
                 </tr>
 
-                <tr ng-repeat="task in taskLists" ng-click="editItem(task)">
-                    <td>{{task.Id}}</td>
-                    <td>{{task.Text}}</td>
-                    <td>{{task.Status}}</td>
-                    <td>{{task.StartDate | date:'medium' }}</td>
-                    <td>{{task.Duration}}</td>
-                    <td>{{task.Progress}}</td>
+                <tr ng-repeat="t in taskLists" ng-click="setTask(t)" ng-class="{ success: t === task }">
+                    <td>{{t.Id}}</td>
+                    <td>{{t.Text}}</td>
+                    <td>{{t.Status}}</td>
+                    <td>{{t.StartDate | date:'medium' }}</td>
+                    <td>{{t.Duration}}</td>
+                    <td>{{t.Progress}}</td>
                 </tr>
             </table>
         </div>
-
-
     </div>
 </div>

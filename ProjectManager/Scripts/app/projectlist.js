@@ -11,50 +11,41 @@ app.config(['$locationProvider', function ($locationProvider) {
 
 
 
-app.controller('ListController', function ($scope, DataService, $location) {
+app.controller('ProjectListController', function ($scope, $location, DataService) {
+    $scope.task = null;
+    $scope.StatusOptions = ['To Do', 'In Progress', 'Completed', 'Backlog'];
     var currentUrl = $location.path().split("/")[3]
 
     DataService.getProjectTasks(currentUrl).then(function (result) {
-
         $scope.taskLists = result.data;
     });
 
-
-    //DataService.getProjectTasks().then(function (dataResponse) {
-    //    $scope.records = dataResponse;
-    //});
-
-
-    $scope.editItem = function (item) {
-        console.log(item)
-        angular.element(document.getElementById("itemDetails")).scope().item = item;
+    $scope.setTask = function (item) {
+        //console.log(item)
+        //angular.element(document.getElementById("itemDetails")).scope().item = item;
+        // add some ui update like highlight
+        $scope.task = item;
     };
 
-});
-
-
-app.controller('ItemController', function ($scope, DataService) {
-
-    $scope.StatusOptions = ['To Do', 'In Progress', 'Completed', 'Backlog'];
-
-    $scope.saveItem = function (item) {
+    $scope.saveTaskDescription = function (item) {
         //db_list.push(item);
         //$rootScope.item = null;
     };
-
-
 
 });
 
 
 app.service('DataService', ['$http',
     function ($http) {
-        var apiUrl = '/Tasks/ProjectJson/';
+        var apiUrl = '/Tasks';
 
         this.getProjectTasks = function (projectId) {
-            return $http.get(apiUrl + projectId);
+            return $http.get(apiUrl + '/ProjectJson/' + projectId);
         };
 
+        this.getTaskDescription = function (descId) {
+            return $http.get(apiUrl + '/TaskDescription/' + descId);
+        };
 }]);
 
 

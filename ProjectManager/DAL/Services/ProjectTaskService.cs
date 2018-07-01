@@ -30,5 +30,12 @@ namespace ProjectManager.Services
 
             return projectList;
         }
+
+        public static TaskDescription GetTaskDescription(int id)
+        {
+            var task = db.TaskDescription.Where(x => x.Id == id).First();
+            return task;
+        }
+
     }
 }
