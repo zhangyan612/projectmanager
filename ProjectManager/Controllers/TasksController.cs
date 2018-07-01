@@ -41,11 +41,19 @@ namespace ProjectManager.Controllers
             return json;
         }
 
+        [HttpGet]
         public string TaskDescription(int id)
         {
             var task = ProjectTaskService.GetTaskDescription(id);
             string json = JsonConvert.SerializeObject(task);
             return json;
+        }
+
+        [HttpPost]
+        public void SaveDescription(int id, string desc)
+        {
+            var user = User.Identity.Name;
+            ProjectTaskService.SaveTaskDescription(id, desc, user);
         }
 
         // GET: Tasks/Details/5

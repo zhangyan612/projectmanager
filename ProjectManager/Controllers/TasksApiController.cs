@@ -38,16 +38,11 @@ namespace ProjectManager.Controllers
 
         // PUT: api/TasksApi/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTask(int id, Task task)
+        public IHttpActionResult PutTask(Task task)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != task.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(task).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ProjectManager.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TaskExists(id))
+                if (!TaskExists(task.Id))
                 {
                     return NotFound();
                 }

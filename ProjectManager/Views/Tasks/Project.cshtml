@@ -35,7 +35,7 @@
                 <h4>{{task.Id}} : {{task.Text}}</h4>
                 <p>
                     Status :
-                    <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions"></select>
+                    <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions" ng-change="statusChanged(task.Status)"></select>
                 </p>
                 <p>
                     Start Date : {{task.StartDate}}
@@ -43,12 +43,20 @@
                 <p>
                     Progress :{{task.Progress}}
                 </p>
-                <p ng-show="TaskDescription">
-                    Note {{TaskDescription}}
-                </p>
-                <p ng-hide="TaskDescription">
-                    Note <textarea class="form-control" rows="3"></textarea>
-                </p>
+
+                <div ng-show="descEditMode">
+                    <p>Note: <button ng-click="saveTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Save Note</button></p>
+
+                    <p><textarea class="form-control" rows="5" ng-model="TaskDescription.Description"></textarea></p>
+                </div>
+
+                <div ng-hide="descEditMode">
+                    <p>
+                        Note: <button ng-click="EditTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Edit Note</button>
+                    </p> 
+                    <p>{{TaskDescription.Description}}</p>
+                </div>
+
             </div>
             <div ng-hide="task">
                 <h4>Please select task from left panel</h4>
