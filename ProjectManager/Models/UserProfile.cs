@@ -24,7 +24,6 @@ namespace ProjectManager.Models
 
         public string LastName { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
         public bool? Gender { get; set; }

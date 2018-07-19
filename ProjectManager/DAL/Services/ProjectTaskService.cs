@@ -16,7 +16,6 @@ namespace ProjectManager.Services
         public static List<ProjectTaskList> GetProjectTasks(Guid projectId)
         {
             var tasks = db.Tasks.Where(x => x.ProjectId == projectId).ToList();
-
             List<ProjectTaskList> projectList = new List<ProjectTaskList>();
 
             foreach (var t in tasks)
@@ -25,6 +24,11 @@ namespace ProjectManager.Services
                 ObjectMapper.Convert(t, projectTask);
 
                 projectTask.Status = t.Board.Name;
+                projectTask.AssignedUserId = t.AssignedTo.Select(a => a.UserProfileId).ToList();
+
+
+                projectTask.AssignedFirstUser = projectTask.AssignedUserId.Count > 0 ?
+                    db.Users.Find(projectTask.AssignedUserId.First()).UserName : null;
 
                 projectList.Add(projectTask);
             }

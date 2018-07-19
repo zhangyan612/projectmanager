@@ -8,7 +8,7 @@ namespace ProjectManager.Migrations
     using ProjectManager.DAL;
     using System.Collections.Generic;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ProjectManager.DAL.PMContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<PMContext>
     {
         /// <summary>
         /// How to use migration

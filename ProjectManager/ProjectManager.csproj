@@ -204,7 +204,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
-    <Compile Include="Controllers\CollaboratorsController.cs" />
     <Compile Include="Controllers\GanttController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectBoardsController.cs" />
@@ -263,9 +262,18 @@
     <Compile Include="Migrations\201806302341232_TaskDesc.Designer.cs">
       <DependentUpon>201806302341232_TaskDesc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807182143486_Fixthings.cs" />
+    <Compile Include="Migrations\201807182143486_Fixthings.Designer.cs">
+      <DependentUpon>201807182143486_Fixthings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807190410428_TaskAssignmentStr.cs" />
+    <Compile Include="Migrations\201807190410428_TaskAssignmentStr.Designer.cs">
+      <DependentUpon>201807190410428_TaskAssignmentStr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Collaborator.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
+    <Compile Include="Models\TaskAssignment.cs" />
     <Compile Include="Models\TaskDescription.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
@@ -522,11 +530,6 @@
     <Content Include="Views\Board\Index.cshtml" />
     <Content Include="Views\Board\Kanban.cshtml" />
     <Content Include="Views\Board\Project.cshtml" />
-    <Content Include="Views\Collaborators\Create.cshtml" />
-    <Content Include="Views\Collaborators\Delete.cshtml" />
-    <Content Include="Views\Collaborators\Details.cshtml" />
-    <Content Include="Views\Collaborators\Edit.cshtml" />
-    <Content Include="Views\Collaborators\Index.cshtml" />
     <Content Include="Views\Tasks\Project.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -555,6 +558,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806302341232_TaskDesc.resx">
       <DependentUpon>201806302341232_TaskDesc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807182143486_Fixthings.resx">
+      <DependentUpon>201807182143486_Fixthings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807190410428_TaskAssignmentStr.resx">
+      <DependentUpon>201807190410428_TaskAssignmentStr.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

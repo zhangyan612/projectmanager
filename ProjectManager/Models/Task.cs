@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +23,8 @@ namespace ProjectManager.Models
         public string Type { get; set; }
         public int? ParentId { get; set; }
         public bool Active { get; set; }
+
+        public virtual ICollection<TaskAssignment> AssignedTo { get; set; }
 
         [JsonIgnore]
         public virtual ProjectBoard Board { get; set; }

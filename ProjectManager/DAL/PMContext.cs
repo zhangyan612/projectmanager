@@ -22,6 +22,8 @@ namespace ProjectManager.DAL
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<TaskDescription> TaskDescription { get; set; }
+        public DbSet<TaskAssignment> TaskAssignments { get; set; }
+        public DbSet<Collaborator> Collaborators { get; set; }
 
         public virtual void Commit()
         {
@@ -60,6 +62,5 @@ namespace ProjectManager.DAL
 
         }
 
-        public System.Data.Entity.DbSet<ProjectManager.Models.Collaborator> Collaborators { get; set; }
     }
 }

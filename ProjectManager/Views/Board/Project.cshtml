@@ -74,24 +74,34 @@
 }
 
 <h3>Project Board</h3>
-<a href="@Url.Action("Details","Projects")/@ViewBag.ID">Go to Time Management</a>
+
+<div class="btn-group" role="group">
+    <a href="@Url.Action("Index", "Projects")" class="btn btn-default btn-xs">< Back</a>
+    <a href="@Url.Action("Project","Tasks")/@ViewBag.ID" class="btn btn-default btn-xs">Task List</a>
+    <a href="@Url.Action("Project","Board")" class="btn btn-default btn-xs">Project Board</a>
+    <a href="@Url.Action("Details","Projects")/@ViewBag.ID" class="btn btn-default btn-xs">Time Management</a>
+</div>
+
+
+
+
 <div id="myKanban"></div>
 
 @*<form>
-    <div class="form-group">
-        <textarea class="form-control" rows="2"></textarea>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button>
-        <button type="button" class="btn btn-default btn-xs pull-right">Cancel</button>
-    </div>
-</form>*@
+        <div class="form-group">
+            <textarea class="form-control" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button>
+            <button type="button" class="btn btn-default btn-xs pull-right">Cancel</button>
+        </div>
+    </form>*@
 
 
 <script src="~/Scripts/jKanban/jkanban.min.js"></script>
 @section scripts {
 
-<script>
+    <script>
 
     var KanbanBoard = new jKanban({
         element: '#myKanban',
@@ -229,7 +239,7 @@
             KanbanBoard.addBoards(boardItem)
         }
     }
-    
+
     //get all board details for this project
     $.ajax({
         url: "@Url.Action("Details", "Board")?pid=@ViewBag.ID",
@@ -265,5 +275,5 @@
     //delete board
 
 
-</script>
+    </script>
 }

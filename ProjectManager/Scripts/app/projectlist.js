@@ -16,6 +16,11 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     $scope.descEditMode = true;
     $scope.TaskDescription = null;
 
+    $scope.getCurrentId = function () {
+        return currentUrl;
+    }
+
+
     DataService.getProjectTasks(currentUrl).then(function (result) {
         $scope.taskLists = result.data;
     });
@@ -57,7 +62,8 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     $scope.statusChanged = function (status) {
         console.log($scope.task);
         console.log(status);
-        //post entire task
+        //post entire task to save
+
     }
 
 });
@@ -78,6 +84,11 @@ app.service('DataService', ['$http',
         this.saveTaskDescription = function (id, desc) {
             return $http.post(apiUrl + '/SaveDescription?id=' + id + '&desc=' + desc);
         };
+
+        this.getTaskUsers = function () {
+            return $http.post(apiUrl + '/UserList');
+        };
+
 }]);
 
 

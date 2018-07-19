@@ -31,8 +31,16 @@ namespace ProjectManager.Controllers
         public ActionResult Project(Guid id)
         {
             var tasks = db.Tasks.Where(x => x.ProjectId == id);
+            ViewBag.ProjectId = id;
             return View(tasks.ToList());
         }
+
+        public string UserList()
+        {
+            var users = db.Users.ToList();
+            return JsonConvert.SerializeObject(users);
+        }
+
 
         public string ProjectJson(Guid id)
         {

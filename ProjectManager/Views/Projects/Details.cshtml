@@ -33,10 +33,10 @@
             text-align: center;
         }
 
-        .controls button {
-            margin: 0 10px;
-            padding: 5px;
-        }
+            .controls button {
+                margin: 0 10px;
+                padding: 5px;
+            }
 
         /*Completed sets*/
         .complete_button {
@@ -55,22 +55,30 @@
             border: 1px solid #94AD94;
         }
 
-        .completed_task .gantt_task_progress {
-            background: #ACCAAC;
-        }
+            .completed_task .gantt_task_progress {
+                background: #ACCAAC;
+            }
 
         .dhtmlx-completed {
             border-color: #669e60;
         }
 
-        .dhtmlx-completed div {
-            background: #81c97a;
-        }
+            .dhtmlx-completed div {
+                background: #81c97a;
+            }
     </style>
 }
 
 
-<h3>@Model.Name </h3> <a href="@Url.Action("Project","Board")/@Model.Id">Go to Board</a>
+<h3>@Model.Name </h3>
+
+<div class="btn-group" role="group">
+    <a href="@Url.Action("Index", "Projects")" class="btn btn-default btn-xs">< Back</a>
+    <a href="@Url.Action("Project","Tasks")/@Model.Id" class="btn btn-default btn-xs">Task List</a>
+    <a href="@Url.Action("Project","Board")/@Model.Id" class="btn btn-default btn-xs">Project Board</a>
+    <a href="@Url.Action("Details","Projects")" class="btn btn-default btn-xs">Time Management</a>
+</div>
+
 
 <div class="controls">
     <a class="btn btn-default" id="scale1" name="scale" value="1">Day view</a>

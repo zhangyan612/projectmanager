@@ -38,6 +38,10 @@
                     <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions" ng-change="statusChanged(task.Status)"></select>
                 </p>
                 <p>
+                    Assigned to : {{task.AssignedFirstUser}}
+                </p>
+
+                <p>
                     Start Date : {{task.StartDate}}
                 </p>
                 <p>
@@ -53,7 +57,7 @@
                 <div ng-hide="descEditMode">
                     <p>
                         Note: <button ng-click="EditTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Edit Note</button>
-                    </p> 
+                    </p>
                     <p>{{TaskDescription.Description}}</p>
                 </div>
 
@@ -66,6 +70,13 @@
 
 
     <div class="ui-layout-west" style="display: none;">
+
+        <div class="btn-group" role="group">
+            <a href="@Url.Action("Index", "Projects")" class="btn btn-default btn-xs" target="_self">< Back</a>
+            <a href="@Url.Action("Project","Tasks")" class="btn btn-default btn-xs" target="_self">Task List</a>
+            <a href="@Url.Action("Project","Board")/@ViewBag.ProjectId" class="btn btn-default btn-xs" target="_self">Project Board</a>
+            <a href="@Url.Action("Details","Projects")/@ViewBag.ProjectId" class="btn btn-default btn-xs" target="_self">Time Management</a>
+        </div>
 
         <h3>Project Tasks</h3>
 
