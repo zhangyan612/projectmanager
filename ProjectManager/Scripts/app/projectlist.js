@@ -60,11 +60,13 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     };
 
     $scope.statusChanged = function (status) {
+        // commom method for any update operation
         console.log($scope.task);
         console.log(status);
         //post entire task to save
 
     }
+
 
 });
 

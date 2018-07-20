@@ -38,7 +38,9 @@
                     <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions" ng-change="statusChanged(task.Status)"></select>
                 </p>
                 <p>
-                    Assigned to : {{task.AssignedFirstUser}}
+                    Assigned to : 
+                    <span ng-show="task.AssignedFirstUser">{{task.AssignedFirstUser}}</span>
+                    <a class="btn btn-success btn-xs" ng-hide="task.AssignedFirstUser">Assign</a>
                 </p>
 
                 <p>
