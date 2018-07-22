@@ -48,6 +48,18 @@ app.filter('propsFilter', function () {
     }
 });
 
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 
 
 app.controller('ProjectListController', function ($scope, $location, DataService) {
@@ -56,6 +68,8 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     $scope.StatusOptions = ['To Do', 'In Progress', 'Completed', 'Backlog'];
     $scope.descEditMode = true;
     $scope.TaskDescription = null;
+    $scope.addPersonButton = true;
+
 
     $scope.getCurrentId = function () {
         return currentUrl;
@@ -83,6 +97,11 @@ app.controller('ProjectListController', function ($scope, $location, DataService
                 $scope.TaskDescription = null;
                 $scope.descEditMode = true;
             }
+
+            if (item.AssignedUserList === undefined || item.AssignedUserList.length == 0) {
+                console.log(item.AssignedUserList)
+                $scope.addPersonButton = false;
+            }
         }
     };
 
@@ -103,10 +122,6 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     $scope.ModelChanged = function (user) {
         // commom method for any update operation
         console.log($scope.task);
-        if (user) {
-            console.log(user);
-            $scope.task.AssignedUserList.push(user);
-        }
         //post entire task to save
 
     };
@@ -119,21 +134,47 @@ app.controller('ProjectListController', function ($scope, $location, DataService
 
     //    }
     //}, true);
-
-    //About assigning to person
     $scope.person = {};
     $scope.projectUsers = [
-        { Id: 1, FullName: 'Adam', Email: 'adam@email.com', age: 10 },
-        { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', age: 12 },
-        { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', age: 30 },
-        { Id: 4, FullName: 'Samantha', Email: 'samantha@email.com', age: 31 },
-        { Id: 5, FullName: 'Estefanía', Email: 'estefanía@email.com', age: 16 },
-        { Id: 6, FullName: 'Natasha', Email: 'natasha@email.com', age: 54 },
-        { Id: 7, FullName: 'Nicole', Email: 'nicole@email.com', age: 43 },
-        { Id: 8, FullName: 'Adrian', Email: 'adrian@email.com', age: 21 }
+        { Id: 1, FullName: 'Adam', Email: 'adam@email.com', PlannedHours: 10 },
+        { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', PlannedHours: 12 },
+        { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', PlannedHours: 30 },
+        { Id: 4, FullName: 'Samantha', Email: 'samantha@email.com', PlannedHours: 31 },
+        { Id: 5, FullName: 'Estefanía', Email: 'estefanía@email.com', PlannedHours: 16 },
+        { Id: 6, FullName: 'Natasha', Email: 'natasha@email.com', PlannedHours: 54 },
+        { Id: 7, FullName: 'Nicole', Email: 'nicole@email.com', PlannedHours: 43 },
+        { Id: 8, FullName: 'Adrian', Email: 'adrian@email.com', PlannedHours: 21 }
     ];
 
+
+    $scope.AddPerson = function () {
+        console.log($scope.person.selected);
+
+        if (containsObject($scope.person.selected, $scope.task.AssignedUserList)) {
+            console.log('Already added');
+        } else {
+            $scope.task.AssignedUserList.push($scope.person.selected);
+            $scope.person.selected = null;
+            $scope.addPersonButton = false;
+        }
+
+    };
+
+    $scope.RemovePerson = function (index) {
+        $scope.task.AssignedUserList.splice(index, 1);
+        console.log($scope.task.AssignedUserList);
+    };
+
+
+    //sort filter
+    $scope.sortType = 'Id'; // set the default sort type
+    $scope.sortReverse = false;  // set the default sort order
+    $scope.searchTask = '';     // set the default search/filter term
+
+
 });
+
+
 
 
 app.service('DataService', ['$http',

@@ -57,90 +57,111 @@
     <div class="ui-layout-center" style="display: none;">
         <div class="col-md-12" id="itemDetails">
             <div ng-show="task">
-                <h4>{{task.Id}} : {{task.Text}}</h4>
-
-
-                @*<p>
-                    Status :
-                    <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions" ng-change="statusChanged(task.Status)"></select>
-                </p>
-                <p>
-                    Assigned to :
-                    <span ng-show="task.AssignedFirstUser">{{task.AssignedFirstUser}}</span>
-                    <a class="btn btn-success btn-xs" ng-hide="task.AssignedFirstUser" data-toggle="modal" data-target="#myModal">Assign</a>
-
-                </p>*@
+                <h3>{{task.Id}} : {{task.Text}}</h3>
 
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">Status: </label>
+                            <label class="col-sm-2 control-label" style="text-align: left;">Status: </label>
                             <div class="col-sm-6">
                                 <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions" ng-change="ModelChanged()"></select>
                             </div>
                         </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label">Assign To: </label>
-                            <div class="col-sm-6">
-
-
-                                <ul>
-                                    <li ng-repeat="item in task.AssignedUserList">
-                                        {{ item }} <button ng-click="remove($index)">Remove</button>
-                                    </li>
-                                </ul>
-
-                                <div>
-                                    <input type="text" ng-model="person">
-                                    <button type="submit" ng-click="add()">Add</button>
-                                </div>
-
-
-                                <span ng-show="task.AssignedUserList">{{task.AssignedUserList[0]}}</span>
-
-                                <a class="btn btn-success btn-xs" ng-hide="task.AssignedUserList[0]">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    Assign
-                                </a>
-
-
-                                <ui-select ng-model="person.selected" theme="bootstrap" style="width:300px;" ng-change="ModelChanged($select.selected)">
-                                    <ui-select-match placeholder="Select a person">{{$select.selected.FullName}}</ui-select-match>
-                                    <ui-select-choices repeat="item in projectUsers | filter: $select.search">
-                                        <div ng-bind-html="item.FullName"></div>
-                                        <small ng-bind-html="item.Email"></small>
-                                    </ui-select-choices>
-                                </ui-select>
-                            </div>
-                        </div>
-
                     </fieldset>
                 </form>
 
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Assignment: </label>
+                        <div class="col-sm-10">
 
-                <p>
-                    Start Date : {{task.StartDate}}
-                </p>
-                <p>
-                    Progress :{{task.Progress}}
-                </p>
+                            <table class="table" ng-show="task.AssignedUserList.length > 0">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Planned Hours</th>
+                                    <th>Actual Hour Worked</th>
+                                    <th></th>
+                                </tr>
 
-                <div ng-show="descEditMode">
-                    <p>Note: <button ng-click="saveTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Save Note</button></p>
+                                <tr ng-repeat="item in task.AssignedUserList" ng-click="EditPerson(item)">
+                                    <td>{{item.FullName}}</td>
+                                    <td>{{item.PlannedHours}}</td>
+                                    <td>{{item.ActualHours}}</td>
+                                    <td><button class="btn btn-default btn-xs" ng-click="RemovePerson($index)">Remove</button></td>
 
-                    <p><textarea class="form-control" rows="5" ng-model="TaskDescription.Description"></textarea></p>
+                                </tr>
+                            </table>
+
+
+                            <a class="btn btn-success btn-xs" ng-hide="addPersonButton" ng-click="addPersonButton = true">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Add Person
+                            </a>
+
+                            <form class="form-inline" ng-submit="AddPerson()" ng-show="addPersonButton">
+                                <div class="form-group">
+                                    <label class="sr-only" for="FullName">Name</label>
+                                    <ui-select ng-model="person.selected" theme="bootstrap" style="width:300px;">
+                                        <ui-select-match placeholder="Select a person">{{$select.selected.FullName}}</ui-select-match>
+                                        <ui-select-choices repeat="item in projectUsers | filter: $select.search">
+                                            <div ng-bind-html="item.FullName"></div>
+                                            <small ng-bind-html="item.Email"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="PlannedHours">Planned Hours: </label>
+                                    <input type="number" class="form-control" id="PlannedHours" placeholder="Planned Hours" ng-model="person.selected.PlannedHours">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="PlannedHours">Actual Hours: </label>
+                                    <input type="number" class="form-control" id="ActualHours" placeholder="Actual Hours" ng-model="person.selected.ActualHours">
+                                </div>
+                                <button type="submit" class="btn btn-default">Add</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <p></p>
+                <div class="row">
+                    <div class="col-sm-2">
+                        Start Date :
+                    </div>
+
+                    <div class="col-sm-6">
+                        {{task.StartDate | date:'mediumDate'}}
+                    </div>
                 </div>
 
-                <div ng-hide="descEditMode">
-                    <p>
-                        Note: <button ng-click="EditTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Edit Note</button>
-                    </p>
-                    <p>{{TaskDescription.Description}}</p>
+                <div class="row">
+                    <div class="col-sm-2">
+                        Progress:
+                    </div>
+
+                    <div class="col-sm-6">
+                        {{ ((task.Progress/1)*100) }}%
+                    </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div ng-show="descEditMode">
+                            <p>Note: <button ng-click="saveTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Save Note</button></p>
+
+                            <p><textarea class="form-control" rows="5" ng-model="TaskDescription.Description"></textarea></p>
+                        </div>
+
+                        <div ng-hide="descEditMode">
+                            <p>
+                                Note: <button ng-click="EditTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Edit Note</button>
+                            </p>
+                            <p>{{TaskDescription.Description}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div ng-hide="task">
                 <h4>Please select task from left panel</h4>
             </div>
@@ -158,25 +179,75 @@
 
         <h3>Project Tasks</h3>
 
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Search a task" ng-model="searchTask">
+                </div>
+            </div>
+        </form>
+
+
         <div>
             <table class="table table-striped">
-                <tr>
-                    <th>Id</th>
-                    <th>Text</th>
-                    <th>Status</th>
-                    <th>Start Date</th>
-                    <th>Duration</th>
-                    <th>Progress</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <td>
+                            <a href="#" ng-click="sortType = 'Id'; sortReverse = !sortReverse">
+                                Id
+                                <span ng-show="sortType == 'Id' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'Id' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'Text'; sortReverse = !sortReverse">
+                                Text
+                                <span ng-show="sortType == 'Text' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'Text' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'Status'; sortReverse = !sortReverse">
+                                Status
+                                <span ng-show="sortType == 'Status' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'Status' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'StartDate'; sortReverse = !sortReverse">
+                                Start Date
+                                <span ng-show="sortType == 'StartDate' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'StartDate' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'Duration'; sortReverse = !sortReverse">
+                                Duration
+                                <span ng-show="sortType == 'Duration' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'Duration' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'Progress'; sortReverse = !sortReverse">
+                                Progress
+                                <span ng-show="sortType == 'Progress' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'Progress' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </thead>
 
-                <tr ng-repeat="t in taskLists" ng-click="setTask(t)" ng-class="{ success: t === task }">
-                    <td>{{t.Id}}</td>
-                    <td>{{t.Text}}</td>
-                    <td>{{t.Status}}</td>
-                    <td>{{t.StartDate | date:'medium' }}</td>
-                    <td>{{t.Duration}}</td>
-                    <td>{{t.Progress}}</td>
-                </tr>
+                <tbody>
+                    <tr ng-repeat="t in taskLists | orderBy:sortType:sortReverse | filter:searchTask" ng-click="setTask(t)" ng-class="{ success: t === task }">
+                        <td>{{t.Id}}</td>
+                        <td>{{t.Text}}</td>
+                        <td>{{t.Status}}</td>
+                        <td>{{t.StartDate | date:'mediumDate' }}</td>
+                        <td>{{t.Duration}}</td>
+                        <td>{{ ((t.Progress/1)*100) }}%</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
