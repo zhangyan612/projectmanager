@@ -100,9 +100,13 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         $scope.descEditMode = true;
     };
 
-    $scope.ModelChanged = function () {
+    $scope.ModelChanged = function (user) {
         // commom method for any update operation
         console.log($scope.task);
+        if (user) {
+            console.log(user);
+            $scope.task.AssignedUserList.push(user);
+        }
         //post entire task to save
 
     };
@@ -118,7 +122,7 @@ app.controller('ProjectListController', function ($scope, $location, DataService
 
     //About assigning to person
     $scope.person = {};
-    $scope.people = [
+    $scope.projectUsers = [
         { Id: 1, FullName: 'Adam', Email: 'adam@email.com', age: 10 },
         { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', age: 12 },
         { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', age: 30 },

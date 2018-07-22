@@ -24,7 +24,7 @@ namespace ProjectManager.Services
                 ObjectMapper.Convert(t, projectTask);
 
                 projectTask.Status = t.Board.Name;
-                projectTask.AssignedUsers = t.AssignedUsers.ToList();
+                projectTask.AssignedUserList = t.AssignedUsers.ToList();
 
                 projectList.Add(projectTask);
             }

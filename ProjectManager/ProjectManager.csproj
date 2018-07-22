@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201807190410428_TaskAssignmentStr.Designer.cs">
       <DependentUpon>201807190410428_TaskAssignmentStr.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807221932026_UpdateTaskAssignment.cs" />
+    <Compile Include="Migrations\201807221932026_UpdateTaskAssignment.Designer.cs">
+      <DependentUpon>201807221932026_UpdateTaskAssignment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Collaborator.cs" />
     <Compile Include="Models\ProjectBoard.cs" />
@@ -1565,6 +1569,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807190410428_TaskAssignmentStr.resx">
       <DependentUpon>201807190410428_TaskAssignmentStr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807221932026_UpdateTaskAssignment.resx">
+      <DependentUpon>201807221932026_UpdateTaskAssignment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

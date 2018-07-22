@@ -86,29 +86,29 @@
                             <div class="col-sm-6">
 
 
-                                @*<ul>
-                                    <li ng-repeat="item in items">
+                                <ul>
+                                    <li ng-repeat="item in task.AssignedUserList">
                                         {{ item }} <button ng-click="remove($index)">Remove</button>
                                     </li>
                                 </ul>
 
                                 <div>
-                                    <input type="text" ng-model="input">
+                                    <input type="text" ng-model="person">
                                     <button type="submit" ng-click="add()">Add</button>
                                 </div>
 
 
-                                <span ng-show="task.AssignedFirstUser">{{task.AssignedFirstUser}}</span>
+                                <span ng-show="task.AssignedUserList">{{task.AssignedUserList[0]}}</span>
 
-                                <a class="btn btn-success btn-xs" ng-hide="task.AssignedFirstUser">
+                                <a class="btn btn-success btn-xs" ng-hide="task.AssignedUserList[0]">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Assign
-                                </a>*@
+                                </a>
 
 
-                                <ui-select ng-model="person.selected" theme="bootstrap" style="width:300px;" ng-change="ModelChanged()">
+                                <ui-select ng-model="person.selected" theme="bootstrap" style="width:300px;" ng-change="ModelChanged($select.selected)">
                                     <ui-select-match placeholder="Select a person">{{$select.selected.FullName}}</ui-select-match>
-                                    <ui-select-choices repeat="item in people | filter: $select.search">
+                                    <ui-select-choices repeat="item in projectUsers | filter: $select.search">
                                         <div ng-bind-html="item.FullName"></div>
                                         <small ng-bind-html="item.Email"></small>
                                     </ui-select-choices>
