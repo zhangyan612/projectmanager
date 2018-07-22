@@ -100,25 +100,33 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         $scope.descEditMode = true;
     };
 
-    $scope.statusChanged = function (status) {
+    $scope.ModelChanged = function () {
         // commom method for any update operation
         console.log($scope.task);
-        console.log(status);
         //post entire task to save
 
     };
 
+    //$scope.$watch("task", function (newVal, oldVal) {
+    //    if (newVal != oldVal) {
+    //        $scope.msg = 'task is changed, new model:';
+    //        console.log($scope.msg);
+    //        console.log(newVal);
+
+    //    }
+    //}, true);
+
     //About assigning to person
     $scope.person = {};
     $scope.people = [
-        { name: 'Adam', email: 'adam@email.com', age: 10 },
-        { name: 'Amalie', email: 'amalie@email.com', age: 12 },
-        { name: 'Wladimir', email: 'wladimir@email.com', age: 30 },
-        { name: 'Samantha', email: 'samantha@email.com', age: 31 },
-        { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
-        { name: 'Natasha', email: 'natasha@email.com', age: 54 },
-        { name: 'Nicole', email: 'nicole@email.com', age: 43 },
-        { name: 'Adrian', email: 'adrian@email.com', age: 21 }
+        { Id: 1, FullName: 'Adam', Email: 'adam@email.com', age: 10 },
+        { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', age: 12 },
+        { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', age: 30 },
+        { Id: 4, FullName: 'Samantha', Email: 'samantha@email.com', age: 31 },
+        { Id: 5, FullName: 'Estefanía', Email: 'estefanía@email.com', age: 16 },
+        { Id: 6, FullName: 'Natasha', Email: 'natasha@email.com', age: 54 },
+        { Id: 7, FullName: 'Nicole', Email: 'nicole@email.com', age: 43 },
+        { Id: 8, FullName: 'Adrian', Email: 'adrian@email.com', age: 21 }
     ];
 
 });
@@ -129,7 +137,7 @@ app.service('DataService', ['$http',
         var apiUrl = '/Tasks';
 
         this.getProjectTasks = function (projectId) {
-            return $http.get(apiUrl + '/ProjectJson/' + projectId);
+            return $http.get(apiUrl + '/GetTasks/' + projectId);
         };
 
         this.getTaskDescription = function (descId) {

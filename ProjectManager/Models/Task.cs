@@ -24,7 +24,7 @@ namespace ProjectManager.Models
         public int? ParentId { get; set; }
         public bool Active { get; set; }
 
-        public virtual ICollection<TaskAssignment> AssignedTo { get; set; }
+        public virtual ICollection<TaskAssignment> AssignedUsers { get; set; }
 
         [JsonIgnore]
         public virtual ProjectBoard Board { get; set; }

@@ -24,11 +24,7 @@ namespace ProjectManager.Services
                 ObjectMapper.Convert(t, projectTask);
 
                 projectTask.Status = t.Board.Name;
-                projectTask.AssignedUserId = t.AssignedTo.Select(a => a.UserProfileId).ToList();
-
-
-                projectTask.AssignedFirstUser = projectTask.AssignedUserId.Count > 0 ?
-                    db.Users.Find(projectTask.AssignedUserId.First()).UserName : null;
+                projectTask.AssignedUsers = t.AssignedUsers.ToList();
 
                 projectList.Add(projectTask);
             }

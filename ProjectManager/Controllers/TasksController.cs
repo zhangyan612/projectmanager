@@ -48,12 +48,25 @@ namespace ProjectManager.Controllers
         }
 
 
-        public string ProjectJson(Guid id)
+        public string GetTasks(Guid id)
         {
             var tasks = ProjectTaskService.GetProjectTasks(id);
             string json = JsonConvert.SerializeObject(tasks);
             return json;
         }
+
+        public ActionResult SaveTasks(Task task)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            db.Tasks.Add(task);
+            db.SaveChanges();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
 
         [HttpGet]
         public string TaskDescription(int id)

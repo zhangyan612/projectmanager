@@ -14,5 +14,12 @@ namespace ProjectManager.Models
 
         public string UserProfileId { get; set; }
 
+        public string FullName { get; set; }
+
+        public string Email { get; set; }
+
+        public double PlannedHours { get; set; }
+
+        public double ActualHours { get; set; }
     }
 }

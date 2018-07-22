@@ -18,7 +18,6 @@ namespace ProjectManager.Models
         public bool Active { get; set; }
         public string Status { get; set; }
         public int? DescriptionId { get; set; }
-        public List<string> AssignedUserId { get; set; }
-        public string AssignedFirstUser { get; set; }
+        public List<TaskAssignment> AssignedUsers { get; set; }
     }
 }
