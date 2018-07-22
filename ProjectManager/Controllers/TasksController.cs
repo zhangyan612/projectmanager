@@ -35,6 +35,12 @@ namespace ProjectManager.Controllers
             return View(tasks.ToList());
         }
 
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+
         public string UserList()
         {
             var users = db.Users.ToList();

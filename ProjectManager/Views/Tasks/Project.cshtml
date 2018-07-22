@@ -5,7 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     <link rel="stylesheet" type="text/css" href="~/Scripts/layout/layout-default.css">
     <style>
+        .select2 > .select2-choice.ui-select-match {
+            /* Because of the inclusion of Bootstrap */
+            height: 29px;
+        }
 
+        .selectize-control > .selectize-dropdown {
+            top: 36px;
+        }
     </style>
     <script src="~/Scripts/layout/jquery.layout.js"></script>
     <script src="~/Scripts/layout/callbacks/jquery.layout.resizePaneAccordions.js"></script>
@@ -19,16 +26,34 @@
                 center__onresize: $.layout.callbacks.resizePaneAccordions
             });
 
+
+            $('#exampleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-title').text('New message to ' + recipient)
+                modal.find('.modal-body input').val(recipient)
+            })
+
+
+
+
         });
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
 
+    <!-- ui-select files -->
+    <link rel="stylesheet" href="~/Scripts/ui-select/select.css">
+    <script src="~/Scripts/ui-select/select.js"></script>
     <script src="~/Scripts/app/projectlist.js"></script>
-   
+
 }
 
-<div id="flexLayout" style="min-height:900px; height:100%;" ng-app='ProjectList'  ng-controller="ProjectListController">
+<div id="flexLayout" style="min-height:900px; height:100%;" ng-app='ProjectList' ng-controller="ProjectListController">
     <div class="ui-layout-center" style="display: none;">
         <div class="col-md-12" id="itemDetails">
             <div ng-show="task">
@@ -38,9 +63,9 @@
                     <select class="form-control" ng-model="task.Status" ng-options="x for x in StatusOptions" ng-change="statusChanged(task.Status)"></select>
                 </p>
                 <p>
-                    Assigned to : 
+                    Assigned to :
                     <span ng-show="task.AssignedFirstUser">{{task.AssignedFirstUser}}</span>
-                    <a class="btn btn-success btn-xs" ng-hide="task.AssignedFirstUser">Assign</a>
+                    <a class="btn btn-success btn-xs" ng-hide="task.AssignedFirstUser" data-toggle="modal" data-target="#myModal">Assign</a>
                 </p>
 
                 <p>
@@ -66,6 +91,44 @@
             </div>
             <div ng-hide="task">
                 <h4>Please select task from left panel</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Assign Task Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Assign Task</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Assign To: </label>
+                                <div class="col-sm-6">
+
+                                    <ui-select ng-model="person.selected" theme="bootstrap" style="width:300px;">
+                                        <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="item in people | filter: $select.search">
+                                            <div ng-bind-html="item.name"></div>
+                                            <small ng-bind-html="item.email"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Assign</button>
+                </div>
             </div>
         </div>
     </div>
@@ -105,3 +168,4 @@
         </div>
     </div>
 </div>
+

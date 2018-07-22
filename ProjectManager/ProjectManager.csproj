@@ -1213,6 +1213,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\app\demo.js" />
     <Content Include="Scripts\app\projectlist.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1463,6 +1464,10 @@
     <Content Include="Scripts\pm\main.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-select\select.css" />
+    <Content Include="Scripts\ui-select\select.js" />
+    <Content Include="Scripts\ui-select\select.min.css" />
+    <Content Include="Scripts\ui-select\select.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1524,6 +1529,9 @@
     <Content Include="Views\Board\Project.cshtml" />
     <Content Include="Views\Tasks\Project.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Scripts\ui-select\select.min.css.map" />
+    <Content Include="Scripts\ui-select\select.min.js.map" />
+    <Content Include="Views\Tasks\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
