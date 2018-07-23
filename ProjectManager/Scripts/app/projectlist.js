@@ -75,14 +75,14 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     $scope.addPersonButton = true;
     $scope.person = {};
     $scope.projectUsers = [
-        { Id: 1, FullName: 'Adam', Email: 'adam@email.com', PlannedHours: 10 },
-        { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', PlannedHours: 12 },
-        { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', PlannedHours: 30 },
-        { Id: 4, FullName: 'Samantha', Email: 'samantha@email.com', PlannedHours: 31 },
-        { Id: 5, FullName: 'Estefanía', Email: 'estefanía@email.com', PlannedHours: 16 },
-        { Id: 6, FullName: 'Natasha', Email: 'natasha@email.com', PlannedHours: 54 },
-        { Id: 7, FullName: 'Nicole', Email: 'nicole@email.com', PlannedHours: 43 },
-        { Id: 8, FullName: 'Adrian', Email: 'adrian@email.com', PlannedHours: 21 }
+        { Id: 1, UserProfileId: "u33433", FullName: 'Adam', Email: 'adam@email.com', PlannedHours: 10 },
+        { Id: 2, UserProfileId: "u3347873", FullName: 'Amalie', Email: 'amalie@email.com', PlannedHours: 12 },
+        { Id: 3, UserProfileId: "u3343333", FullName: 'Wladimir', Email: 'wladimir@email.com', PlannedHours: 30 },
+        { Id: 4, UserProfileId: "u334223", FullName: 'Samantha', Email: 'samantha@email.com', PlannedHours: 31 },
+        { Id: 5, UserProfileId: "u33442", FullName: 'Estefanía', Email: 'estefanía@email.com', PlannedHours: 16 },
+        { Id: 6, UserProfileId: "u432433", FullName: 'Natasha', Email: 'natasha@email.com', PlannedHours: 54 },
+        { Id: 7, UserProfileId: "u46433", FullName: 'Nicole', Email: 'nicole@email.com', PlannedHours: 43 },
+        { Id: 8, UserProfileId: "u655433", FullName: 'Adrian', Email: 'adrian@email.com', PlannedHours: 21 }
     ];
 
     $scope.getCurrentId = function () {
@@ -90,6 +90,7 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     }
 
     DataService.getProjectTasks(currentUrl).then(function (result) {
+        console.log(result);
         $scope.taskLists = result.data;
     });
 
@@ -146,7 +147,9 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         // commom method for any update operation
         console.log($scope.task);
         //post entire task to save
-
+        DataService.updateTask($scope.task).then(function (result) {
+            console.log(result);
+        });
     };
 
     //$scope.$watch("task", function (newVal, oldVal) {
@@ -159,14 +162,26 @@ app.controller('ProjectListController', function ($scope, $location, DataService
 
 
     $scope.AddPerson = function () {
-        console.log($scope.person.selected);
 
         if (containsObject($scope.person.selected, $scope.task.AssignedUserList)) {
             console.log('Already added');
         } else {
-            $scope.task.AssignedUserList.push($scope.person.selected);
-            $scope.person.selected = null;
-            $scope.addPersonButton = false;
+            var assignedPerson = $scope.person.selected;
+            assignedPerson.TaskId = $scope.task.Id;
+
+            DataService.addTaskAssignment(assignedPerson).then(function (result) {
+                console.log(result);
+                if (result.status == 200) {
+                    $scope.task.AssignedUserList.push(result.data);
+                    $scope.person.selected = null;
+                    $scope.addPersonButton = false;
+
+                }
+            });
+
+            //$scope.task.AssignedUserList.push($scope.person.selected);
+            //$scope.person.selected = null;
+            //$scope.addPersonButton = false;
         }
 
     };
@@ -253,9 +268,14 @@ app.service('DataService', ['$http',
             return $http.post(apiUrl + '/UserList');
         };
 
-        this.saveTask = function (task) {
-            return $http.post(apiUrl + '/SaveTasks', task);
+        this.updateTask = function (task) {
+            return $http.post(apiUrl + '/Edit', task);
         };
+
+        this.addTaskAssignment = function (task) {
+            return $http.post(apiUrl + '/AddTaskAssignment', task);
+        };
+
 
 
 }]);

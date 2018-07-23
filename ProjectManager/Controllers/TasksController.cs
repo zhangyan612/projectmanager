@@ -67,6 +67,34 @@ namespace ProjectManager.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        [HttpPost]
+        public ActionResult UpdateTasks([Bind(Include = "Id,Text,StartDate,Duration,Progress,SortOrder,Type,ParentId,ProjectId")] Task task)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(task).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", task.ProjectId);
+            string json = JsonConvert.SerializeObject(task);
+            return Content(json);
+        }
+
+        [HttpPost]
+        public ActionResult AddTaskAssignment([Bind(Include = "Id,TaskId,UserProfileId,FullName,Email,PlannedHours,ActualHours")] TaskAssignment person)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var task = db.Tasks.Find(person.TaskId);
+            task.AssignedUsers.Add(person);
+            db.SaveChanges();
+            string json = JsonConvert.SerializeObject(person);
+            return Content(json);
+        }
 
         [HttpGet]
         public string TaskDescription(int id)
@@ -102,28 +130,6 @@ namespace ProjectManager.Controllers
             return View(task);
         }
 
-        //// GET: Tasks/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name");
-        //    return View();
-        //}
-
-        //// POST: Tasks/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Text,StartDate,Duration,Progress,SortOrder,Type,ParentId,ProjectId")] Task task)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Tasks.Add(task);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", task.ProjectId);
-        //    return View(task);
-        //}
 
         // GET: Tasks/Edit/5
         public ActionResult Edit(int? id)

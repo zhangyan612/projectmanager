@@ -15,7 +15,7 @@ namespace ProjectManager.Services
 
         public static List<ProjectTaskList> GetProjectTasks(Guid projectId)
         {
-            var tasks = db.Tasks.Where(x => x.ProjectId == projectId).ToList();
+            var tasks = db.Tasks.Where(x => x.ProjectId == projectId).Include(d => d.AssignedUsers).ToList();
             List<ProjectTaskList> projectList = new List<ProjectTaskList>();
 
             foreach (var t in tasks)
