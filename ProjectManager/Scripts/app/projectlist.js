@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('ProjectList', ['ngSanitize', 'ui.select']);
+var app = angular.module('ProjectList', ['ngSanitize', 'ui.select', 'angularTrix']);
 
 app.config(['$locationProvider', function ($locationProvider) {
     $locationProvider.html5Mode({
@@ -64,17 +64,30 @@ function containsObject(obj, list) {
 
 app.controller('ProjectListController', function ($scope, $location, DataService) {
     var currentUrl = $location.path().split("/")[3]
+
+    $scope.sortType = 'Id'; // set the default sort type
+    $scope.sortReverse = false;  // set the default sort order
+    $scope.searchTask = '';     // set the default search/filter term
     $scope.task = null;
     $scope.StatusOptions = ['To Do', 'In Progress', 'Completed', 'Backlog'];
     $scope.descEditMode = true;
     $scope.TaskDescription = null;
     $scope.addPersonButton = true;
-
+    $scope.person = {};
+    $scope.projectUsers = [
+        { Id: 1, FullName: 'Adam', Email: 'adam@email.com', PlannedHours: 10 },
+        { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', PlannedHours: 12 },
+        { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', PlannedHours: 30 },
+        { Id: 4, FullName: 'Samantha', Email: 'samantha@email.com', PlannedHours: 31 },
+        { Id: 5, FullName: 'Estefanía', Email: 'estefanía@email.com', PlannedHours: 16 },
+        { Id: 6, FullName: 'Natasha', Email: 'natasha@email.com', PlannedHours: 54 },
+        { Id: 7, FullName: 'Nicole', Email: 'nicole@email.com', PlannedHours: 43 },
+        { Id: 8, FullName: 'Adrian', Email: 'adrian@email.com', PlannedHours: 21 }
+    ];
 
     $scope.getCurrentId = function () {
         return currentUrl;
     }
-
 
     DataService.getProjectTasks(currentUrl).then(function (result) {
         $scope.taskLists = result.data;
@@ -87,11 +100,15 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         $scope.task = item;
         if (item) {
             var descId = item.DescriptionId;
-            console.log(descId);
             if (descId) {
                 DataService.getTaskDescription(descId).then(function (result) {
-                    $scope.TaskDescription = result.data;
-                    $scope.descEditMode = false;
+                    console.log(result)
+                    if (result.status == 200) {
+                        $scope.TaskDescription = result.data;
+                        $scope.descEditMode = false;
+                    } else {
+                        alert("Error saving note");
+                    }
                 });
             } else {
                 $scope.TaskDescription = null;
@@ -110,7 +127,13 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         console.log($scope.TaskDescription.Description);
 
         // save item to db 
-        DataService.saveTaskDescription($scope.task.Id, $scope.TaskDescription.Description);
+        //var htmlDesc = $sanitize($scope.TaskDescription.Description);
+
+        DataService.saveTaskDescription($scope.task.Id, $scope.TaskDescription.Description).then(function (result) {
+            console.log(result);
+            $scope.task.TaskDescription = $scope.TaskDescription;
+            $scope.task.DescriptionId = result.data;
+        });
 
         $scope.descEditMode = false;
     };
@@ -131,20 +154,8 @@ app.controller('ProjectListController', function ($scope, $location, DataService
     //        $scope.msg = 'task is changed, new model:';
     //        console.log($scope.msg);
     //        console.log(newVal);
-
     //    }
     //}, true);
-    $scope.person = {};
-    $scope.projectUsers = [
-        { Id: 1, FullName: 'Adam', Email: 'adam@email.com', PlannedHours: 10 },
-        { Id: 2, FullName: 'Amalie', Email: 'amalie@email.com', PlannedHours: 12 },
-        { Id: 3, FullName: 'Wladimir', Email: 'wladimir@email.com', PlannedHours: 30 },
-        { Id: 4, FullName: 'Samantha', Email: 'samantha@email.com', PlannedHours: 31 },
-        { Id: 5, FullName: 'Estefanía', Email: 'estefanía@email.com', PlannedHours: 16 },
-        { Id: 6, FullName: 'Natasha', Email: 'natasha@email.com', PlannedHours: 54 },
-        { Id: 7, FullName: 'Nicole', Email: 'nicole@email.com', PlannedHours: 43 },
-        { Id: 8, FullName: 'Adrian', Email: 'adrian@email.com', PlannedHours: 21 }
-    ];
 
 
     $scope.AddPerson = function () {
@@ -165,11 +176,56 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         console.log($scope.task.AssignedUserList);
     };
 
+    // editor attachment
+    var createStorageKey, host, uploadAttachment;
 
-    //sort filter
-    $scope.sortType = 'Id'; // set the default sort type
-    $scope.sortReverse = false;  // set the default sort order
-    $scope.searchTask = '';     // set the default search/filter term
+    $scope.trixAttachmentAdd = function (e) {
+        var attachment;
+        attachment = e.attachment;
+        if (attachment.file) {
+            return uploadAttachment(attachment);
+        }
+    }
+
+    host = "https://d13txem1unpe48.cloudfront.net/";
+
+    uploadAttachment = function (attachment) {
+        console.log(attachment)
+        var file, form, key, xhr;
+        file = attachment.file;
+        key = createStorageKey(file);
+        form = new FormData;
+        form.append("key", key);
+        form.append("Content-Type", file.type);
+        form.append("file", file);
+        xhr = new XMLHttpRequest;
+        xhr.open("POST", host, true);
+        xhr.upload.onprogress = function (event) {
+            var progress;
+            progress = event.loaded / event.total * 100;
+            return attachment.setUploadProgress(progress);
+        };
+        xhr.onload = function () {
+            var href, url;
+            if (xhr.status === 204) {
+                url = href = host + key;
+                console.log(url)
+                return attachment.setAttributes({
+                    url: url,
+                    href: href
+                });
+            }
+        };
+        return xhr.send(form);
+    };
+
+    createStorageKey = function (file) {
+        var date, day, time;
+        date = new Date();
+        day = date.toISOString().slice(0, 10);
+        time = date.getTime();
+        return "tmp/" + day + "/" + time + "-" + file.name;
+    };
 
 
 });
@@ -190,12 +246,17 @@ app.service('DataService', ['$http',
         };
 
         this.saveTaskDescription = function (id, desc) {
-            return $http.post(apiUrl + '/SaveDescription?id=' + id + '&desc=' + desc);
+            return $http.post(apiUrl + '/SaveDescription?id=' + id + '&desc=' + escape(desc));
         };
 
         this.getTaskUsers = function () {
             return $http.post(apiUrl + '/UserList');
         };
+
+        this.saveTask = function (task) {
+            return $http.post(apiUrl + '/SaveTasks', task);
+        };
+
 
 }]);
 

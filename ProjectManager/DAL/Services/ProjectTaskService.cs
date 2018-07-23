@@ -38,7 +38,7 @@ namespace ProjectManager.Services
             return task;
         }
 
-        public static void SaveTaskDescription(int id, string desc, string user)
+        public static int SaveTaskDescription(int id, string desc, string user)
         {
             var task = db.Tasks.Where(x => x.Id == id).First();
 
@@ -50,6 +50,7 @@ namespace ProjectManager.Services
                 existingDesc.LastModifiedDate = DateTime.Now;
                 db.Entry(existingDesc).State = EntityState.Modified;
                 db.SaveChanges();
+                return existingDesc.Id;
             }
             else
             {
@@ -67,6 +68,7 @@ namespace ProjectManager.Services
                 task.DescriptionId = newId;
                 db.Entry(task).State = EntityState.Modified;
                 db.SaveChanges();
+                return newId;
             }
         }
     }

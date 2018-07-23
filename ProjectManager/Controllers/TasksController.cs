@@ -77,10 +77,14 @@ namespace ProjectManager.Controllers
         }
 
         [HttpPost]
-        public void SaveDescription(int id, string desc)
+        [ValidateInput(false)]
+        public int SaveDescription(int id, string desc)
         {
+            var htmlText = Request.Unvalidated.QueryString["desc"];
+
             var user = User.Identity.Name;
-            ProjectTaskService.SaveTaskDescription(id, desc, user);
+            int newId = ProjectTaskService.SaveTaskDescription(id, desc, user);
+            return newId;
         }
 
         // GET: Tasks/Details/5

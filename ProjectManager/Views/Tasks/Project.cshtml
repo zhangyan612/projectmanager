@@ -5,15 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     <link rel="stylesheet" type="text/css" href="~/Scripts/layout/layout-default.css">
     <style>
-        .select2 > .select2-choice.ui-select-match {
-            /* Because of the inclusion of Bootstrap */
-            height: 29px;
-        }
+         .select2 > .select2-choice.ui-select-match {
+             /* Because of the inclusion of Bootstrap */
+             height: 29px;
+         }
 
-        .selectize-control > .selectize-dropdown {
-            top: 36px;
+         .selectize-control > .selectize-dropdown {
+             top: 36px;
+         }
+
+         #itemDetails {
+             height: 100%;
+         }
+
+         .center {
+             height: 100%;
+             position: relative;
+         }
+
+        .center h4 {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
+        .well {
+            background-color: inherit;
+        }
+         /*#trix-toolbar-1 .text_tools .link {
+             display: none;
+        }*/
+
     </style>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.css">
+
     <script src="~/Scripts/layout/jquery.layout.js"></script>
     <script src="~/Scripts/layout/callbacks/jquery.layout.resizePaneAccordions.js"></script>
     <script type="text/javascript">
@@ -46,6 +72,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.js"></script>
+
+    <script src="~/Scripts/editor/angular-trix.js"></script>
+
     <!-- ui-select files -->
     <link rel="stylesheet" href="~/Scripts/ui-select/select.css">
     <script src="~/Scripts/ui-select/select.js"></script>
@@ -58,7 +88,7 @@
         <div class="col-md-12" id="itemDetails">
             <div ng-show="task">
                 <h3>{{task.Id}} : {{task.Text}}</h3>
-
+                <legend></legend>
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="form-group">
@@ -91,7 +121,6 @@
 
                                 </tr>
                             </table>
-
 
                             <a class="btn btn-success btn-xs" ng-hide="addPersonButton" ng-click="addPersonButton = true">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -126,43 +155,55 @@
                 <p></p>
                 <div class="row">
                     <div class="col-sm-2">
-                        Start Date :
+                        <b>Start Date :</b>
                     </div>
 
                     <div class="col-sm-6">
                         {{task.StartDate | date:'mediumDate'}}
                     </div>
                 </div>
+                <p></p>
 
                 <div class="row">
                     <div class="col-sm-2">
-                        Progress:
+                        <b>Progress:</b>
                     </div>
 
                     <div class="col-sm-6">
-                        {{ ((task.Progress/1)*100) }}%
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{ ((task.Progress/1)*100) }}"
+                                 aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ ((task.Progress/1)*100) }}%;">
+                                {{ ((task.Progress/1)*100) }}%
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <div ng-show="descEditMode">
-                            <p>Note: <button ng-click="saveTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Save Note</button></p>
+                            <p>
+                                <b>Note:</b>
+                                <button ng-click="saveTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Save Note</button>
+                            </p>
 
-                            <p><textarea class="form-control" rows="5" ng-model="TaskDescription.Description"></textarea></p>
+                            <p>
+                                <trix-editor angular-trix ng-model="TaskDescription.Description" trix-file-accept="trixFileAccept(e, editor);" trix-attachment-add="trixAttachmentAdd(e, editor);" trix-attachment-remove="trixAttachmentRemove(e, editor);"></trix-editor>
+                            </p>
                         </div>
 
                         <div ng-hide="descEditMode">
                             <p>
-                                Note: <button ng-click="EditTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Edit Note</button>
+                                <b>Note:</b>
+                                <button ng-click="EditTaskDescription()" style="float:right;" class="btn btn-xs btn-success">Edit Note</button>
                             </p>
-                            <p>{{TaskDescription.Description}}</p>
+                            <div class="well" ng-bind-html="TaskDescription.Description"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div ng-hide="task">
+            <div ng-hide="task" class="center">
                 <h4>Please select task from left panel</h4>
             </div>
         </div>
@@ -188,7 +229,6 @@
             </div>
         </form>
 
-
         <div>
             <table class="table table-striped">
                 <thead>
@@ -202,7 +242,7 @@
                         </td>
                         <td>
                             <a href="#" ng-click="sortType = 'Text'; sortReverse = !sortReverse">
-                                Text
+                                Title
                                 <span ng-show="sortType == 'Text' && !sortReverse" class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == 'Text' && sortReverse" class="fa fa-caret-up"></span>
                             </a>
