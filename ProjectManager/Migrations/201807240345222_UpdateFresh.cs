@@ -3,7 +3,7 @@ namespace ProjectManager.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class UpdateFresh : DbMigration
     {
         public override void Up()
         {
@@ -36,11 +36,40 @@ namespace ProjectManager.Migrations
                         Active = c.Boolean(nullable: false),
                         BoardId = c.Int(),
                         ProjectId = c.Guid(nullable: false),
+                        DescriptionId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ProjectBoards", t => t.BoardId)
                 .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
                 .Index(t => t.BoardId)
+                .Index(t => t.ProjectId);
+            
+            CreateTable(
+                "dbo.TaskAssignments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        TaskId = c.Int(nullable: false),
+                        UserProfileId = c.String(),
+                        FullName = c.String(),
+                        Email = c.String(),
+                        PlannedHours = c.Double(nullable: false),
+                        ActualHours = c.Double(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Tasks", t => t.TaskId, cascadeDelete: true)
+                .Index(t => t.TaskId);
+            
+            CreateTable(
+                "dbo.Collaborators",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.Guid(nullable: false),
+                        ProjectId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
                 .Index(t => t.ProjectId);
             
             CreateTable(
@@ -64,45 +93,10 @@ namespace ProjectManager.Migrations
                         Desc = c.String(),
                         Public = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.TeamProjects",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        TeamId = c.Guid(nullable: false),
-                        ProjectId = c.Guid(nullable: false),
+                        TeamId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
-                .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
-                .Index(t => t.TeamId)
-                .Index(t => t.ProjectId);
-            
-            CreateTable(
-                "dbo.Teams",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        Name = c.String(),
-                        CreatedDate = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.TeamMembers",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        TeamId = c.Guid(nullable: false),
-                        UserId = c.Guid(nullable: false),
-                        Email = c.String(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
+                .ForeignKey("dbo.Teams", t => t.TeamId)
                 .Index(t => t.TeamId);
             
             CreateTable(
@@ -127,6 +121,39 @@ namespace ProjectManager.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.TaskDescriptions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Description = c.String(),
+                        LastModifiedDate = c.DateTime(nullable: false),
+                        LastModifiedBy = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.TeamMembers",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        TeamId = c.Guid(nullable: false),
+                        UserId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
+                .Index(t => t.TeamId);
+            
+            CreateTable(
+                "dbo.Teams",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -208,22 +235,24 @@ namespace ProjectManager.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.TeamProjects", "TeamId", "dbo.Teams");
+            DropForeignKey("dbo.Projects", "TeamId", "dbo.Teams");
             DropForeignKey("dbo.TeamMembers", "TeamId", "dbo.Teams");
-            DropForeignKey("dbo.TeamProjects", "ProjectId", "dbo.Projects");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Tasks", "ProjectId", "dbo.Projects");
+            DropForeignKey("dbo.Collaborators", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.ProjectBoards", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.Tasks", "BoardId", "dbo.ProjectBoards");
+            DropForeignKey("dbo.TaskAssignments", "TaskId", "dbo.Tasks");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.TeamMembers", new[] { "TeamId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.TeamMembers", new[] { "TeamId" });
-            DropIndex("dbo.TeamProjects", new[] { "ProjectId" });
-            DropIndex("dbo.TeamProjects", new[] { "TeamId" });
+            DropIndex("dbo.Projects", new[] { "TeamId" });
+            DropIndex("dbo.Collaborators", new[] { "ProjectId" });
+            DropIndex("dbo.TaskAssignments", new[] { "TaskId" });
             DropIndex("dbo.Tasks", new[] { "ProjectId" });
             DropIndex("dbo.Tasks", new[] { "BoardId" });
             DropIndex("dbo.ProjectBoards", new[] { "ProjectId" });
@@ -231,13 +260,15 @@ namespace ProjectManager.Migrations
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Teams");
+            DropTable("dbo.TeamMembers");
+            DropTable("dbo.TaskDescriptions");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.TeamMembers");
-            DropTable("dbo.Teams");
-            DropTable("dbo.TeamProjects");
             DropTable("dbo.Projects");
             DropTable("dbo.Links");
+            DropTable("dbo.Collaborators");
+            DropTable("dbo.TaskAssignments");
             DropTable("dbo.Tasks");
             DropTable("dbo.ProjectBoards");
         }

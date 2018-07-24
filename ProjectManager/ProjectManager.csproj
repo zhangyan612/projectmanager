@@ -242,37 +242,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712302233534_Initial.cs" />
-    <Compile Include="Migrations\201712302233534_Initial.Designer.cs">
-      <DependentUpon>201712302233534_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801131656070_updateteam.cs" />
-    <Compile Include="Migrations\201801131656070_updateteam.Designer.cs">
-      <DependentUpon>201801131656070_updateteam.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801131716037_modifyteam.cs" />
-    <Compile Include="Migrations\201801131716037_modifyteam.Designer.cs">
-      <DependentUpon>201801131716037_modifyteam.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801131723114_updateteam1.cs" />
-    <Compile Include="Migrations\201801131723114_updateteam1.Designer.cs">
-      <DependentUpon>201801131723114_updateteam1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806302341232_TaskDesc.cs" />
-    <Compile Include="Migrations\201806302341232_TaskDesc.Designer.cs">
-      <DependentUpon>201806302341232_TaskDesc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807182143486_Fixthings.cs" />
-    <Compile Include="Migrations\201807182143486_Fixthings.Designer.cs">
-      <DependentUpon>201807182143486_Fixthings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807190410428_TaskAssignmentStr.cs" />
-    <Compile Include="Migrations\201807190410428_TaskAssignmentStr.Designer.cs">
-      <DependentUpon>201807190410428_TaskAssignmentStr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807221932026_UpdateTaskAssignment.cs" />
-    <Compile Include="Migrations\201807221932026_UpdateTaskAssignment.Designer.cs">
-      <DependentUpon>201807221932026_UpdateTaskAssignment.cs</DependentUpon>
+    <Compile Include="Migrations\201807240345222_UpdateFresh.cs" />
+    <Compile Include="Migrations\201807240345222_UpdateFresh.Designer.cs">
+      <DependentUpon>201807240345222_UpdateFresh.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Collaborator.cs" />
@@ -1586,29 +1558,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712302233534_Initial.resx">
-      <DependentUpon>201712302233534_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801131656070_updateteam.resx">
-      <DependentUpon>201801131656070_updateteam.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801131716037_modifyteam.resx">
-      <DependentUpon>201801131716037_modifyteam.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801131723114_updateteam1.resx">
-      <DependentUpon>201801131723114_updateteam1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806302341232_TaskDesc.resx">
-      <DependentUpon>201806302341232_TaskDesc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807182143486_Fixthings.resx">
-      <DependentUpon>201807182143486_Fixthings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807190410428_TaskAssignmentStr.resx">
-      <DependentUpon>201807190410428_TaskAssignmentStr.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807221932026_UpdateTaskAssignment.resx">
-      <DependentUpon>201807221932026_UpdateTaskAssignment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807240345222_UpdateFresh.resx">
+      <DependentUpon>201807240345222_UpdateFresh.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
