@@ -92,24 +92,9 @@ namespace ProjectManager.DAL.Services
                     Duration = 3
                 };
 
-                switch (boardName)
-                {
-                    case "In Progress":
-                        newTask.StartDate = DateTime.Today;
-                        newTask.Active = true;
-                        db.Tasks.Add(newTask);
-                        break;
-                    case "Completed":
-                        newTask.StartDate = DateTime.Today.AddDays(-3);
-                        newTask.Duration = 3;
-                        newTask.Active = true;
-                        newTask.Progress = 1;
-                        db.Tasks.Add(newTask);
-                        break;
-                    default:
-                        db.Tasks.Add(newTask);
-                        break;
-                }
+                newTask = BoardStatusService.CreateTaskRule(newTask, boardName);
+
+                db.Tasks.Add(newTask);
                 db.SaveChanges();
                 return newTask;
             }
@@ -125,21 +110,8 @@ namespace ProjectManager.DAL.Services
             // change the task boardid
             task.BoardId = tBoard.Id;
 
-            switch (boardName)
-            {
-                case "In Progress":
-                    task.StartDate = DateTime.Today;
-                    task.Active = true;
-                    break;
-                case "Completed":
-                    var dayDiff = (DateTime.Today - task.StartDate).Days;
-                    task.Duration = dayDiff ==0 ? 1: dayDiff;
-                    task.Active = true;
-                    task.Progress = 1;
-                    break;
-                default:
-                    break;
-            }
+            task = BoardStatusService.UpdateTaskRule(task, boardName);
+            
             db.SaveChanges();
         }
 

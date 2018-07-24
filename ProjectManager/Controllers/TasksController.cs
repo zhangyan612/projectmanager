@@ -11,6 +11,7 @@ using ProjectManager.Models;
 using Newtonsoft.Json;
 using ProjectManager.Services;
 using ProjectManager.Utility;
+using ProjectManager.DAL.Services;
 
 namespace ProjectManager.Controllers
 {
@@ -71,21 +72,23 @@ namespace ProjectManager.Controllers
         [HttpPost]
         public ActionResult UpdateStatus(ProjectTaskList taskView)
         {
+            string json;
+
             if (ModelState.IsValid)
             {
-                Task task = new Task();
-                ObjectMapper.Convert(taskView, task);
-
+                var task = db.Tasks.Find(taskView.Id);
                 var board = db.Boards.First(x => x.Name == taskView.Status && x.ProjectId == taskView.ProjectId);
                 task.BoardId = board.Id;
-                db.Tasks.Attach(task);
-                // Only update status so far
-                db.Entry(task).Property(x => x.BoardId).IsModified = true;
+                task = BoardStatusService.UpdateTaskRule(task, board.Name);
+
+                db.Entry(task).State = EntityState.Modified;
                 db.SaveChanges();
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+
+                json = JsonConvert.SerializeObject(task);
+                return Content(json);
             }
-            string json = JsonConvert.SerializeObject(taskView);
-            return Content(json);
+            json = JsonConvert.SerializeObject(taskView);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, json);
         }
 
         [HttpPost]

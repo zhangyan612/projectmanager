@@ -148,6 +148,10 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         //post entire task to save
         DataService.updateStatus($scope.task).then(function (result) {
             console.log(result);
+            if (result.status == 200) {
+                console.log(result.data);
+                $scope.task.progress = result.data.progress;
+            }
         });
     };
 

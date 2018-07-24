@@ -233,6 +233,7 @@
     <Compile Include="DAL\Repository\ProjectsRepository.cs" />
     <Compile Include="DAL\Repository\UserProfileRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
+    <Compile Include="DAL\Services\BoardStatusService.cs" />
     <Compile Include="DAL\Services\ProjectBoardService.cs" />
     <Compile Include="DAL\Services\ProjectsService.cs" />
     <Compile Include="DAL\Services\UserProfileService.cs" />
