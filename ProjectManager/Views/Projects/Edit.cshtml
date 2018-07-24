@@ -10,7 +10,10 @@
     @Html.ActionLink("< Back to List", "Index")
 </div>
 
-<h2>Manage Basic Info</h2>
+
+<h2>Project Setting</h2>
+
+<h3>Basic Information</h3>
 
 @using (Html.BeginForm())
 {
@@ -58,4 +61,14 @@
     </div>
 }
 
-<h2>Add People to project</h2>
+<h3>Team Listing</h3>
+<legend></legend>
+
+
+
+<h3>Delete this project</h3>
+<legend></legend>
+
+@Html.ActionLink("Delete the project", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+
+

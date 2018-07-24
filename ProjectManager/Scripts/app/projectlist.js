@@ -149,8 +149,8 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         DataService.updateStatus($scope.task).then(function (result) {
             console.log(result);
             if (result.status == 200) {
-                console.log(result.data);
-                $scope.task.progress = result.data.progress;
+                console.log(result.data.progress);
+                $scope.task.Progress = result.data.Progress;
             }
         });
     };
