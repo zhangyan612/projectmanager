@@ -1193,6 +1193,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular\angular-sanitize.js" />
+    <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\app\demo.js" />
     <Content Include="Scripts\app\projectlist.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1411,6 +1413,9 @@
     <Content Include="Scripts\bootstrapTable\extensions\tree-column\bootstrap-table-tree-column.min.js" />
     <Content Include="Scripts\bootstrapTable\extensions\treegrid\bootstrap-table-treegrid.js" />
     <Content Include="Scripts\bootstrapTable\extensions\treegrid\bootstrap-table-treegrid.min.js" />
+    <Content Include="Scripts\editor\angular-trix.js" />
+    <Content Include="Scripts\editor\trix.css" />
+    <Content Include="Scripts\editor\trix.js" />
     <Content Include="Scripts\jKanban\jkanban.js" />
     <Content Include="Scripts\jKanban\jkanban.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1548,7 +1553,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\editor\" />
     <Folder Include="Views\Gantt\" />
   </ItemGroup>
   <ItemGroup>
