@@ -104,7 +104,7 @@ app.controller('ProjectListController', function ($scope, $location, DataService
             if (descId) {
                 DataService.getTaskDescription(descId).then(function (result) {
                     console.log(result)
-                    if (result.status == 200) {
+                    if (result.status === 200) {
                         $scope.TaskDescription = result.data;
                         $scope.descEditMode = false;
                     } else {
@@ -116,7 +116,7 @@ app.controller('ProjectListController', function ($scope, $location, DataService
                 $scope.descEditMode = true;
             }
 
-            if (item.AssignedUserList === undefined || item.AssignedUserList.length == 0) {
+            if (item.AssignedUserList === undefined || item.AssignedUserList.length === 0) {
                 console.log(item.AssignedUserList)
                 $scope.addPersonButton = false;
             }
@@ -143,11 +143,10 @@ app.controller('ProjectListController', function ($scope, $location, DataService
         $scope.descEditMode = true;
     };
 
-    $scope.ModelChanged = function (user) {
-        // commom method for any update operation
+    $scope.StatusChanged = function () {
         console.log($scope.task);
         //post entire task to save
-        DataService.updateTask($scope.task).then(function (result) {
+        DataService.updateStatus($scope.task).then(function (result) {
             console.log(result);
         });
     };
@@ -171,7 +170,7 @@ app.controller('ProjectListController', function ($scope, $location, DataService
 
             DataService.addTaskAssignment(assignedPerson).then(function (result) {
                 console.log(result);
-                if (result.status == 200) {
+                if (result.status === 200) {
                     $scope.task.AssignedUserList.push(result.data);
                     $scope.person.selected = null;
                     $scope.addPersonButton = false;
@@ -268,8 +267,8 @@ app.service('DataService', ['$http',
             return $http.post(apiUrl + '/UserList');
         };
 
-        this.updateTask = function (task) {
-            return $http.post(apiUrl + '/Edit', task);
+        this.updateStatus = function (task) {
+            return $http.post(apiUrl + '/UpdateStatus', task);
         };
 
         this.addTaskAssignment = function (task) {

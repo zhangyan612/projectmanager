@@ -10,6 +10,7 @@ using ProjectManager.DAL;
 using ProjectManager.Models;
 using Newtonsoft.Json;
 using ProjectManager.Services;
+using ProjectManager.Utility;
 
 namespace ProjectManager.Controllers
 {
@@ -68,16 +69,22 @@ namespace ProjectManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateTasks([Bind(Include = "Id,Text,StartDate,Duration,Progress,SortOrder,Type,ParentId,ProjectId")] Task task)
+        public ActionResult UpdateStatus(ProjectTaskList taskView)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(task).State = EntityState.Modified;
+                Task task = new Task();
+                ObjectMapper.Convert(taskView, task);
+
+                var board = db.Boards.First(x => x.Name == taskView.Status && x.ProjectId == taskView.ProjectId);
+                task.BoardId = board.Id;
+                db.Tasks.Attach(task);
+                // Only update status so far
+                db.Entry(task).Property(x => x.BoardId).IsModified = true;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", task.ProjectId);
-            string json = JsonConvert.SerializeObject(task);
+            string json = JsonConvert.SerializeObject(taskView);
             return Content(json);
         }
 

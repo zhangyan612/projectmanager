@@ -8,6 +8,8 @@ namespace ProjectManager.Models
     public class ProjectTaskList
     {
         public int Id { get; set; }
+        public Guid ProjectId { get; set; }
+        public int? BoardId { get; set; }
         public string Text { get; set; }
         public DateTime StartDate { get; set; }
         public int Duration { get; set; }
