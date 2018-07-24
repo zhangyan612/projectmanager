@@ -1197,6 +1197,7 @@
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\app\demo.js" />
     <Content Include="Scripts\app\projectlist.js" />
+    <Content Include="Scripts\app\settings.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
