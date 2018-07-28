@@ -10,6 +10,7 @@ using ProjectManager.DAL;
 using ProjectManager.Models;
 using ProjectManager.DAL.Services;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace ProjectManager.Controllers
 {
@@ -41,6 +42,28 @@ namespace ProjectManager.Controllers
 
             return View(projects);
         }
+
+        public ActionResult GetAllUsers()
+        {
+            var users = userService.GetUsers();
+            var json = JsonConvert.SerializeObject(users);
+            return Content(json);
+        }
+
+        public ActionResult AddUser(Guid ProjectId, string userId)
+        {
+            var user = userService.GetUser(userId);
+            var json = JsonConvert.SerializeObject(user);
+            return Content(json);
+        }
+
+        public ActionResult RemoveUser(Guid ProjectId, string userId)
+        {
+            var users = userService.GetUsers();
+            var json = JsonConvert.SerializeObject(users);
+            return Content(json);
+        }
+
 
         // GET: Projects/Details/5
         public ActionResult Details(Guid? id)

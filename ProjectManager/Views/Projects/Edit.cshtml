@@ -8,9 +8,99 @@
     <script src="~/Scripts/angular/angular.js"></script>
      <!-- ui-select files -->
     <link rel="stylesheet" href="~/Scripts/ui-select/select.css">
+    <style>
+
+        h1 {
+            font-size: 32px;
+        }
+
+        input {
+            border: 0;
+            margin-right: 5px;
+            background: transparent;
+            border-bottom: 1px solid black;
+            width: 80px;
+            padding: 8px;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, input:active {
+            outline: 0;
+            width: 200px;
+            border-bottom-color: #F97D75;
+        }
+
+        .teamListing button {
+            background-color: #F97D75;
+            border: 0;
+            padding: 8px 20px;
+            color: white;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .teamListing button:focus, button:active {
+            outline: 0;
+        }
+
+        .teamListing ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 25px;
+        }
+
+       .teamListing li {
+            border: 1px solid black;
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        .fa-close {
+            cursor: pointer;
+        }
+
+        [contenteditable]:focus, [contenteditable]:active {
+            outline: 0;
+        }
+
+    </style>
     <script src="~/Scripts/ui-select/select.js"></script>
 
     <script src="~/Scripts/app/settings.js"></script>
+
+    <script>
+        angular
+            .module('addSkills', [])
+            .controller('addSkillsController', ['$scope', function ($scope) {
+
+                $scope.skills = [];
+
+                $scope.projectUsers = [
+                    { Id: 1, UserProfileId: "u33433", FullName: 'Adam', Email: 'adam@email.com', PlannedHours: 10 },
+                    { Id: 2, UserProfileId: "u3347873", FullName: 'Amalie', Email: 'amalie@email.com', PlannedHours: 12 },
+                    { Id: 3, UserProfileId: "u3343333", FullName: 'Wladimir', Email: 'wladimir@email.com', PlannedHours: 30 },
+                    { Id: 4, UserProfileId: "u334223", FullName: 'Samantha', Email: 'samantha@email.com', PlannedHours: 31 },
+                    { Id: 5, UserProfileId: "u33442", FullName: 'Estefanía', Email: 'estefanía@email.com', PlannedHours: 16 },
+                    { Id: 6, UserProfileId: "u432433", FullName: 'Natasha', Email: 'natasha@email.com', PlannedHours: 54 },
+                    { Id: 7, UserProfileId: "u46433", FullName: 'Nicole', Email: 'nicole@email.com', PlannedHours: 43 },
+                    { Id: 8, UserProfileId: "u655433", FullName: 'Adrian', Email: 'adrian@email.com', PlannedHours: 21 }
+                ];
+
+                $scope.addSkill = function () {
+                    $scope.skills.push({ 'title': $scope.newSkill, 'done': false })
+                    $scope.newSkill = ''
+                }
+
+                $scope.deleteSkill = function (index) {
+                    $scope.skills.splice(index, 1);
+                }
+            }])
+    </script>
 }
 
 
@@ -36,24 +126,24 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-8">
                 @Html.TextAreaFor(model => model.Desc, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Public, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.Public, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-8">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Public)
                     @Html.ValidationMessageFor(model => model.Public, "", new { @class = "text-danger" })
@@ -62,7 +152,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-1 col-md-8">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
@@ -72,6 +162,29 @@
 <h3>Team Listing</h3>
 <legend></legend>
 
+<div class="teamListing" ng-app="addSkills" ng-controller="addSkillsController">
+    <form name="skillsFrm" ng-submit="addSkill()">
+        <input type="text" name="newSkill" ng-model="newSkill" required />
+        <button ng-disabled="skillsFrm.$invalid" ng-click="addSkill()">Add</button>
+
+
+        <ui-select ng-model="person.selected" theme="bootstrap" style="width:300px;">
+            <ui-select-match placeholder="Select a person">{{$select.selected.FullName}}</ui-select-match>
+            <ui-select-choices repeat="item in projectUsers | filter: $select.search">
+                <div ng-bind-html="item.FullName"></div>
+                <small ng-bind-html="item.Email"></small>
+            </ui-select-choices>
+        </ui-select>
+
+    </form>
+
+    <ul>
+        <li ng-repeat="skill in skills" class="{'fadeOut' : skill.done}">
+            <span class="fa fa-close" ng-click="deleteSkill($index)"></span>
+            <span>{{skill.title}}</span>
+        </li>
+    </ul>
+</div>
 
 
 <h3>Delete this project</h3>
